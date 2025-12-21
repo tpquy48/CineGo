@@ -1,0 +1,31 @@
+name: cine_go
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # State Management
+  flutter_bloc: ^8.1.0
+  equatable: ^2.0.5
+
+  # Network & API
+  dio: ^5.4.0
+  cached_network_image: ^3.3.0
+
+  # UI & Animation
+  flutter_svg: ^2.0.9
+  shimmer: ^3.0.0 # Hiệu ứng loading skeleton
+  carousel_slider: ^4.2.1 # Cho Slide danh sách phim
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
