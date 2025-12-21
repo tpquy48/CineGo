@@ -1,6 +1,6 @@
 # cine_go
 
-A new Flutter project.
+A movie ticket booking app
 
 ## Getting Started
 
