@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/models/movie_model.dart';
 import '../../logic/movie_bloc.dart';
 import '../../logic/movie_state.dart';
+import 'movie_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -69,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
 
                     const SizedBox(height: 30),
-                    // Movie Title & Info
+                    // Movie Title and Info
                     Text(
                       movies[_currentIndex].title,
                       textAlign: TextAlign.center,
@@ -114,31 +115,40 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15), // Blur intensity
-        child: Container(
-          color: Colors.black.withValues(alpha: 0.5), // Darken the background
-        ),
+        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+        // child: Container(color: Colors.black.withAlpha(125)),
+        child: Container(color: Colors.black.withValues(alpha: 0.5)),
       ),
     );
   }
 
   // Build each individual movie poster card
   Widget _buildMovieCard(Movie movie) {
-    return Hero(
-      tag: movie.id, // Important for the transition to detail screen
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.5),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MovieDetailScreen(movie: movie),
+          ),
+        );
+      },
+      child: Hero(
+        tag: movie.id, // Important for the transition to detail screen
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.5),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              ),
+            ],
+            image: DecorationImage(
+              image: NetworkImage(movie.posterPath),
+              fit: BoxFit.cover,
             ),
-          ],
-          image: DecorationImage(
-            image: NetworkImage(movie.posterPath),
-            fit: BoxFit.cover,
           ),
         ),
       ),
