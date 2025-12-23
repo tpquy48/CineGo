@@ -4,17 +4,30 @@ import '../models/movie_model.dart';
 
 class MovieRepository {
   final Dio _dio = Dio();
-  // final String _apiKey = '51be31b5e8eae8f6483a0cec93491902';
-  // final String _baseUrl = 'https://api.themoviedb.org/3';
-  // final String _apiKey = dotenv.env['API_KEY'] ?? '';
-  final String _apiKey = Env.apiKey;
+  // final String _apiKey = Env.apiKey;
+  final String _apiAccessToken = Env.apiReadAccessToken;
   final String _baseUrl = Env.baseUrl;
 
   Future<List<Movie>> getNowPlaying() async {
     try {
       final response = await _dio.get(
-        '$_baseUrl/movie/now_playing',
-        queryParameters: {'api_key': _apiKey, 'language': 'vi-VN'},
+        '$_baseUrl/discover/movie',
+        queryParameters: {
+          'include_adult': 'false',
+          'include_video': 'false',
+          'language': 'en-US',
+          'page': 1,
+          'sort_by': 'popularity.desc',
+          'with_release_type': '2|3',
+          'release_date.gte': '{min_date}',
+          'release_date.lte': '{max_date}',
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $_apiAccessToken',
+            'accept': 'application/json',
+          },
+        ),
       );
 
       final List results = response.data['results'];

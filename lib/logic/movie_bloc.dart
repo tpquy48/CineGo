@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../data/repositories/movie_repository.dart';
@@ -16,6 +18,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
         final movies = await movieRepository.getNowPlaying();
         emit(MovieLoaded(movies)); // Success state
       } catch (e) {
+        log(e.toString());
         emit(MovieError(e.toString())); // Error state
       }
     });

@@ -19,8 +19,8 @@ dependencies:
 
   # UI & Animation
   flutter_svg: ^2.0.9
-  shimmer: ^3.0.0 # Hiệu ứng loading skeleton
-  carousel_slider: ^4.2.1 # Cho Slide danh sách phim
+  shimmer: ^3.0.0 # Loading skeleton
+  carousel_slider: ^5.0.0 # For movie list slider
   flutter_dotenv: ^6.0.0
   freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
