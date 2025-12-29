@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../../data/models/movie_model.dart';
+import '../../../domain/movie/movie.dart';
 
 class MovieDetailScreen extends StatelessWidget {
-  final Movie movie;
+  final MovieEntity movie;
 
   const MovieDetailScreen({required this.movie, super.key});
 
@@ -24,10 +24,7 @@ class MovieDetailScreen extends StatelessWidget {
               height: size.height * 0.7,
               width: double.infinity,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(movie.posterPath),
-                  fit: BoxFit.cover,
-                ),
+                image: DecorationImage(image: NetworkImage(movie.posterPath), fit: BoxFit.cover),
               ),
             ),
           ),
@@ -74,14 +71,10 @@ class MovieDetailScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Text(
-                        movie.overview,
-                        style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 16,
-                          height: 1.5,
-                        ),
-                      ),
+                      // Text(
+                      //   movie.overview,
+                      //   style: const TextStyle(color: Colors.white70, fontSize: 16, height: 1.5),
+                      // ),
                       const SizedBox(height: 100), // Space for bottom button
                     ],
                   ),
@@ -118,19 +111,14 @@ class MovieDetailScreen extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black.withValues(alpha: 0.8),
-                  ],
+                  colors: [Colors.transparent, Colors.black.withValues(alpha: 0.8)],
                 ),
               ),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber,
                   minimumSize: const Size(double.infinity, 60),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                   elevation: 10,
                 ),
                 onPressed: () {
@@ -138,11 +126,7 @@ class MovieDetailScreen extends StatelessWidget {
                 },
                 child: const Text(
                   'Book Tickets',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -159,10 +143,7 @@ class MovieDetailScreen extends StatelessWidget {
         const SizedBox(width: 5),
         Text(
           '$rating / 10',
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ],
     );

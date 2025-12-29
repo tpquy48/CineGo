@@ -2,19 +2,19 @@ import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/models/movie_model.dart';
-import '../../logic/movie_bloc.dart';
-import '../../logic/movie_state.dart';
-import 'movie_detail_screen.dart';
+import '../../../domain/movie/movie.dart';
+import '../../movie/bloc/movie_bloc.dart';
+import '../../movie/bloc/movie_state.dart';
+import '../../movie/screens/movie_detail_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeWithCarouselScreen extends StatefulWidget {
+  const HomeWithCarouselScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeWithCarouselScreen> createState() => _HomeWithCarouselScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeWithCarouselScreenState extends State<HomeWithCarouselScreen> {
   int _currentIndex = 0; // Tracks the current movie in focus
 
   @override
@@ -24,9 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: BlocBuilder<MovieBloc, MovieState>(
         builder: (context, state) {
           if (state is MovieLoading) {
-            return const Center(
-              child: CircularProgressIndicator(color: Colors.amber),
-            );
+            return const Center(child: CircularProgressIndicator(color: Colors.amber));
           } else if (state is MovieLoaded) {
             final movies = state.movies;
 
@@ -59,8 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         viewportFraction: 0.7,
                         onPageChanged: (index, reason) {
                           setState(() {
-                            _currentIndex =
-                                index; // Update background when slide changes
+                            _currentIndex = index; // Update background when slide changes
                           });
                         },
                       ),
@@ -104,15 +101,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Build the blurred background based on the current movie's poster
-  Widget _buildBackground(Movie movie) {
+  Widget _buildBackground(MovieEntity movie) {
     return Container(
       height: double.infinity,
       width: double.infinity,
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage(movie.posterPath),
-          fit: BoxFit.cover,
-        ),
+        image: DecorationImage(image: NetworkImage(movie.posterPath), fit: BoxFit.cover),
       ),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
@@ -123,14 +117,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Build each individual movie poster card
-  Widget _buildMovieCard(Movie movie) {
+  Widget _buildMovieCard(MovieEntity movie) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) => MovieDetailScreen(movie: movie),
-          ),
+          MaterialPageRoute(builder: (context) => MovieDetailScreen(movie: movie)),
         );
       },
       child: Hero(
@@ -145,10 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 offset: const Offset(0, 5),
               ),
             ],
-            image: DecorationImage(
-              image: NetworkImage(movie.posterPath),
-              fit: BoxFit.cover,
-            ),
+            image: DecorationImage(image: NetworkImage(movie.posterPath), fit: BoxFit.cover),
           ),
         ),
       ),

@@ -4,12 +4,14 @@ part 'env.g.dart';
 
 @Envied(path: '.env')
 abstract class Env {
-  @EnviedField(varName: 'API_KEY', obfuscate: true)
-  static final String apiKey = _Env.apiKey;
+  @EnviedField(varName: 'API_KEY')
+  static const String apiKey = _Env.apiKey;
   @EnviedField(varName: 'API_READ_ACCESS_TOKEN', obfuscate: true)
   static final String apiReadAccessToken = _Env.apiReadAccessToken;
   @EnviedField(varName: 'BASE_URL')
   static const String baseUrl = _Env.baseUrl;
   @EnviedField(varName: 'IMAGE_BASE_URL')
   static const String imageBaseUrl = _Env.imageBaseUrl;
+  @EnviedField(varName: 'BACKDROP_IMAGE_BASE_URL')
+  static const String backdropImageUrl = _Env.backdropImageUrl;
 }

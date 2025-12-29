@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 part of 'constants.dart';
 // class AppAssets {
 //   static const String _basePath = 'assets/images';
@@ -11,6 +13,7 @@ class Ic {
 }
 
 class Img {
+  static const String imageNetWorkBaseUrl = Env.imageBaseUrl;
   static const String _imgPath = 'assets/images';
 }
 

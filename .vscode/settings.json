@@ -1,0 +1,23 @@
+{
+  // Bracket & scope lines
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "editor.guides.bracketPairsHorizontal": false,
+  "editor.guides.indentation": true,
+  "editor.guides.highlightActiveIndentation": true,
+
+  // Less glare (Ít chói hơn)
+  "editor.matchBrackets": "always",
+  "editor.renderWhitespace": "selection",
+
+  // Enhance readability of the widget tree.
+  "editor.wordWrap": "off",
+  "editor.formatOnSave": true,
+
+  // Flutter / Dart
+  "dart.previewFlutterUiGuides": true,
+  "dart.lineLength": 100,
+
+  // Spell checker
+  "cSpell.words": ["dtos", "tmdb", "Usecase", "usecases"]
+}
