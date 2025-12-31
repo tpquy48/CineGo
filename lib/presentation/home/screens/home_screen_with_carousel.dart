@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/movie/movie.dart';
 import '../../movie/bloc/movie_bloc.dart';
 import '../../movie/bloc/movie_state.dart';
-import '../../movie/screens/movie_detail_screen.dart';
+import '../../movie/screens/movie_detail_screen_deprecated.dart';
 
 class HomeWithCarouselScreen extends StatefulWidget {
   const HomeWithCarouselScreen({super.key});
@@ -122,7 +122,7 @@ class _HomeWithCarouselScreenState extends State<HomeWithCarouselScreen> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => MovieDetailScreen(movie: movie)),
+          MaterialPageRoute(builder: (context) => MovieDetailScreenDeprecated(movie: movie)),
         );
       },
       child: Hero(

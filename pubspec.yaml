@@ -31,6 +31,7 @@ dependencies:
   flutter_svg: ^2.0.9
   shimmer: ^3.0.0 # Loading skeleton
   carousel_slider: ^5.0.0 # For movie list slider
+  qr_flutter: ^4.1.0
   
   # Configuration & Logic
   freezed_annotation: ^3.1.0
@@ -59,3 +60,4 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/logo/

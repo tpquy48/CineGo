@@ -1,151 +1,172 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
-import '../../../domain/movie/movie.dart';
+import '../widgets/about_tab.dart';
+import '../widgets/sessions_tab.dart';
+
+class Cinema {
+  final String name;
+  final String address;
+  final String distance;
+  final List<Session> sessions;
+
+  Cinema({
+    required this.name,
+    required this.address,
+    required this.distance,
+    required this.sessions,
+  });
+}
+
+class Session {
+  final String time;
+  final String format;
+  final Map<String, String> prices;
+
+  Session({required this.time, required this.format, required this.prices});
+}
+
+final demoCinemas = [
+  Cinema(
+    name: 'Eurasia Cinema7',
+    address: 'ул. Петрова, д.24, ТЦ "Евразия"',
+    distance: '1.5km',
+    sessions: [
+      Session(
+        time: '14:40',
+        format: 'Рус',
+        prices: {'Adult': '2200 ₸', 'Child': '1000 ₸', 'Student': '1500 ₸'},
+      ),
+      Session(
+        time: '15:10',
+        format: 'IMAX Рус',
+        prices: {'Adult': '3500 ₸', 'Child': '1500 ₸', 'Student': '2500 ₸', 'VIP': '4000 ₸'},
+      ),
+    ],
+  ),
+  Cinema(
+    name: 'Arman Asia Park',
+    address: 'пр. Кабанбай батыра 21, ТРЦ «Asia Park»',
+    distance: '5km',
+    sessions: [
+      Session(time: '16:05', format: 'Қаз', prices: {'Adult': '1900 ₸', 'Student': '1200 ₸'}),
+      Session(time: '16:15', format: 'Рус', prices: {'Adult': '2300 ₸', 'Student': '1600 ₸'}),
+    ],
+  ),
+];
 
 class MovieDetailScreen extends StatelessWidget {
-  final MovieEntity movie;
-
-  const MovieDetailScreen({required this.movie, super.key});
+  const MovieDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          // 1. Movie Poster (Hero transition)
-          Hero(
-            tag: movie.id,
-            child: Container(
-              height: size.height * 0.7,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(image: NetworkImage(movie.posterPath), fit: BoxFit.cover),
-              ),
-            ),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: const Color(0xFF0E1624),
+        appBar: AppBar(
+          backgroundColor: const Color(0xFF162033),
+          elevation: 0,
+          leading: const BackButton(),
+          title: const Text(
+            'The Batman',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
-
-          // 2. Gradient Overlay to blend poster with background
-          Container(
-            height: size.height * 0.7,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.transparent, Colors.black],
-              ),
-            ),
+          centerTitle: true,
+          bottom: const TabBar(
+            indicatorColor: Color(0xFFFF7A1A),
+            indicatorWeight: 3,
+            labelColor: Color(0xFFFF7A1A),
+            unselectedLabelColor: Colors.white54,
+            tabs: [
+              Tab(text: 'About'),
+              Tab(text: 'Sessions'),
+            ],
           ),
-
-          // 3. Movie Details Content
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: size.height * 0.55),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        movie.title.toUpperCase(),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      _buildRatingStars(movie.voteAverage),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Synopsis',
-                        style: TextStyle(
-                          color: Colors.amber,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      // Text(
-                      //   movie.overview,
-                      //   style: const TextStyle(color: Colors.white70, fontSize: 16, height: 1.5),
-                      // ),
-                      const SizedBox(height: 100), // Space for bottom button
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // 4. Floating Back Button
-          Positioned(
-            top: 50,
-            left: 20,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  color: Colors.white.withValues(alpha: 0.5),
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.white),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-          // 5. Fixed "Book Tickets" Button at bottom
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.transparent, Colors.black.withValues(alpha: 0.8)],
-                ),
-              ),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.amber,
-                  minimumSize: const Size(double.infinity, 60),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                  elevation: 10,
-                ),
-                onPressed: () {
-                  // Next phase: Seat Selection
-                },
-                child: const Text(
-                  'Book Tickets',
-                  style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
+        body: const TabBarView(children: [AboutTab(), SessionsTab()]),
       ),
     );
   }
+}
 
-  Widget _buildRatingStars(double rating) {
-    return Row(
-      children: [
-        const Icon(Icons.star, color: Colors.amber, size: 20),
-        const SizedBox(width: 5),
-        Text(
-          '$rating / 10',
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+
+
+
+
+
+
+/* class MovieDetailScreen extends StatelessWidget {
+  final MovieEntity movie;
+  const MovieDetailScreen({super.key, required this.movie});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(movie.posterPath),
+            fit: BoxFit.cover,
+          ),
         ),
-      ],
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), // Soft blur on the whole background
+          child: Container(
+            color: Colors.black.withOpacity(0.5),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  // Top Row: Back button & Favorite
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const BackButton(color: Colors.white),
+                        IconButton(icon: const Icon(Icons.favorite_border, color: Colors.white), onPressed: () {}),
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  // The Glassmorphic Card from Figma
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                    child: GlassInfoCard(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(movie.title, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
+                          const SizedBox(height: 10),
+                          const MovieMetadataRow(), // Row for 120min, Action, ⭐ 4.5
+                          const SizedBox(height: 15),
+                          Text(
+                            movie.overview, // This overview comes from TMDB
+                            maxLines: 3,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white.withOpacity(0.8)),
+                          ),
+                          const SizedBox(height: 25),
+                          // The CTA Button
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFFF7A28), // Figma Orange
+                              minimumSize: const Size(double.infinity, 50),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                            ),
+                            onPressed: () => _navigateToBooking(context),
+                            child: const Text('Buy Ticket', style: TextStyle(fontWeight: FontWeight.bold)),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
-}
+} */

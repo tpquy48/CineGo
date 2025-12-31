@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'core/di/service_locator.dart' as di;
 import 'presentation/home/screens/home_screen.dart';
-import 'presentation/home/screens/home_screen_with_carousel.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `runApp` works properly.

@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
-import '../../dtos/movie_dto.dart';
 import '../../dtos/movie_response.dart';
 
 part 'movie_remote_datasource.g.dart';
