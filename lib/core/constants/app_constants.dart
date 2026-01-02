@@ -1,7 +1,7 @@
 part of 'constants.dart';
 
 class AppConstants {
-  static const appTitle = 'CineGo';
+  static const appName = 'CineGo';
 
   static const pageSize = 10;
 

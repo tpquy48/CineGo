@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'app_observer.dart';
 import 'core/core.dart';
 import 'core/di/service_locator.dart' as di;
-import 'presentation/home/screens/home_screen.dart';
-import 'presentation/home/screens/splash_screen.dart';
+import 'core/l10n/app_localizations.dart';
+import 'core/l10n/l10n.dart';
+import 'core/navigation/app_router.dart';
+import 'core/observer/app_observer.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `runApp` works properly.
@@ -26,26 +28,17 @@ class CineGoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: AppConstants.appTitle,
+      title: AppConstants.appName,
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
       routerConfig: appRouter,
-      // home: const SplashScreen(),
+      supportedLocales: L10n.supportedLocales,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
     );
-
-    // return RepositoryProvider(
-    //   create: (context) => MovieRepository(),
-    //   child: BlocProvider(
-    //     create: (context) =>
-    //         MovieBloc(movieRepository: context.read<MovieRepository>())
-    //           ..add(FetchNowPlaying()), // Fetch movies data immediately on startup,
-    //     child: MaterialApp(
-    //       title: 'CineGo',
-    //       debugShowCheckedModeBanner: false,
-    //       theme: ThemeData.dark(),
-    //       home: const HomeScreen(),
-    //     ),
-    //   ),
-    // );
   }
 }

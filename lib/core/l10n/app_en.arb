@@ -1,0 +1,8 @@
+{
+  "@@locale": "en",
+  "appName": "CineGo",
+  "login": "Login",
+  "logout": "Logout",
+  "bookNow": "Book now",
+  "selectSeat": "Select seat"
+}
