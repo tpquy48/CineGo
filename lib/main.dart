@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'app_observer.dart';
+import 'core/core.dart';
 import 'core/di/service_locator.dart' as di;
 import 'presentation/home/screens/home_screen.dart';
+import 'presentation/home/screens/splash_screen.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `runApp` works properly.
@@ -9,6 +13,9 @@ Future<void> main() async {
 
   // Initialize Dependency Injection
   await di.init();
+
+  // Observer
+  Bloc.observer = AppBlocObserver();
 
   runApp(const CineGoApp());
 }
@@ -18,11 +25,12 @@ class CineGoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'CineGo',
+    return MaterialApp.router(
+      title: AppConstants.appTitle,
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: const HomeScreen(),
+      routerConfig: appRouter,
+      // home: const SplashScreen(),
     );
 
     // return RepositoryProvider(

@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/core.dart' show Img;
+import '../../../core/navigation/app_navigator.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -38,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
   void _goNext() {
     // TODO: check auth by Bloc
-    Navigator.pushReplacementNamed(context, '/home');
+    context.goHome();
   }
 
   @override
