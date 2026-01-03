@@ -26,9 +26,12 @@ dependencies:
 
   # Navigation & Backend
   go_router: ^17.0.1
-  # firebase_core: ^4.3.0
-  # firebase_auth: ^6.1.2 # Standard for Firebase apps
-  # cloud_firestore: ^6.1.1 # Standard for Firebase apps
+  drift: ^2.18.0
+  sqlite3_flutter_libs: ^0.5.21
+  path_provider: ^2.1.2
+  path: ^1.9.0
+  
+
 
   # UI & Animation
   flutter_svg: ^2.0.9
@@ -48,10 +51,11 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   
   # Generation Tools
-  build_runner: ^2.6.0
+  build_runner: ^2.4.8
   freezed: ^3.2.3
   json_serializable: ^6.10.0
   retrofit_generator: 10.1.0
+  drift_dev: ^2.18.0
 
   # Utilities
   mockito: ^5.4.5
