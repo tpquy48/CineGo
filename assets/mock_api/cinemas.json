@@ -1,0 +1,14 @@
+[
+  {
+    "id": "cgv_binhthanh",
+    "name": "CGV Bình Thạnh",
+    "address": "26 Nguyễn Gia Trí, Bình Thạnh, HCMC",
+    "logo": "https://i.imgur.com/CGV.png"
+  },
+  {
+    "id": "lotte_q1",
+    "name": "Lotte Cinema Quận 1",
+    "address": "469 Nguyễn Trãi, Quận 1, HCMC",
+    "logo": "https://i.imgur.com/Lotte.png"
+  }
+]

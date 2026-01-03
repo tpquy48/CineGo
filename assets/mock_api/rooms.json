@@ -1,0 +1,26 @@
+[
+  {
+    "id": "room_01",
+    "cinemaId": "cgv_binhthanh",
+    "name": "Room 1",
+    "rows": 8,
+    "columns": 12,
+    "aisles": [3, 8]
+  },
+  {
+    "id": "room_02",
+    "cinemaId": "cgv_binhthanh",
+    "name": "Room 2",
+    "rows": 10,
+    "columns": 14,
+    "aisles": [4, 10]
+  },
+  {
+    "id": "room_03",
+    "cinemaId": "lotte_q1",
+    "name": "IMAX",
+    "rows": 12,
+    "columns": 16,
+    "aisles": [5, 12]
+  }
+]

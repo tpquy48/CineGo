@@ -1,0 +1,20 @@
+[
+  {
+    "id": "combo_01",
+    "name": "Popcorn + Coke",
+    "price": 55000,
+    "image": "https://i.imgur.com/popcorn.png"
+  },
+  {
+    "id": "combo_02",
+    "name": "Nachos + Sprite",
+    "price": 65000,
+    "image": "https://i.imgur.com/nachos.png"
+  },
+  {
+    "id": "combo_03",
+    "name": "Couple Combo",
+    "price": 120000,
+    "image": "https://i.imgur.com/couple.png"
+  }
+]

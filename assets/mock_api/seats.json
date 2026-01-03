@@ -1,0 +1,30 @@
+[
+  {
+    "roomId": "room_01",
+    "seats": [
+      { "id": "A1", "type": "standard" },
+      { "id": "A2", "type": "standard" },
+      { "id": "A3", "type": "standard" },
+      { "id": "A4", "type": "standard" },
+
+      { "id": "B1", "type": "standard" },
+      { "id": "B2", "type": "standard" },
+      { "id": "B3", "type": "vip" },
+      { "id": "B4", "type": "vip" },
+
+      { "id": "C1", "type": "standard" },
+      { "id": "C2", "type": "standard" },
+      { "id": "C3", "type": "vip" },
+      { "id": "C4", "type": "vip" }
+    ]
+  },
+  {
+    "roomId": "room_02",
+    "seats": [
+      { "id": "A1", "type": "standard" },
+      { "id": "A2", "type": "standard" },
+      { "id": "A3", "type": "standard" },
+      { "id": "A4", "type": "standard" }
+    ]
+  }
+]

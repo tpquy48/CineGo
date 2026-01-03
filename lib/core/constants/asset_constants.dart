@@ -20,3 +20,12 @@ class Img {
 }
 
 // class Js {}
+
+class MockApi {
+  static const String _basePath = 'assets/mock_api';
+  static const String cinemas = '$_basePath/cinemas.json';
+  static const String seats = '$_basePath/seats.json';
+  static const String rooms = '$_basePath/rooms.json';
+  static const String showtimes = '$_basePath/showtimes.json';
+  static const String foods = '$_basePath/foods.json';
+}

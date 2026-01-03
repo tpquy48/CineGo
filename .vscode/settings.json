@@ -19,5 +19,5 @@
   "dart.lineLength": 100,
 
   // Spell checker
-  "cSpell.words": ["cinego", "dtos", "tmdb", "Usecase", "usecases"]
+  "cSpell.words": ["cinego", "dtos", "showtimes", "tmdb", "Usecase", "usecases"]
 }

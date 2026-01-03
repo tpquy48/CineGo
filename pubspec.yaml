@@ -65,3 +65,4 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/logo/
+    - assets/mock_api/
