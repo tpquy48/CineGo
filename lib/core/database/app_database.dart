@@ -5,9 +5,9 @@ import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
-import '../../data/booking/local/tables/bookings_table.dart';
-import '../../data/booking/local/tables/seat_locks_table.dart';
-import '../../data/booking/local/tables/tickets_table.dart';
+import '../../features/booking/data/local/tables/bookings_table.dart';
+import '../../features/booking/data/local/tables/seat_locks_table.dart';
+import '../../features/booking/data/local/tables/tickets_table.dart';
 
 part 'app_database.g.dart';
 

@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../data/movie/datasources/remote/movie_remote_datasource.dart';
-import '../../data/movie/repositories/movie_repository_impl.dart';
-import '../../domain/movie/repositories/movie_repository.dart';
-import '../../domain/movie/usecases/get_popular_movies_usecase.dart';
 import '../../env.dart';
-import '../../presentation/movie/bloc/movie_bloc.dart';
+import '../../features/movie/data/datasources/remote/movie_remote_datasource.dart';
+import '../../features/movie/data/repositories/movie_repository_impl.dart';
+import '../../features/movie/domain/repositories/movie_repository.dart';
+import '../../features/movie/domain/usecases/get_popular_movies_usecase.dart';
+import '../../features/movie/presentation/bloc/movie_bloc.dart';
 import '../network/interceptors/tmdb_interceptor.dart';
 
 final sl = GetIt.instance; // sl stands for Service Locator
