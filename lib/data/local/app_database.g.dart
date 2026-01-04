@@ -43,10 +43,10 @@ class $BookingsTable extends Bookings with TableInfo<$BookingsTable, Booking> {
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _moviesMeta = const VerificationMeta('movies');
+  static const VerificationMeta _seatsMeta = const VerificationMeta('seats');
   @override
-  late final GeneratedColumn<String> movies = GeneratedColumn<String>(
-    'movies',
+  late final GeneratedColumn<String> seats = GeneratedColumn<String>(
+    'seats',
     aliasedName,
     false,
     type: DriftSqlType.string,
@@ -88,7 +88,7 @@ class $BookingsTable extends Bookings with TableInfo<$BookingsTable, Booking> {
     id,
     movieId,
     showtimeId,
-    movies,
+    seats,
     foods,
     totalPrice,
     createdAt,
@@ -124,13 +124,13 @@ class $BookingsTable extends Bookings with TableInfo<$BookingsTable, Booking> {
     } else if (isInserting) {
       context.missing(_showtimeIdMeta);
     }
-    if (data.containsKey('movies')) {
+    if (data.containsKey('seats')) {
       context.handle(
-        _moviesMeta,
-        movies.isAcceptableOrUnknown(data['movies']!, _moviesMeta),
+        _seatsMeta,
+        seats.isAcceptableOrUnknown(data['seats']!, _seatsMeta),
       );
     } else if (isInserting) {
-      context.missing(_moviesMeta);
+      context.missing(_seatsMeta);
     }
     if (data.containsKey('foods')) {
       context.handle(
@@ -177,9 +177,9 @@ class $BookingsTable extends Bookings with TableInfo<$BookingsTable, Booking> {
         DriftSqlType.string,
         data['${effectivePrefix}showtime_id'],
       )!,
-      movies: attachedDatabase.typeMapping.read(
+      seats: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}movies'],
+        data['${effectivePrefix}seats'],
       )!,
       foods: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -206,7 +206,7 @@ class Booking extends DataClass implements Insertable<Booking> {
   final int id;
   final int movieId;
   final String showtimeId;
-  final String movies;
+  final String seats;
   final String foods;
   final int totalPrice;
   final DateTime createdAt;
@@ -214,7 +214,7 @@ class Booking extends DataClass implements Insertable<Booking> {
     required this.id,
     required this.movieId,
     required this.showtimeId,
-    required this.movies,
+    required this.seats,
     required this.foods,
     required this.totalPrice,
     required this.createdAt,
@@ -225,7 +225,7 @@ class Booking extends DataClass implements Insertable<Booking> {
     map['id'] = Variable<int>(id);
     map['movie_id'] = Variable<int>(movieId);
     map['showtime_id'] = Variable<String>(showtimeId);
-    map['movies'] = Variable<String>(movies);
+    map['seats'] = Variable<String>(seats);
     map['foods'] = Variable<String>(foods);
     map['total_price'] = Variable<int>(totalPrice);
     map['created_at'] = Variable<DateTime>(createdAt);
@@ -237,7 +237,7 @@ class Booking extends DataClass implements Insertable<Booking> {
       id: Value(id),
       movieId: Value(movieId),
       showtimeId: Value(showtimeId),
-      movies: Value(movies),
+      seats: Value(seats),
       foods: Value(foods),
       totalPrice: Value(totalPrice),
       createdAt: Value(createdAt),
@@ -253,7 +253,7 @@ class Booking extends DataClass implements Insertable<Booking> {
       id: serializer.fromJson<int>(json['id']),
       movieId: serializer.fromJson<int>(json['movieId']),
       showtimeId: serializer.fromJson<String>(json['showtimeId']),
-      movies: serializer.fromJson<String>(json['movies']),
+      seats: serializer.fromJson<String>(json['seats']),
       foods: serializer.fromJson<String>(json['foods']),
       totalPrice: serializer.fromJson<int>(json['totalPrice']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
@@ -266,7 +266,7 @@ class Booking extends DataClass implements Insertable<Booking> {
       'id': serializer.toJson<int>(id),
       'movieId': serializer.toJson<int>(movieId),
       'showtimeId': serializer.toJson<String>(showtimeId),
-      'movies': serializer.toJson<String>(movies),
+      'seats': serializer.toJson<String>(seats),
       'foods': serializer.toJson<String>(foods),
       'totalPrice': serializer.toJson<int>(totalPrice),
       'createdAt': serializer.toJson<DateTime>(createdAt),
@@ -277,7 +277,7 @@ class Booking extends DataClass implements Insertable<Booking> {
     int? id,
     int? movieId,
     String? showtimeId,
-    String? movies,
+    String? seats,
     String? foods,
     int? totalPrice,
     DateTime? createdAt,
@@ -285,7 +285,7 @@ class Booking extends DataClass implements Insertable<Booking> {
     id: id ?? this.id,
     movieId: movieId ?? this.movieId,
     showtimeId: showtimeId ?? this.showtimeId,
-    movies: movies ?? this.movies,
+    seats: seats ?? this.seats,
     foods: foods ?? this.foods,
     totalPrice: totalPrice ?? this.totalPrice,
     createdAt: createdAt ?? this.createdAt,
@@ -297,7 +297,7 @@ class Booking extends DataClass implements Insertable<Booking> {
       showtimeId: data.showtimeId.present
           ? data.showtimeId.value
           : this.showtimeId,
-      movies: data.movies.present ? data.movies.value : this.movies,
+      seats: data.seats.present ? data.seats.value : this.seats,
       foods: data.foods.present ? data.foods.value : this.foods,
       totalPrice: data.totalPrice.present
           ? data.totalPrice.value
@@ -312,7 +312,7 @@ class Booking extends DataClass implements Insertable<Booking> {
           ..write('id: $id, ')
           ..write('movieId: $movieId, ')
           ..write('showtimeId: $showtimeId, ')
-          ..write('movies: $movies, ')
+          ..write('seats: $seats, ')
           ..write('foods: $foods, ')
           ..write('totalPrice: $totalPrice, ')
           ..write('createdAt: $createdAt')
@@ -321,15 +321,8 @@ class Booking extends DataClass implements Insertable<Booking> {
   }
 
   @override
-  int get hashCode => Object.hash(
-    id,
-    movieId,
-    showtimeId,
-    movies,
-    foods,
-    totalPrice,
-    createdAt,
-  );
+  int get hashCode =>
+      Object.hash(id, movieId, showtimeId, seats, foods, totalPrice, createdAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -337,7 +330,7 @@ class Booking extends DataClass implements Insertable<Booking> {
           other.id == this.id &&
           other.movieId == this.movieId &&
           other.showtimeId == this.showtimeId &&
-          other.movies == this.movies &&
+          other.seats == this.seats &&
           other.foods == this.foods &&
           other.totalPrice == this.totalPrice &&
           other.createdAt == this.createdAt);
@@ -347,7 +340,7 @@ class BookingsCompanion extends UpdateCompanion<Booking> {
   final Value<int> id;
   final Value<int> movieId;
   final Value<String> showtimeId;
-  final Value<String> movies;
+  final Value<String> seats;
   final Value<String> foods;
   final Value<int> totalPrice;
   final Value<DateTime> createdAt;
@@ -355,7 +348,7 @@ class BookingsCompanion extends UpdateCompanion<Booking> {
     this.id = const Value.absent(),
     this.movieId = const Value.absent(),
     this.showtimeId = const Value.absent(),
-    this.movies = const Value.absent(),
+    this.seats = const Value.absent(),
     this.foods = const Value.absent(),
     this.totalPrice = const Value.absent(),
     this.createdAt = const Value.absent(),
@@ -364,13 +357,13 @@ class BookingsCompanion extends UpdateCompanion<Booking> {
     this.id = const Value.absent(),
     required int movieId,
     required String showtimeId,
-    required String movies,
+    required String seats,
     required String foods,
     required int totalPrice,
     required DateTime createdAt,
   }) : movieId = Value(movieId),
        showtimeId = Value(showtimeId),
-       movies = Value(movies),
+       seats = Value(seats),
        foods = Value(foods),
        totalPrice = Value(totalPrice),
        createdAt = Value(createdAt);
@@ -378,7 +371,7 @@ class BookingsCompanion extends UpdateCompanion<Booking> {
     Expression<int>? id,
     Expression<int>? movieId,
     Expression<String>? showtimeId,
-    Expression<String>? movies,
+    Expression<String>? seats,
     Expression<String>? foods,
     Expression<int>? totalPrice,
     Expression<DateTime>? createdAt,
@@ -387,7 +380,7 @@ class BookingsCompanion extends UpdateCompanion<Booking> {
       if (id != null) 'id': id,
       if (movieId != null) 'movie_id': movieId,
       if (showtimeId != null) 'showtime_id': showtimeId,
-      if (movies != null) 'movies': movies,
+      if (seats != null) 'seats': seats,
       if (foods != null) 'foods': foods,
       if (totalPrice != null) 'total_price': totalPrice,
       if (createdAt != null) 'created_at': createdAt,
@@ -398,7 +391,7 @@ class BookingsCompanion extends UpdateCompanion<Booking> {
     Value<int>? id,
     Value<int>? movieId,
     Value<String>? showtimeId,
-    Value<String>? movies,
+    Value<String>? seats,
     Value<String>? foods,
     Value<int>? totalPrice,
     Value<DateTime>? createdAt,
@@ -407,7 +400,7 @@ class BookingsCompanion extends UpdateCompanion<Booking> {
       id: id ?? this.id,
       movieId: movieId ?? this.movieId,
       showtimeId: showtimeId ?? this.showtimeId,
-      movies: movies ?? this.movies,
+      seats: seats ?? this.seats,
       foods: foods ?? this.foods,
       totalPrice: totalPrice ?? this.totalPrice,
       createdAt: createdAt ?? this.createdAt,
@@ -426,8 +419,8 @@ class BookingsCompanion extends UpdateCompanion<Booking> {
     if (showtimeId.present) {
       map['showtime_id'] = Variable<String>(showtimeId.value);
     }
-    if (movies.present) {
-      map['movies'] = Variable<String>(movies.value);
+    if (seats.present) {
+      map['seats'] = Variable<String>(seats.value);
     }
     if (foods.present) {
       map['foods'] = Variable<String>(foods.value);
@@ -447,7 +440,7 @@ class BookingsCompanion extends UpdateCompanion<Booking> {
           ..write('id: $id, ')
           ..write('movieId: $movieId, ')
           ..write('showtimeId: $showtimeId, ')
-          ..write('movies: $movies, ')
+          ..write('seats: $seats, ')
           ..write('foods: $foods, ')
           ..write('totalPrice: $totalPrice, ')
           ..write('createdAt: $createdAt')
@@ -487,19 +480,19 @@ class $SeatLocksTable extends SeatLocks
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
-  static const VerificationMeta _lockSeatsMeta = const VerificationMeta(
-    'lockSeats',
+  static const VerificationMeta _lockedSeatsMeta = const VerificationMeta(
+    'lockedSeats',
   );
   @override
-  late final GeneratedColumn<String> lockSeats = GeneratedColumn<String>(
-    'lock_seats',
+  late final GeneratedColumn<String> lockedSeats = GeneratedColumn<String>(
+    'locked_seats',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
   @override
-  List<GeneratedColumn> get $columns => [id, showtimeId, lockSeats];
+  List<GeneratedColumn> get $columns => [id, showtimeId, lockedSeats];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -523,13 +516,16 @@ class $SeatLocksTable extends SeatLocks
     } else if (isInserting) {
       context.missing(_showtimeIdMeta);
     }
-    if (data.containsKey('lock_seats')) {
+    if (data.containsKey('locked_seats')) {
       context.handle(
-        _lockSeatsMeta,
-        lockSeats.isAcceptableOrUnknown(data['lock_seats']!, _lockSeatsMeta),
+        _lockedSeatsMeta,
+        lockedSeats.isAcceptableOrUnknown(
+          data['locked_seats']!,
+          _lockedSeatsMeta,
+        ),
       );
     } else if (isInserting) {
-      context.missing(_lockSeatsMeta);
+      context.missing(_lockedSeatsMeta);
     }
     return context;
   }
@@ -548,9 +544,9 @@ class $SeatLocksTable extends SeatLocks
         DriftSqlType.string,
         data['${effectivePrefix}showtime_id'],
       )!,
-      lockSeats: attachedDatabase.typeMapping.read(
+      lockedSeats: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}lock_seats'],
+        data['${effectivePrefix}locked_seats'],
       )!,
     );
   }
@@ -564,18 +560,18 @@ class $SeatLocksTable extends SeatLocks
 class SeatLock extends DataClass implements Insertable<SeatLock> {
   final int id;
   final String showtimeId;
-  final String lockSeats;
+  final String lockedSeats;
   const SeatLock({
     required this.id,
     required this.showtimeId,
-    required this.lockSeats,
+    required this.lockedSeats,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['showtime_id'] = Variable<String>(showtimeId);
-    map['lock_seats'] = Variable<String>(lockSeats);
+    map['locked_seats'] = Variable<String>(lockedSeats);
     return map;
   }
 
@@ -583,7 +579,7 @@ class SeatLock extends DataClass implements Insertable<SeatLock> {
     return SeatLocksCompanion(
       id: Value(id),
       showtimeId: Value(showtimeId),
-      lockSeats: Value(lockSeats),
+      lockedSeats: Value(lockedSeats),
     );
   }
 
@@ -595,7 +591,7 @@ class SeatLock extends DataClass implements Insertable<SeatLock> {
     return SeatLock(
       id: serializer.fromJson<int>(json['id']),
       showtimeId: serializer.fromJson<String>(json['showtimeId']),
-      lockSeats: serializer.fromJson<String>(json['lockSeats']),
+      lockedSeats: serializer.fromJson<String>(json['lockedSeats']),
     );
   }
   @override
@@ -604,15 +600,15 @@ class SeatLock extends DataClass implements Insertable<SeatLock> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'showtimeId': serializer.toJson<String>(showtimeId),
-      'lockSeats': serializer.toJson<String>(lockSeats),
+      'lockedSeats': serializer.toJson<String>(lockedSeats),
     };
   }
 
-  SeatLock copyWith({int? id, String? showtimeId, String? lockSeats}) =>
+  SeatLock copyWith({int? id, String? showtimeId, String? lockedSeats}) =>
       SeatLock(
         id: id ?? this.id,
         showtimeId: showtimeId ?? this.showtimeId,
-        lockSeats: lockSeats ?? this.lockSeats,
+        lockedSeats: lockedSeats ?? this.lockedSeats,
       );
   SeatLock copyWithCompanion(SeatLocksCompanion data) {
     return SeatLock(
@@ -620,7 +616,9 @@ class SeatLock extends DataClass implements Insertable<SeatLock> {
       showtimeId: data.showtimeId.present
           ? data.showtimeId.value
           : this.showtimeId,
-      lockSeats: data.lockSeats.present ? data.lockSeats.value : this.lockSeats,
+      lockedSeats: data.lockedSeats.present
+          ? data.lockedSeats.value
+          : this.lockedSeats,
     );
   }
 
@@ -629,58 +627,58 @@ class SeatLock extends DataClass implements Insertable<SeatLock> {
     return (StringBuffer('SeatLock(')
           ..write('id: $id, ')
           ..write('showtimeId: $showtimeId, ')
-          ..write('lockSeats: $lockSeats')
+          ..write('lockedSeats: $lockedSeats')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, showtimeId, lockSeats);
+  int get hashCode => Object.hash(id, showtimeId, lockedSeats);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is SeatLock &&
           other.id == this.id &&
           other.showtimeId == this.showtimeId &&
-          other.lockSeats == this.lockSeats);
+          other.lockedSeats == this.lockedSeats);
 }
 
 class SeatLocksCompanion extends UpdateCompanion<SeatLock> {
   final Value<int> id;
   final Value<String> showtimeId;
-  final Value<String> lockSeats;
+  final Value<String> lockedSeats;
   const SeatLocksCompanion({
     this.id = const Value.absent(),
     this.showtimeId = const Value.absent(),
-    this.lockSeats = const Value.absent(),
+    this.lockedSeats = const Value.absent(),
   });
   SeatLocksCompanion.insert({
     this.id = const Value.absent(),
     required String showtimeId,
-    required String lockSeats,
+    required String lockedSeats,
   }) : showtimeId = Value(showtimeId),
-       lockSeats = Value(lockSeats);
+       lockedSeats = Value(lockedSeats);
   static Insertable<SeatLock> custom({
     Expression<int>? id,
     Expression<String>? showtimeId,
-    Expression<String>? lockSeats,
+    Expression<String>? lockedSeats,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (showtimeId != null) 'showtime_id': showtimeId,
-      if (lockSeats != null) 'lock_seats': lockSeats,
+      if (lockedSeats != null) 'locked_seats': lockedSeats,
     });
   }
 
   SeatLocksCompanion copyWith({
     Value<int>? id,
     Value<String>? showtimeId,
-    Value<String>? lockSeats,
+    Value<String>? lockedSeats,
   }) {
     return SeatLocksCompanion(
       id: id ?? this.id,
       showtimeId: showtimeId ?? this.showtimeId,
-      lockSeats: lockSeats ?? this.lockSeats,
+      lockedSeats: lockedSeats ?? this.lockedSeats,
     );
   }
 
@@ -693,8 +691,8 @@ class SeatLocksCompanion extends UpdateCompanion<SeatLock> {
     if (showtimeId.present) {
       map['showtime_id'] = Variable<String>(showtimeId.value);
     }
-    if (lockSeats.present) {
-      map['lock_seats'] = Variable<String>(lockSeats.value);
+    if (lockedSeats.present) {
+      map['locked_seats'] = Variable<String>(lockedSeats.value);
     }
     return map;
   }
@@ -704,7 +702,7 @@ class SeatLocksCompanion extends UpdateCompanion<SeatLock> {
     return (StringBuffer('SeatLocksCompanion(')
           ..write('id: $id, ')
           ..write('showtimeId: $showtimeId, ')
-          ..write('lockSeats: $lockSeats')
+          ..write('lockedSeats: $lockedSeats')
           ..write(')'))
         .toString();
   }
@@ -1083,7 +1081,7 @@ typedef $$BookingsTableCreateCompanionBuilder =
       Value<int> id,
       required int movieId,
       required String showtimeId,
-      required String movies,
+      required String seats,
       required String foods,
       required int totalPrice,
       required DateTime createdAt,
@@ -1093,7 +1091,7 @@ typedef $$BookingsTableUpdateCompanionBuilder =
       Value<int> id,
       Value<int> movieId,
       Value<String> showtimeId,
-      Value<String> movies,
+      Value<String> seats,
       Value<String> foods,
       Value<int> totalPrice,
       Value<DateTime> createdAt,
@@ -1123,8 +1121,8 @@ class $$BookingsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get movies => $composableBuilder(
-    column: $table.movies,
+  ColumnFilters<String> get seats => $composableBuilder(
+    column: $table.seats,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1168,8 +1166,8 @@ class $$BookingsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get movies => $composableBuilder(
-    column: $table.movies,
+  ColumnOrderings<String> get seats => $composableBuilder(
+    column: $table.seats,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -1209,8 +1207,8 @@ class $$BookingsTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get movies =>
-      $composableBuilder(column: $table.movies, builder: (column) => column);
+  GeneratedColumn<String> get seats =>
+      $composableBuilder(column: $table.seats, builder: (column) => column);
 
   GeneratedColumn<String> get foods =>
       $composableBuilder(column: $table.foods, builder: (column) => column);
@@ -1255,7 +1253,7 @@ class $$BookingsTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<int> movieId = const Value.absent(),
                 Value<String> showtimeId = const Value.absent(),
-                Value<String> movies = const Value.absent(),
+                Value<String> seats = const Value.absent(),
                 Value<String> foods = const Value.absent(),
                 Value<int> totalPrice = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
@@ -1263,7 +1261,7 @@ class $$BookingsTableTableManager
                 id: id,
                 movieId: movieId,
                 showtimeId: showtimeId,
-                movies: movies,
+                seats: seats,
                 foods: foods,
                 totalPrice: totalPrice,
                 createdAt: createdAt,
@@ -1273,7 +1271,7 @@ class $$BookingsTableTableManager
                 Value<int> id = const Value.absent(),
                 required int movieId,
                 required String showtimeId,
-                required String movies,
+                required String seats,
                 required String foods,
                 required int totalPrice,
                 required DateTime createdAt,
@@ -1281,7 +1279,7 @@ class $$BookingsTableTableManager
                 id: id,
                 movieId: movieId,
                 showtimeId: showtimeId,
-                movies: movies,
+                seats: seats,
                 foods: foods,
                 totalPrice: totalPrice,
                 createdAt: createdAt,
@@ -1312,13 +1310,13 @@ typedef $$SeatLocksTableCreateCompanionBuilder =
     SeatLocksCompanion Function({
       Value<int> id,
       required String showtimeId,
-      required String lockSeats,
+      required String lockedSeats,
     });
 typedef $$SeatLocksTableUpdateCompanionBuilder =
     SeatLocksCompanion Function({
       Value<int> id,
       Value<String> showtimeId,
-      Value<String> lockSeats,
+      Value<String> lockedSeats,
     });
 
 class $$SeatLocksTableFilterComposer
@@ -1340,8 +1338,8 @@ class $$SeatLocksTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get lockSeats => $composableBuilder(
-    column: $table.lockSeats,
+  ColumnFilters<String> get lockedSeats => $composableBuilder(
+    column: $table.lockedSeats,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -1365,8 +1363,8 @@ class $$SeatLocksTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get lockSeats => $composableBuilder(
-    column: $table.lockSeats,
+  ColumnOrderings<String> get lockedSeats => $composableBuilder(
+    column: $table.lockedSeats,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -1388,8 +1386,10 @@ class $$SeatLocksTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get lockSeats =>
-      $composableBuilder(column: $table.lockSeats, builder: (column) => column);
+  GeneratedColumn<String> get lockedSeats => $composableBuilder(
+    column: $table.lockedSeats,
+    builder: (column) => column,
+  );
 }
 
 class $$SeatLocksTableTableManager
@@ -1422,21 +1422,21 @@ class $$SeatLocksTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> showtimeId = const Value.absent(),
-                Value<String> lockSeats = const Value.absent(),
+                Value<String> lockedSeats = const Value.absent(),
               }) => SeatLocksCompanion(
                 id: id,
                 showtimeId: showtimeId,
-                lockSeats: lockSeats,
+                lockedSeats: lockedSeats,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String showtimeId,
-                required String lockSeats,
+                required String lockedSeats,
               }) => SeatLocksCompanion.insert(
                 id: id,
                 showtimeId: showtimeId,
-                lockSeats: lockSeats,
+                lockedSeats: lockedSeats,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

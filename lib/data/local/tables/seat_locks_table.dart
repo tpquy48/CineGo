@@ -4,5 +4,5 @@ class SeatLocks extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   TextColumn get showtimeId => text().unique()();
-  TextColumn get lockSeats => text()(); // JSON: ["A1", "B3"]
+  TextColumn get lockedSeats => text()(); // JSON: ["A1", "B3"]
 }

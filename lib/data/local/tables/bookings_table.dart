@@ -6,7 +6,7 @@ class Bookings extends Table {
   IntColumn get movieId => integer()(); // TMDB movieId
   TextColumn get showtimeId => text()();
 
-  TextColumn get movies => text()(); // JSON string
+  TextColumn get seats => text()(); // JSON string
   TextColumn get foods => text()(); // JSON string
 
   IntColumn get totalPrice => integer()();
