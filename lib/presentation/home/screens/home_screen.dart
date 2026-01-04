@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/core.dart' show Img;
-import '../../../core/di/service_locator.dart';
-import '../../movie/bloc/movie_bloc.dart';
-import '../../movie/bloc/movie_event.dart';
-import '../../movie/bloc/movie_state.dart';
-import '../../movie/screens/movie_detail_screen.dart';
 import '../../movie/widgets/movie_card.dart';
 
 class Movie {

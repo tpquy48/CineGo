@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../app_database.dart';
+import '../../../../core/database/database.dart';
 
 class BookingLocalDatasource {
   final AppDatabase db;

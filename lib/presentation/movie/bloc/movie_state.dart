@@ -1,11 +1,7 @@
-import 'package:equatable/equatable.dart';
+import '../../../core/bloc/bloc.dart';
+import '../../../domain/movie/entities/movie_entity.dart';
 
-import '../../../domain/movie/movie.dart';
-
-abstract class MovieState extends Equatable {
-  @override
-  List<Object?> get props => [];
-}
+abstract class MovieState extends BaseEvent {}
 
 class MovieInitial extends MovieState {}
 

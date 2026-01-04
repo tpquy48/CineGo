@@ -1,9 +1,6 @@
-import 'package:equatable/equatable.dart';
+import '../../../core/bloc/bloc.dart';
 
-abstract class MovieEvent extends Equatable {
-  @override
-  List<Object?> get props => [];
-}
+abstract class MovieEvent extends BaseEvent {}
 
 // Event triggered when user opens the app or pulls to refresh
 // class FetchNowPlaying extends MovieEvent {}

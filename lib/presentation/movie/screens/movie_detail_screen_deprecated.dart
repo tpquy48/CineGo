@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../../../domain/movie/movie.dart';
+import '../../../domain/movie/entities/movie_entity.dart';
 
 class MovieDetailScreenDeprecated extends StatelessWidget {
   final MovieEntity movie;

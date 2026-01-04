@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:drift/drift.dart';
 
-import '../app_database.dart';
+import '../../../../core/database/database.dart';
 
 class SeatLockLocalDatasource {
   final AppDatabase db;

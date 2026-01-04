@@ -1,8 +1,10 @@
 import 'dart:ui';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../domain/movie/movie.dart';
+
+import '../../../domain/movie/entities/movie_entity.dart';
 import '../../movie/bloc/movie_bloc.dart';
 import '../../movie/bloc/movie_state.dart';
 import '../../movie/screens/movie_detail_screen_deprecated.dart';

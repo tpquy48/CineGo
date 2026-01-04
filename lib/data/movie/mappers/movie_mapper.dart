@@ -1,6 +1,6 @@
 // MovieModel -> MovieEntity
 
-import '../../../domain/movie/movie.dart';
+import '../../../domain/movie/entities/movie_entity.dart';
 import '../../../env.dart';
 import '../dtos/movie_dto.dart';
 

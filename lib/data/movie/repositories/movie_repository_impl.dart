@@ -1,4 +1,5 @@
-import '../../../domain/movie/movie.dart';
+import '../../../domain/movie/entities/movie_entity.dart';
+import '../../../domain/movie/repositories/movie_repository.dart';
 import '../datasources/remote/movie_remote_datasource.dart';
 import '../mappers/movie_mapper.dart';
 
