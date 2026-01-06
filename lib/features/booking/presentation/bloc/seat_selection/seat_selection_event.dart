@@ -1,6 +1,6 @@
 import '../../../../../core/bloc/bloc.dart';
 
-abstract class SeatSelectionEvent extends BaseEvent {}
+sealed class SeatSelectionEvent extends BaseEvent {}
 
 class LoadLockSeatsEvent extends SeatSelectionEvent {
   final String showtimeId;

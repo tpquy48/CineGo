@@ -127,6 +127,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select seat'**
   String get selectSeat;
+
+  /// No description provided for @nowInCinemas.
+  ///
+  /// In en, this message translates to:
+  /// **'Now in cinemas'**
+  String get nowInCinemas;
 }
 
 class _AppLocalizationsDelegate

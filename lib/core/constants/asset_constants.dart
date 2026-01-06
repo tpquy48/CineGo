@@ -16,6 +16,7 @@ class Ic {
 class Img {
   static const String imageNetWorkBaseUrl = Env.imageBaseUrl;
   static const String _imgPath = 'assets/images';
+  static const String defaultCardImage = '$_imgPath/unavailable_image.png';
   static const String cinego = '$_imgPath/cinego_logo.png';
 }
 

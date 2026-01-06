@@ -16,7 +16,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
       emit(MovieLoading());
       try {
         // Fetch data from repository
-        final movies = await _getPopularMoviesUsecase.call();
+        final movies = await _getPopularMoviesUsecase.call(page: 1);
         emit(MovieLoaded(List.unmodifiable(movies)));
       } catch (e) {
         log(e.toString());

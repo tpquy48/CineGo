@@ -1,6 +1,6 @@
 import '../../../../../core/bloc/bloc.dart';
 
-abstract class BookingState extends BaseState {}
+sealed class BookingState extends BaseState {}
 
 class BookingInitial extends BookingState {}
 

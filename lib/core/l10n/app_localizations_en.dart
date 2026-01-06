@@ -22,4 +22,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectSeat => 'Select seat';
+
+  @override
+  String get nowInCinemas => 'Now in cinemas';
 }

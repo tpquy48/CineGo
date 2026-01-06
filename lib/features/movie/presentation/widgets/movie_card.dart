@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
-import '../../../home/presentation/screens/home_screen.dart' show Movie;
-import '../screens/movie_detail_screen.dart';
+
+import '../../../../core/core.dart';
+import '../../../../core/extensions/extensions.dart';
+import '../../../../core/navigation/app_navigator.dart';
+import '../../domain/entities/movie_entity.dart';
 
 class MovieCard extends StatelessWidget {
-  final Movie movie;
+  final MovieEntity movie;
 
   const MovieCard({required this.movie, super.key});
+
+  String displayGenre(List<String> genreNames) {
+    if (genreNames.isEmpty) {
+      return ' ';
+    }
+    if (genreNames.length > 1) {
+      return '${genreNames[0]}, ${genreNames[1]}';
+    }
+    return genreNames[0];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +29,17 @@ class MovieCard extends StatelessWidget {
           child: Stack(
             children: [
               GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const MovieDetailScreen()),
-                  );
-                },
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Image.network(movie.poster, width: double.infinity, fit: BoxFit.cover),
+                onTap: () => context.openMovieDetail(movie.id.toString()),
+                child: AspectRatio(
+                  aspectRatio: 3.1 / 4,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Image.network(
+                      movie.posterPath,
+                      // width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
               Positioned(
@@ -33,13 +48,12 @@ class MovieCard extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFF7A1A),
+                    color: AppColors.primary,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    movie.rating,
-                    // movie.voteAverage.toString(),
-                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    movie.voteAverage.toString(),
+                    style: context.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -49,59 +63,23 @@ class MovieCard extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           movie.title,
-          maxLines: 2,
+          maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
         ),
         const SizedBox(height: 4),
-        Text(movie.genre, style: const TextStyle(fontSize: 12, color: Colors.white54)),
+        Text(
+          // 'Action', 'Adventure', 'Horror'
+          displayGenre(movie.genreNames),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontSize: 12, color: Colors.white54),
+        ),
+        //  Text(
+        //     "⭐ ${movie.voteAverage.toStringAsFixed(1)}",
+        //     style: const TextStyle(color: Colors.amber),
+        //   ),
       ],
     );
   }
 }
-
-
-
-
-/* 
-class MovieCard extends StatelessWidget {
-  final MovieEntity movie;
-  final VoidCallback onTap;
-
-  const MovieCard({super.key, required this.movie, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Image.network(
-                Img.imageNetWorkBaseUrl +
-                    movie.posterPath, // Mapper already prepended TMDB base URL
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const Icon(Icons.broken_image),
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            movie.title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          Text(
-            "⭐ ${movie.voteAverage.toStringAsFixed(1)}",
-            style: const TextStyle(color: Colors.amber),
-          ),
-        ],
-      ),
-    );
-  }
-}
- */

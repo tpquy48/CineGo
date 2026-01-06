@@ -4,5 +4,6 @@
   "login": "Login",
   "logout": "Logout",
   "bookNow": "Book now",
-  "selectSeat": "Select seat"
+  "selectSeat": "Select seat",
+  "nowInCinemas": "Now in cinemas"
 }

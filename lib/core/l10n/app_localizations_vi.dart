@@ -22,4 +22,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get selectSeat => 'Chọn ghế';
+
+  @override
+  String get nowInCinemas => 'Now in cinemas';
 }

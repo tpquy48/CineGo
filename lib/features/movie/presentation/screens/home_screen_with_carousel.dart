@@ -4,10 +4,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../movie/domain/entities/movie_entity.dart';
-import '../../../movie/presentation/bloc/movie_bloc.dart';
-import '../../../movie/presentation/bloc/movie_state.dart';
-import '../../../movie/presentation/screens/movie_detail_screen_deprecated.dart';
+import '../../domain/entities/movie_entity.dart';
+import '../bloc/movie_bloc.dart';
+import '../bloc/movie_state.dart';
+import 'movie_detail_screen_deprecated.dart';
 
 class HomeWithCarouselScreen extends StatefulWidget {
   const HomeWithCarouselScreen({super.key});

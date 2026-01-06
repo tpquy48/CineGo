@@ -1,6 +1,6 @@
 import '../../../../../core/bloc/bloc.dart';
 
-abstract class BookingEvent extends BaseEvent {}
+sealed class BookingEvent extends BaseEvent {}
 
 class ConfirmBookingEvent extends BookingEvent {
   final int movieId;

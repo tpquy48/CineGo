@@ -8,7 +8,7 @@ import '../../dtos/movie_response.dart';
 part 'movie_remote_datasource.g.dart';
 
 @RestApi()
-abstract class MovieRemoteDatasource {
+sealed class MovieRemoteDatasource {
   factory MovieRemoteDatasource(Dio dio, {String baseUrl}) = _MovieRemoteDatasource;
 
   @GET('/movie/popular')

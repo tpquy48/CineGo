@@ -9,21 +9,22 @@ class MovieRepositoryImpl implements MovieRepository {
   MovieRepositoryImpl(this._remoteDatasource);
 
   @override
-  Future<List<MovieEntity>> getPopularMovies() async {
+  Future<List<MovieEntity>> getPopularMovies({required int page}) async {
     try {
-      final res = await _remoteDatasource.getPopularMovies();
+      final res = await _remoteDatasource.getPopularMovies(page: page);
       // Use the mapper to convert DTOs to Entities for the Domain layer
-      return res.movies.map((dto) => dto.toEntity()).toList();
+      final entities = res.movies.map((dto) => dto.toEntity()).toList();
+      return entities;
     } catch (e) {
-      // You can add custom error handling here (from lib/core/error)
+      // Should add custom error handling here (from lib/core/error)
       throw Exception('Failed to fetch movies: $e');
     }
   }
 
   @override
-  Future<List<MovieEntity>> getNowPlayingMovies() async {
+  Future<List<MovieEntity>> getNowPlayingMovies({required int page}) async {
     try {
-      final res = await _remoteDatasource.getNowPlayingMovies();
+      final res = await _remoteDatasource.getNowPlayingMovies(page: page);
 
       return res.movies.map((dto) => dto.toEntity()).toList();
     } catch (e) {
