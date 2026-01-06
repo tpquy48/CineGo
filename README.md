@@ -1,4 +1,4 @@
-# cine_go
+# cinego
 
 A movie ticket booking app
 
