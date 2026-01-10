@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -7,15 +5,13 @@ import 'package:intl/intl.dart';
 import '../../../../core/di/service_locator.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../domain/entities/cinema_entity.dart';
 import '../../domain/entities/session_entity.dart';
 import '../cubit/sessions_cubit.dart';
 import '../cubit/sessions_state.dart';
-import '../models/movie_detail_ui_model.dart';
-import '../screens/movie_detail_screen.dart';
+import 'by_cinema_view.dart';
+import 'by_time_view.dart';
 
 class SessionsTab extends StatefulWidget {
-  // final MovieDetailUiModel movie;
   final int movieId;
 
   const SessionsTab({required this.movieId, super.key});
@@ -48,14 +44,6 @@ class _SessionsTabState extends State<SessionsTab> {
 
   @override
   Widget build(BuildContext context) {
-    // final cinemas = demoCinemas;
-
-    // final flatSessions = _flattenSessions(state.cinemas);
-    // ..sort(
-    //   (a, b) =>
-    //       timeAscending ? a.time.compareTo(b.time) : b.time.compareTo(a.time),
-    // );
-
     return BlocProvider.value(
       value: _cubit,
       child: BlocBuilder<SessionsCubit, SessionsState>(
@@ -69,16 +57,6 @@ class _SessionsTabState extends State<SessionsTab> {
           }
 
           final cubit = context.read<SessionsCubit>();
-
-          // final flatSessions = _flattenSessions(state.cinemas)
-          //   ..sort(
-          //     (a, b) => timeAscending
-          //         ? a.session.time.compareTo(b.session.time)
-          //         : b.session.time.compareTo(a.session.time),
-          //   );
-
-          // const Duration(seconds: 3);
-          // Timer(const Duration(seconds: 3), cubit.toggleByCinema);
 
           return Column(
             children: [
@@ -104,8 +82,8 @@ class _SessionsTabState extends State<SessionsTab> {
               const _PriceHeader(),
               Expanded(
                 child: state.byCinema
-                    ? _ByCinemaView(state.cinemas)
-                    : _ByTimeView(_flattenSessions(state)),
+                    ? ByCinemaView(state.cinemas)
+                    : ByTimeView(_flattenSessions(state)),
               ),
             ],
           );
@@ -192,42 +170,11 @@ class _FilterItem extends StatelessWidget {
   }
 }
 
-class _ByCinemaView extends StatelessWidget {
-  final List<CinemaEntity> cinemas;
-
-  const _ByCinemaView(this.cinemas);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(children: cinemas.map((c) => _CinemaBlock(c)).toList());
-  }
-}
-
 class SessionWithCinema {
   final String cinemaName;
-  // final Session session;
   final SessionEntity session;
 
   SessionWithCinema({required this.cinemaName, required this.session});
-}
-
-class _ByTimeView extends StatelessWidget {
-  final List<SessionWithCinema> sessions;
-
-  const _ByTimeView(this.sessions);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: sessions.map((s) {
-        return _SessionItem(
-          s.session.time,
-          s.cinemaName,
-          s.session.prices['Adult'] ?? '•',
-        );
-      }).toList(),
-    );
-  }
 }
 
 List<SessionWithCinema> _flattenSessions(SessionsLoaded state) {
@@ -248,55 +195,7 @@ List<SessionWithCinema> _flattenSessions(SessionsLoaded state) {
   return list;
 }
 
-class _SessionList extends StatelessWidget {
-  const _SessionList();
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: const [
-        _SessionItem('14:40', 'Eurasia Cinema7', '2200 ₸'),
-        _SessionItem('15:10', 'Kinopark 8 IMAX Saryarka', '3500 ₸'),
-        _SessionItem('15:40', 'Kinopark 6 Keruencity Astana', '2700 ₸'),
-        _SessionItem('16:05', 'Arman Asia Park', '1900 ₸'),
-      ],
-    );
-  }
-}
-
-class _SessionItem extends StatelessWidget {
-  final String time;
-  final String cinema;
-  final String price;
-
-  const _SessionItem(this.time, this.cinema, this.price);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.white12)),
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 60,
-            child: Text(
-              time,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-          ),
-          Expanded(child: Text(cinema, style: const TextStyle(fontSize: 14))),
-          Text(
-            price,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-          ),
-        ],
-      ),
-    );
-  }
-}
+const _headerStyle = TextStyle(fontSize: 12, color: Colors.white54);
 
 class _PriceHeader extends StatelessWidget {
   const _PriceHeader();
@@ -313,116 +212,6 @@ class _PriceHeader extends StatelessWidget {
           Expanded(child: Text('Child', style: _headerStyle)),
           Expanded(child: Text('Student', style: _headerStyle)),
           Expanded(child: Text('VIP', style: _headerStyle)),
-        ],
-      ),
-    );
-  }
-}
-
-const _headerStyle = TextStyle(fontSize: 12, color: Colors.white54);
-
-class _CinemaBlock extends StatelessWidget {
-  final CinemaEntity cinema;
-
-  const _CinemaBlock(this.cinema);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      cinema.name,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      cinema.address,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.white54,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.location_on,
-                    size: 14,
-                    color: Colors.white54,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    cinema.distance,
-                    style: const TextStyle(fontSize: 12, color: Colors.white54),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        ...cinema.sessions.map((s) => _SessionRow(s)),
-      ],
-    );
-  }
-}
-
-class _SessionRow extends StatelessWidget {
-  // final Session session;
-  final SessionEntity session;
-
-  const _SessionRow(this.session);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: Colors.white12)),
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 60,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  session.time,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Text(
-                  session.format,
-                  style: const TextStyle(fontSize: 11, color: Colors.white54),
-                ),
-              ],
-            ),
-          ),
-          ...['Adult', 'Child', 'Student', 'VIP'].map(
-            (k) => Expanded(
-              child: Text(
-                session.prices[k] ?? '•',
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 13),
-              ),
-            ),
-          ),
         ],
       ),
     );

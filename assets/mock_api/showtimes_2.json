@@ -53,9 +53,9 @@
     "format": "Laser Eng",
     "room_id": 5,
     "prices": {
-      "Adult": "130.000 VND",
+      "Adult": "130.000đ",
       "Child": null,
-      "Student": "100.000 VND",
+      "Student": "100.000đ",
       "VIP": null
     }
   }
