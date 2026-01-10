@@ -16,8 +16,17 @@
 
   // Flutter / Dart
   "dart.previewFlutterUiGuides": true,
-  "dart.lineLength": 100,
+  // "dart.lineLength": 100,
 
   // Spell checker
-  "cSpell.words": ["cinego", "dtos", "showtimes", "tmdb", "Usecase", "usecases"]
+  "cSpell.words": [
+    "cinego",
+    "dtos",
+    "imdb",
+    "kinopoisk",
+    "showtimes",
+    "tmdb",
+    "Usecase",
+    "usecases"
+  ]
 }

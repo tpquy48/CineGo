@@ -6,7 +6,7 @@ class GetPopularMoviesUsecase {
 
   GetPopularMoviesUsecase(this._repository);
 
-  Future<List<MovieEntity>> call() async {
-    return await _repository.getPopularMovies();
+  Future<List<MovieEntity>> call({required int page}) async {
+    return await _repository.getPopularMovies(page: page);
   }
 }

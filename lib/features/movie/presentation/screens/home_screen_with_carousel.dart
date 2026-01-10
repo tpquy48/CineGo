@@ -1,13 +1,13 @@
-import 'dart:ui';
+/* import 'dart:ui';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../movie/domain/entities/movie_entity.dart';
-import '../../../movie/presentation/bloc/movie_bloc.dart';
-import '../../../movie/presentation/bloc/movie_state.dart';
-import '../../../movie/presentation/screens/movie_detail_screen_deprecated.dart';
+import '../../domain/entities/movie_entity.dart';
+import '../bloc/movie_detail_bloc.dart';
+import '../bloc/movie_detail_state.dart';
+import 'movie_detail_screen_deprecated.dart';
 
 class HomeWithCarouselScreen extends StatefulWidget {
   const HomeWithCarouselScreen({super.key});
@@ -23,7 +23,7 @@ class _HomeWithCarouselScreenState extends State<HomeWithCarouselScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: BlocBuilder<MovieBloc, MovieState>(
+      body: BlocBuilder<MovieDetailBloc, MovieDetailState>(
         builder: (context, state) {
           if (state is MovieLoading) {
             return const Center(child: CircularProgressIndicator(color: Colors.amber));
@@ -146,3 +146,4 @@ class _HomeWithCarouselScreenState extends State<HomeWithCarouselScreen> {
     );
   }
 }
+ */

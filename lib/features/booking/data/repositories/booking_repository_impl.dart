@@ -1,5 +1,5 @@
 import '../../domain/repositories/booking_repository.dart';
-import '../local/datasources/booking_local_datasource.dart';
+import '../datasources/local/booking_local_datasource.dart';
 
 class BookingRepositoryImpl implements BookingRepository {
   final BookingLocalDatasource _localDatasource;

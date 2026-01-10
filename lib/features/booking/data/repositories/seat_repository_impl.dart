@@ -1,5 +1,5 @@
 import '../../domain/repositories/seat_repository.dart';
-import '../local/datasources/seat_lock_local_datasource.dart';
+import '../datasources/local/seat_lock_local_datasource.dart';
 
 class SeatRepositoryImpl implements SeatRepository {
   final SeatLockLocalDatasource _localDataSource;

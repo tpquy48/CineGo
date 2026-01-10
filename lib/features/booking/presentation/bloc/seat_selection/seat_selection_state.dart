@@ -1,6 +1,6 @@
 import '../../../../../core/bloc/base_state.dart';
 
-abstract class SeatSelectionState extends BaseState {}
+sealed class SeatSelectionState extends BaseState {}
 
 class SeatSelectionInitial extends SeatSelectionState {}
 

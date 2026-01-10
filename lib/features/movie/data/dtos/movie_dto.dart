@@ -7,11 +7,12 @@ part 'movie_dto.g.dart';
 
 // Dtos use for remote data
 @freezed
-abstract class MovieDto with _$MovieDto {
+sealed class MovieDto with _$MovieDto {
   const factory MovieDto({
     required int id,
     required String title,
     required String overview,
+    @JsonKey(name: 'genre_ids') required List<int> genreIds,
     @JsonKey(name: 'vote_average') required double voteAverage,
     @JsonKey(name: 'poster_path') String? posterPath,
     @JsonKey(name: 'release_date') String? releaseDate,

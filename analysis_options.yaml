@@ -18,6 +18,12 @@ custom_lint:
 
 linter:
   rules:
+    # import rules
+    # - always_use_package_imports
+    # - avoid_relative_lib_imports
+    - prefer_relative_imports
+    
+    # style
     - always_declare_return_types
     - always_put_control_body_on_new_line
     - always_put_required_named_parameters_first
@@ -99,5 +105,4 @@ linter:
     - camel_case_types
     - constant_identifier_names
     - non_constant_identifier_names
-    - prefer_relative_imports
     - use_super_parameters

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../../../core/core.dart' show Img;
+import '../../../../core/core.dart';
 import '../../../../core/navigation/app_navigator.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -29,17 +29,16 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
 
     _scale = Tween<double>(
-      begin: 0.85,
+      begin: 0.75,
       end: 1,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutBack));
 
     _controller.forward();
 
-    Timer(const Duration(seconds: 2), _goNext);
+    Timer(const Duration(seconds: 1), _goNext);
   }
 
   void _goNext() {
-    // TODO: check auth by Bloc
     context.goHome();
   }
 
@@ -58,8 +57,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFF0F172A), // dark blue
-              Color(0xFF020617), // almost black
+              AppColors.splashPrimary, // dark blue
+              AppColors.splashSecondary, // almost black
             ],
           ),
         ),

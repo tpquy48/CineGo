@@ -1,0 +1,62 @@
+[
+  {
+    "id": 101,
+    "movie_id": 550,
+    "cinema_id": 1,
+    "date": "2026-02-15",
+    "time": "14:40",
+    "format": "2D Ru",
+    "room_id": 1,
+    "prices": {
+      "Adult": "125.000đ",
+      "Child": "60.000đ",
+      "Student": "100.000đ",
+      "VIP": null
+    }
+  },
+  {
+    "id": 102,
+    "movie_id": 550,
+    "cinema_id": 1,
+    "date": "2026-02-15",
+    "time": "16:10",
+    "format": "2D Ru",
+    "room_id": 1,
+    "prices": {
+      "Adult": "140.000đ",
+      "Child": null,
+      "Student": "90.000đ",
+      "VIP": null
+    }
+  },
+  {
+    "id": 201,
+    "movie_id": 550,
+    "cinema_id": 2,
+    "date": "2026-02-15",
+    "time": "15:10",
+    "format": "IMAX Ru",
+    "room_id": 3,
+    "prices": {
+      "Adult": "130.000đ",
+      "Child": "70.000đ",
+      "Student": "100.000đ",
+      "VIP": "180.000đ"
+    }
+  },
+  {
+    "id": 301,
+    "movie_id": 550,
+    "cinema_id": 3,
+    "date": "2026-02-15",
+    "time": "16:05",
+    "format": "Laser Eng",
+    "room_id": 5,
+    "prices": {
+      "Adult": "130.000đ",
+      "Child": null,
+      "Student": "100.000đ",
+      "VIP": null
+    }
+  }
+]

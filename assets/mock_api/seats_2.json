@@ -1,0 +1,23 @@
+[
+  {
+    "room_id": 1,
+    "row": 1,
+    "col": 1,
+    "type": "standard",
+    "available": true
+  },
+  {
+    "room_id": 1,
+    "row": 1,
+    "col": 2,
+    "type": "standard",
+    "available": false
+  },
+  {
+    "room_id": 3,
+    "row": 5,
+    "col": 10,
+    "type": "vip",
+    "available": true
+  }
+]

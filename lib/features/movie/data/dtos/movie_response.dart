@@ -8,7 +8,7 @@ part 'movie_response.freezed.dart';
 part 'movie_response.g.dart';
 
 @freezed
-abstract class MovieResponse with _$MovieResponse {
+sealed class MovieResponse with _$MovieResponse {
   const factory MovieResponse({
     required int page,
     @JsonKey(name: 'results') required List<MovieDto> movies,

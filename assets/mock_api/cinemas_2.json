@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Galaxy Cinema HVT",
+    "address": "243 Hoang Van Thu Street, Tan Binh District, Ho Chi Minh City",
+    "distance": "2.5km"
+  },
+  {
+    "id": 2,
+    "name": "Vincom Thu Duc",
+    "address": "515 Hoang Dieu 2 Street, Thu Duc City",
+    "distance": "13.2km"
+  },
+  {
+    "id": 3,
+    "name": "Lotte Cinema 7",
+    "address": "1153 Nguyen Huu Canh Street, Thanh My Tay District, Ho Chi Minh City",
+    "distance": "5.8km"
+  }
+]

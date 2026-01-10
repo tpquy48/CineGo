@@ -4,5 +4,20 @@
   "login": "Login",
   "logout": "Logout",
   "bookNow": "Book now",
-  "selectSeat": "Select seat"
+  "selectSeat": "Select seat",
+  "nowInCinemas": "Now in cinemas",
+  "about": "About",
+  "sessions": "Sessions",
+  "certificate": "Certificate",
+  "genre": "Genre",
+  "runtime": "Runtime",
+  "release": "Release",
+  "director": "Director",
+  "cast": "Cast",
+  "tmdb": "TMDB",
+  "kinopoisk": "Kinopoisk",
+  "selectSession": "Select session",
+  "byCinema": "By cinema",
+  "timeAscending": "Time ↑",
+  "timeDescending": "Time ↓"
 }

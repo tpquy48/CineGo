@@ -22,4 +22,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectSeat => 'Select seat';
+
+  @override
+  String get nowInCinemas => 'Now in cinemas';
+
+  @override
+  String get about => 'About';
+
+  @override
+  String get sessions => 'Sessions';
+
+  @override
+  String get certificate => 'Certificate';
+
+  @override
+  String get genre => 'Genre';
+
+  @override
+  String get runtime => 'Runtime';
+
+  @override
+  String get release => 'Release';
+
+  @override
+  String get director => 'Director';
+
+  @override
+  String get cast => 'Cast';
+
+  @override
+  String get tmdb => 'TMDB';
+
+  @override
+  String get kinopoisk => 'Kinopoisk';
+
+  @override
+  String get selectSession => 'Select session';
+
+  @override
+  String get byCinema => 'By cinema';
+
+  @override
+  String get timeAscending => 'Time ↑';
+
+  @override
+  String get timeDescending => 'Time ↓';
 }
