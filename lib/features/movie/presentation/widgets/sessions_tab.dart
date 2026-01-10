@@ -42,6 +42,10 @@ class _SessionsTabState extends State<SessionsTab> {
     super.dispose();
   }
 
+  void onSelectSession() {
+    // TODO: Go to seat selection
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
@@ -82,8 +86,14 @@ class _SessionsTabState extends State<SessionsTab> {
               const _PriceHeader(),
               Expanded(
                 child: state.byCinema
-                    ? ByCinemaView(state.cinemas)
-                    : ByTimeView(_flattenSessions(state)),
+                    ? ByCinemaView(
+                        cinemas: state.cinemas,
+                        onSelectSession: onSelectSession,
+                      )
+                    : ByTimeView(
+                        sessions: _flattenSessions(state),
+                        onSelectSession: onSelectSession,
+                      ),
               ),
             ],
           );

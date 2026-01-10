@@ -5,19 +5,32 @@ import '../../domain/entities/session_entity.dart';
 
 class ByCinemaView extends StatelessWidget {
   final List<CinemaEntity> cinemas;
+  final VoidCallback onSelectSession;
 
-  const ByCinemaView(this.cinemas, {super.key});
+  const ByCinemaView({
+    required this.cinemas,
+    required this.onSelectSession,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: cinemas.map((c) => _CinemaBlock(c)).toList());
+    return ListView(
+      children: cinemas
+          .map(
+            (cinema) =>
+                _CinemaBlock(cinema: cinema, onSelectSession: onSelectSession),
+          )
+          .toList(),
+    );
   }
 }
 
 class _CinemaBlock extends StatelessWidget {
   final CinemaEntity cinema;
+  final VoidCallback onSelectSession;
 
-  const _CinemaBlock(this.cinema);
+  const _CinemaBlock({required this.cinema, required this.onSelectSession});
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +80,9 @@ class _CinemaBlock extends StatelessWidget {
             ],
           ),
         ),
-        ...cinema.sessions.map((s) => _SessionRow(s)),
+        ...cinema.sessions.map(
+          (s) => _SessionRow(session: s, onTap: onSelectSession),
+        ),
       ],
     );
   }
@@ -75,50 +90,54 @@ class _CinemaBlock extends StatelessWidget {
 
 class _SessionRow extends StatelessWidget {
   final SessionEntity session;
+  final VoidCallback onTap;
 
-  const _SessionRow(this.session);
+  const _SessionRow({required this.session, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: const BoxDecoration(
-        border: Border(
-          top: BorderSide(color: Colors.white12),
-          bottom: BorderSide(color: Colors.white12),
-        ),
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 60,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  session.time,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Text(
-                  session.format,
-                  style: const TextStyle(fontSize: 11, color: Colors.white54),
-                ),
-              ],
-            ),
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(color: Colors.white12),
+            bottom: BorderSide(color: Colors.white12),
           ),
-          ...['Adult', 'Child', 'Student', 'VIP'].map(
-            (k) => Expanded(
-              child: Text(
-                session.prices[k] ?? '•',
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 13),
+        ),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 60,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    session.time,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    session.format,
+                    style: const TextStyle(fontSize: 11, color: Colors.white54),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+            ...['Adult', 'Child', 'Student', 'VIP'].map(
+              (k) => Expanded(
+                child: Text(
+                  session.prices[k] ?? '•',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 13),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

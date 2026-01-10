@@ -9,8 +9,13 @@ import '../models/movie_detail_ui_model.dart';
 
 class AboutTab extends StatelessWidget {
   final MovieDetailUiModel movie;
+  final VoidCallback onGoToSessions;
 
-  const AboutTab({required this.movie, super.key});
+  const AboutTab({
+    required this.movie,
+    required this.onGoToSessions,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +50,7 @@ class AboutTab extends StatelessWidget {
           //       'Robert Pattinson, Zoë Kravitz, Jeffrey Wright, Colin Farrell, Paul Dano...',
           // ),
           const SizedBox(height: 30),
-          _PrimaryButton(),
+          _PrimaryButton(onGoToSessions),
         ],
       ),
     );
@@ -189,6 +194,9 @@ class _Badge extends StatelessWidget {
 }
 
 class _PrimaryButton extends StatelessWidget {
+  final VoidCallback onGoToSessions;
+  const _PrimaryButton(this.onGoToSessions);
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -201,17 +209,7 @@ class _PrimaryButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(14),
           ),
         ),
-        onPressed: () {
-          // Go to seat selection screen
-
-          // Navigator.of(context).push(
-          //   MaterialPageRoute(
-          //     builder: (context) {
-          //       return const SeatSelectionScreen();
-          //     },
-          //   ),
-          // );
-        },
+        onPressed: onGoToSessions,
         child: Text(
           context.l10n.selectSession,
           style: context.textTheme.titleMedium!.copyWith(

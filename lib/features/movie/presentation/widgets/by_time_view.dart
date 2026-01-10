@@ -4,14 +4,24 @@ import 'sessions_tab.dart';
 
 class ByTimeView extends StatelessWidget {
   final List<SessionWithCinema> sessions;
+  final VoidCallback onSelectSession;
 
-  const ByTimeView(this.sessions, {super.key});
+  const ByTimeView({
+    required this.sessions,
+    required this.onSelectSession,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: sessions.map((s) {
-        return _SessionItem(s.session.time, s.cinemaName, s.session.prices);
+        return _SessionItem(
+          s.session.time,
+          s.cinemaName,
+          s.session.prices,
+          onSelectSession,
+        );
       }).toList(),
     );
   }
@@ -21,53 +31,60 @@ class _SessionItem extends StatelessWidget {
   final String time;
   final String cinema;
   final Map<String, String> prices;
+  final VoidCallback onSelectSession;
 
-  const _SessionItem(this.time, this.cinema, this.prices);
+  const _SessionItem(this.time, this.cinema, this.prices, this.onSelectSession);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.white12)),
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 60,
-            child: Text(
-              time,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  cinema,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
+    return InkWell(
+      onTap: onSelectSession,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: const BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.white12)),
+        ),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 60,
+              child: Text(
+                time,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                 ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    ...['Adult', 'Child', 'Student', 'VIP'].map(
-                      (k) => Expanded(
-                        child: Text(
-                          prices[k] ?? '•',
-                          style: const TextStyle(fontSize: 13),
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    cinema,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      ...['Adult', 'Child', 'Student', 'VIP'].map(
+                        (k) => Expanded(
+                          child: Text(
+                            prices[k] ?? '•',
+                            style: const TextStyle(fontSize: 13),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
