@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/core.dart';
+import '../../../../core/extensions/extensions.dart';
+import '../../../../core/l10n/l10n.dart';
+import '../models/movie_detail_ui_model.dart';
+
 // import '../../seat_selection/screens/seat_selection_screen.dart';
 
 class AboutTab extends StatelessWidget {
-  const AboutTab({super.key});
+  final MovieDetailUiModel movie;
+
+  const AboutTab({required this.movie, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,24 +19,31 @@ class AboutTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _VideoPreview(),
+          _VideoPreview(movie.backdropUrl),
           const SizedBox(height: 20),
-          _RatingsRow(),
+          _RatingsRow(movie),
           const SizedBox(height: 16),
-          const Text(
-            'When the Riddler, a sadistic serial killer, begins murdering key political figures in Gotham, Batman is forced to investigate the city\'s hidden corruption and question his family\'s involvement.',
-            style: TextStyle(fontSize: 14, color: Colors.white70, height: 1.6),
+          Text(
+            movie.overview,
+            style: context.textTheme.bodyMedium!.copyWith(
+              color: Colors.white70,
+              height: 1.6,
+            ),
           ),
           const SizedBox(height: 20),
-          const _InfoItem('Certificate', valueWidget: _Badge('16+')),
-          const _InfoItem('Runtime', value: '02:56'),
-          const _InfoItem('Release', value: '2022'),
-          const _InfoItem('Genre', value: 'Action, Crime, Drama'),
-          const _InfoItem('Director', value: 'Matt Reeves'),
-          const _InfoItem(
-            'Cast',
-            value: 'Robert Pattinson, Zoë Kravitz, Jeffrey Wright, Colin Farrell, Paul Dano...',
+          _InfoItem(
+            context.l10n.certificate,
+            valueWidget: _Badge(movie.ageRating),
           ),
+          _InfoItem(context.l10n.runtime, value: movie.runtime),
+          _InfoItem(context.l10n.release, value: movie.releaseYear),
+          _InfoItem(context.l10n.genre, value: movie.genres),
+          // _InfoItem(context.l10n.director, value: movie.),
+          // _InfoItem(
+          //   context.l10n.cast,
+          //   value:
+          //       'Robert Pattinson, Zoë Kravitz, Jeffrey Wright, Colin Farrell, Paul Dano...',
+          // ),
           const SizedBox(height: 30),
           _PrimaryButton(),
         ],
@@ -39,6 +53,10 @@ class AboutTab extends StatelessWidget {
 }
 
 class _VideoPreview extends StatelessWidget {
+  final String videoUrl;
+
+  const _VideoPreview(this.videoUrl);
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -47,7 +65,8 @@ class _VideoPreview extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Image.network(
-            'https://image.tmdb.org/t/p/w780/9yBVqNruk6Ykrwc32qrK2TIE5xw.jpg',
+            videoUrl,
+            // 'https://image.tmdb.org/t/p/w780/9yBVqNruk6Ykrwc32qrK2TIE5xw.jpg',
             height: 200,
             width: double.infinity,
             fit: BoxFit.cover,
@@ -55,7 +74,10 @@ class _VideoPreview extends StatelessWidget {
           Container(
             width: 56,
             height: 56,
-            decoration: const BoxDecoration(color: Colors.black54, shape: BoxShape.circle),
+            decoration: const BoxDecoration(
+              color: Colors.black54,
+              shape: BoxShape.circle,
+            ),
             child: const Icon(Icons.play_arrow, size: 32),
           ),
         ],
@@ -65,13 +87,19 @@ class _VideoPreview extends StatelessWidget {
 }
 
 class _RatingsRow extends StatelessWidget {
+  final MovieDetailUiModel movie;
+
+  const _RatingsRow(this.movie);
+
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       children: [
-        Expanded(child: _RatingBox('8.3', 'IMDB')),
-        SizedBox(width: 12),
-        Expanded(child: _RatingBox('7.9', 'Kinopoisk')),
+        Expanded(child: _RatingBox(movie.imdbScore, context.l10n.tmdb)),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _RatingBox(movie.kinopoiskScore, context.l10n.kinopoisk),
+        ),
       ],
     );
   }
@@ -88,14 +116,22 @@ class _RatingBox extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFF162033),
+        color: AppColors.appBarBg,
         borderRadius: BorderRadius.circular(14),
       ),
       child: Column(
         children: [
-          Text(value, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text(
+            value,
+            style: context.textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           const SizedBox(height: 4),
-          Text(label, style: const TextStyle(fontSize: 12, color: Colors.white54)),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 12, color: Colors.white54),
+          ),
         ],
       ),
     );
@@ -118,9 +154,16 @@ class _InfoItem extends StatelessWidget {
         children: [
           SizedBox(
             width: 90,
-            child: Text(label, style: const TextStyle(color: Colors.white54, fontSize: 13)),
+            child: Text(
+              label,
+              style: const TextStyle(color: Colors.white54, fontSize: 13),
+            ),
           ),
-          Expanded(child: valueWidget ?? Text(value ?? '', style: const TextStyle(fontSize: 13))),
+          Expanded(
+            child:
+                valueWidget ??
+                Text(value ?? '', style: const TextStyle(fontSize: 13)),
+          ),
         ],
       ),
     );
@@ -153,11 +196,14 @@ class _PrimaryButton extends StatelessWidget {
       height: 52,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFFFF7A1A),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          backgroundColor: AppColors.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
         ),
         onPressed: () {
           // Go to seat selection screen
+
           // Navigator.of(context).push(
           //   MaterialPageRoute(
           //     builder: (context) {
@@ -166,9 +212,11 @@ class _PrimaryButton extends StatelessWidget {
           //   ),
           // );
         },
-        child: const Text(
-          'Select session',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        child: Text(
+          context.l10n.selectSession,
+          style: context.textTheme.titleMedium!.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

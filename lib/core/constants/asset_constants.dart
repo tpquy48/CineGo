@@ -18,6 +18,13 @@ class Img {
   static const String _imgPath = 'assets/images';
   static const String defaultCardImage = '$_imgPath/unavailable_image.png';
   static const String cinego = '$_imgPath/cinego_logo.png';
+
+  static String? networkUrl(String? relativeUrl) {
+    if (relativeUrl == null || relativeUrl.isEmpty) {
+      return null;
+    }
+    return '$imageNetWorkBaseUrl/$relativeUrl';
+  }
 }
 
 // class Js {}
@@ -29,4 +36,8 @@ class MockApi {
   static const String rooms = '$_basePath/rooms.json';
   static const String showtimes = '$_basePath/showtimes.json';
   static const String foods = '$_basePath/foods.json';
+
+  static String getPath(String fileName) {
+    return '$_basePath/$fileName';
+  }
 }

@@ -15,7 +15,8 @@ class AppColors {
   static const splashPrimary = Color(0xFF0F172A);
   static const splashSecondary = Color(0xFF0F172A);
 
-  static const Color secondary = Color(0xFFFF7A1A);
+  static const Color secondary = Color(0xFF0E1624);
+  static const Color appBarBg = Color(0xFF162033);
 
   static const lightScheme = ColorScheme.light(
     primary: primary,
@@ -28,7 +29,7 @@ class AppColors {
     primary: primary,
     secondary: secondary,
     surface: Color(0xFF121212),
-    // error: Color(0xFFCF6679),
+    error: Color(0xFFCF6679),
   );
 
   // Text colors

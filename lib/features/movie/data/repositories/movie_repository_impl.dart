@@ -1,17 +1,21 @@
+import '../../../../core/cache/movie_memory_cache.dart';
+import '../../domain/entities/movie_detail_entity.dart';
 import '../../domain/entities/movie_entity.dart';
 import '../../domain/repositories/movie_repository.dart';
 import '../datasources/remote/movie_remote_datasource.dart';
+import '../mappers/movie_detail_mapper.dart';
 import '../mappers/movie_mapper.dart';
 
 class MovieRepositoryImpl implements MovieRepository {
-  final MovieRemoteDatasource _remoteDatasource;
+  final MovieRemoteDatasource remoteDatasource;
+  final MovieMemoryCache cache;
 
-  MovieRepositoryImpl(this._remoteDatasource);
+  MovieRepositoryImpl({required this.remoteDatasource, required this.cache});
 
   @override
   Future<List<MovieEntity>> getPopularMovies({required int page}) async {
     try {
-      final res = await _remoteDatasource.getPopularMovies(page: page);
+      final res = await remoteDatasource.getPopularMovies(page: page);
       // Use the mapper to convert DTOs to Entities for the Domain layer
       final entities = res.movies.map((dto) => dto.toEntity()).toList();
       return entities;
@@ -24,7 +28,7 @@ class MovieRepositoryImpl implements MovieRepository {
   @override
   Future<List<MovieEntity>> getNowPlayingMovies({required int page}) async {
     try {
-      final res = await _remoteDatasource.getNowPlayingMovies(page: page);
+      final res = await remoteDatasource.getNowPlayingMovies(page: page);
 
       return res.movies.map((dto) => dto.toEntity()).toList();
     } catch (e) {
@@ -36,44 +40,33 @@ class MovieRepositoryImpl implements MovieRepository {
   Future<List<MovieEntity>> searchMovies({required String query}) async {
     try {
       // NEED TO UPDATE
-      final res = await _remoteDatasource.searchMovies(query: query);
+      final res = await remoteDatasource.searchMovies(query: query);
 
       return res.movies.map((dto) => dto.toEntity()).toList();
     } catch (e) {
       throw Exception('Failed to fetch movies: $e');
     }
   }
+
+  @override
+  Future<MovieDetailEntity> getMovieDetail(String movieId) async {
+    try {
+      // Try cache first
+      final cachedMovie = cache.getMovieDetail(movieId);
+      if (cachedMovie != null) {
+        return cachedMovie;
+      }
+
+      // Fetch from API
+      final dto = await remoteDatasource.getMovieDetail(movieId: movieId);
+      final entity = dto.toEntity();
+
+      // Save to cache
+      cache.save(entity);
+
+      return entity;
+    } catch (e) {
+      throw Exception('Failed to fetch movies: $e');
+    }
+  }
 }
-
-// class MovieRepositoryImpl implements MovieRepository {
-  // final Dio _dio = Dio();
-  // final String _apiKey = Env.apiKey;
-  // final String _apiAccessToken = Env.apiReadAccessToken;
-  // final String _baseUrl = Env.baseUrl;
-
-  // Future<List<Movie>> getNowPlaying() async {
-  //   try {
-  //     final response = await _dio.get(
-  //       '$_baseUrl/discover/movie',
-  //       queryParameters: {
-  //         'include_adult': 'false',
-  //         'include_video': 'false',
-  //         'language': 'en-US',
-  //         'page': 1,
-  //         'sort_by': 'popularity.desc',
-  //         'with_release_type': '2|3',
-  //         'release_date.gte': '{min_date}',
-  //         'release_date.lte': '{max_date}',
-  //       },
-  //       options: Options(
-  //         headers: {'Authorization': 'Bearer $_apiAccessToken', 'accept': 'application/json'},
-  //       ),
-  //     );
-
-  //     final List results = response.data['results'];
-  //     return results.map((json) => Movie.fromJson(json)).toList();
-  //   } catch (e) {
-  //     throw Exception('Getting movie list failed: $e');
-  //   }
-  // }
-// }

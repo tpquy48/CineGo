@@ -33,7 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onScroll() {
     final cubit = context.read<HomeMovieCubit>();
 
-    if (_controller.position.pixels >= _controller.position.maxScrollExtent - 200) {
+    if (_controller.position.pixels >=
+        _controller.position.maxScrollExtent - 200) {
       cubit.loadMore();
     }
   }
@@ -72,7 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text(
                     context.l10n.nowInCinemas,
-                    style: context.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700),
+                    style: context.textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                   const Icon(Icons.search, size: 24),
                 ],
@@ -95,12 +98,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             (_, index) => MovieCard(movie: state.movies[index]),
                             childCount: state.movies.length,
                           ),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 12,
-                            crossAxisSpacing: 12,
-                            childAspectRatio: 0.65,
-                          ),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 12,
+                                crossAxisSpacing: 12,
+                                childAspectRatio: 0.65,
+                              ),
                         ),
 
                         // Load more indicator
@@ -157,7 +161,7 @@ class _TopBar extends StatelessWidget {
           children: [
             Icon(Icons.location_on, size: 16, color: Colors.white70),
             SizedBox(width: 4),
-            Text('Nur-Sultan', style: TextStyle(fontSize: 13)),
+            Text('Ho Chi Minh City', style: TextStyle(fontSize: 13)),
           ],
         ),
         const Spacer(),
@@ -167,7 +171,10 @@ class _TopBar extends StatelessWidget {
             border: Border.all(color: Colors.white24),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Text('Eng', style: context.textTheme.labelMedium?.copyWith(fontSize: 13)),
+          child: Text(
+            'Eng',
+            style: context.textTheme.labelMedium?.copyWith(fontSize: 13),
+          ),
         ),
         const SizedBox(width: 12),
         Container(

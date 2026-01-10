@@ -133,6 +133,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Now in cinemas'**
   String get nowInCinemas;
+
+  /// No description provided for @about.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
+  /// No description provided for @sessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get sessions;
+
+  /// No description provided for @certificate.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate'**
+  String get certificate;
+
+  /// No description provided for @genre.
+  ///
+  /// In en, this message translates to:
+  /// **'Genre'**
+  String get genre;
+
+  /// No description provided for @runtime.
+  ///
+  /// In en, this message translates to:
+  /// **'Runtime'**
+  String get runtime;
+
+  /// No description provided for @release.
+  ///
+  /// In en, this message translates to:
+  /// **'Release'**
+  String get release;
+
+  /// No description provided for @director.
+  ///
+  /// In en, this message translates to:
+  /// **'Director'**
+  String get director;
+
+  /// No description provided for @cast.
+  ///
+  /// In en, this message translates to:
+  /// **'Cast'**
+  String get cast;
+
+  /// No description provided for @tmdb.
+  ///
+  /// In en, this message translates to:
+  /// **'TMDB'**
+  String get tmdb;
+
+  /// No description provided for @kinopoisk.
+  ///
+  /// In en, this message translates to:
+  /// **'Kinopoisk'**
+  String get kinopoisk;
+
+  /// No description provided for @selectSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Select session'**
+  String get selectSession;
+
+  /// No description provided for @byCinema.
+  ///
+  /// In en, this message translates to:
+  /// **'By cinema'**
+  String get byCinema;
+
+  /// No description provided for @timeAscending.
+  ///
+  /// In en, this message translates to:
+  /// **'Time ↑'**
+  String get timeAscending;
+
+  /// No description provided for @timeDescending.
+  ///
+  /// In en, this message translates to:
+  /// **'Time ↓'**
+  String get timeDescending;
 }
 
 class _AppLocalizationsDelegate

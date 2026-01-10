@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
+import '../../dtos/movie_detail_dto.dart';
 import '../../dtos/movie_response.dart';
 
 part 'movie_remote_datasource.g.dart';
@@ -33,5 +34,11 @@ sealed class MovieRemoteDatasource {
   Future<MovieResponse> searchMovies({
     @Query('query') required String query,
     @Query('page') int page = 1,
+  });
+
+  @GET('/movie/{movie_id}')
+  Future<MovieDetailDto> getMovieDetail({
+    @Path('movie_id') required String movieId,
+    @Query('language') String language = 'en-US',
   });
 }

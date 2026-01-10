@@ -47,4 +47,7 @@ class HomeMovieCubit extends Cubit<HomeMovieState> {
   Future<void> refresh() async {
     await loadInitial();
   }
+
+  // Future<void> saveMemoryCache(List<MovieEntity> movies) {
+  // }
 }

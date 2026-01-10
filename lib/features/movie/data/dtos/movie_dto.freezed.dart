@@ -121,10 +121,7 @@ return $default(_that);case _:
 final _that = this;
 switch (_that) {
 case _MovieDto():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return $default(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -183,10 +180,7 @@ return $default(_that.id,_that.title,_that.overview,_that.genreIds,_that.voteAve
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String title,  String overview, @JsonKey(name: 'genre_ids')  List<int> genreIds, @JsonKey(name: 'vote_average')  double voteAverage, @JsonKey(name: 'poster_path')  String? posterPath, @JsonKey(name: 'release_date')  String? releaseDate)  $default,) {final _that = this;
 switch (_that) {
 case _MovieDto():
-return $default(_that.id,_that.title,_that.overview,_that.genreIds,_that.voteAverage,_that.posterPath,_that.releaseDate);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return $default(_that.id,_that.title,_that.overview,_that.genreIds,_that.voteAverage,_that.posterPath,_that.releaseDate);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///

@@ -8,8 +8,7 @@ import 'core/l10n/app_localizations.dart';
 import 'core/l10n/l10n.dart';
 import 'core/navigation/app_router.dart';
 import 'core/theme/app_theme.dart';
-import 'features/movie/presentation/bloc/movie_bloc.dart';
-import 'features/movie/presentation/bloc/movie_event.dart';
+import 'features/movie/presentation/bloc/movie_detail_bloc.dart';
 import 'features/movie/presentation/cubit/home_movie_cubit.dart';
 
 class CineGoApp extends StatelessWidget {
@@ -19,7 +18,8 @@ class CineGoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => sl<MovieBloc>()..add(GetPopularMoviesEvent())),
+        // BlocProvider(create: (_) => sl<MovieDetailBloc>()..add(const LoadMovieDetail())),
+        // BlocProvider(create: (_) => sl<MovieDetailBloc>()),
         BlocProvider(create: (_) => sl<HomeMovieCubit>()),
       ],
       child: MaterialApp.router(

@@ -1,6 +1,8 @@
-class GenreEntity {
-  final int id;
-  final String name;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  GenreEntity({required this.id, required this.name});
+part 'genre_entity.freezed.dart';
+
+@freezed
+sealed class GenreEntity with _$GenreEntity {
+  const factory GenreEntity({required int id, required String name}) = _GenreEntity;
 }
