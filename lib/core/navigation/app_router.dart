@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/booking/presentation/screens/seat_selection_screen.dart';
 import '../../features/movie/domain/usecases/get_movie_detail_usecase.dart';
 import '../../features/movie/presentation/bloc/movie_detail_bloc.dart';
 import '../../features/movie/presentation/bloc/movie_detail_event.dart';
@@ -38,23 +39,25 @@ final GoRouter appRouter = GoRouter(
               child: MovieDetailScreen(movieId: movieId),
             );
           },
-          //     routes: [
-          //       GoRoute(
-          //         path: 'seats',
-          //         name: AppRoutes.seatSelection,
-          //         builder: (_, state) => SeatSelectionScreen(movieId: state.pathParameters['movieId']!),
-          //       ),
-          //       GoRoute(
-          //         path: 'checkout',
-          //         name: AppRoutes.checkout,
-          //         builder: (_, state) => const CheckoutPage(),
-          //       ),
-          //       GoRoute(
-          //         path: 'result',
-          //         name: AppRoutes.paymentResult,
-          //         builder: (_, state) => const PaymentResultScreen(),
-          //       ),
-          //     ],
+          routes: [
+            GoRoute(
+              path: 'seats',
+              name: AppRoutes.seatSelection,
+              builder: (_, state) => SeatSelectionScreen(
+                // movieId: state.pathParameters['movieId']!,
+              ),
+            ),
+            //       GoRoute(
+            //         path: 'checkout',
+            //         name: AppRoutes.checkout,
+            //         builder: (_, state) => const CheckoutPage(),
+            //       ),
+            //       GoRoute(
+            //         path: 'result',
+            //         name: AppRoutes.paymentResult,
+            //         builder: (_, state) => const PaymentResultScreen(),
+            //       ),
+          ],
         ),
       ],
     ),

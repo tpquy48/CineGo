@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/di/service_locator.dart';
 import '../../../../core/l10n/l10n.dart';
+import '../../../../core/navigation/app_navigator.dart';
+import '../../../../core/navigation/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/session_entity.dart';
 import '../cubit/sessions_cubit.dart';
@@ -43,7 +46,7 @@ class _SessionsTabState extends State<SessionsTab> {
   }
 
   void onSelectSession() {
-    // TODO: Go to seat selection
+    context.openSeatSelection(AppRoutes.seatSelection);
   }
 
   @override
