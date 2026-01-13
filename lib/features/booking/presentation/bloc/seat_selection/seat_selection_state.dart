@@ -1,23 +1,29 @@
 import '../../../../../core/bloc/base_state.dart';
+import '../../enums/seat_stage.dart';
 
-sealed class SeatSelectionState extends BaseState {}
+class SeatSelectionState extends BaseState {
+  final List<String> selectedSeatIds;
+  final SeatStage stage;
+  final bool zoomed;
 
-class SeatSelectionInitial extends SeatSelectionState {}
+  const SeatSelectionState({
+    this.selectedSeatIds = const [],
+    this.stage = SeatStage.overview,
+    this.zoomed = false,
+  });
 
-class SeatSelectionLoading extends SeatSelectionState {}
-
-class SeatSelectionLoaded extends SeatSelectionState {
-  final List<String> lockedSeats;
-  SeatSelectionLoaded(this.lockedSeats);
+  SeatSelectionState copyWith({
+    List<String>? selectedSeatIds,
+    SeatStage? stage,
+    bool? zoomed,
+  }) {
+    return SeatSelectionState(
+      selectedSeatIds: selectedSeatIds ?? this.selectedSeatIds,
+      stage: stage ?? this.stage,
+      zoomed: zoomed ?? this.zoomed,
+    );
+  }
 
   @override
-  List<Object?> get props => [lockedSeats];
-}
-
-class SeatSelectionError extends SeatSelectionState {
-  final String message;
-  SeatSelectionError(this.message);
-
-  @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [selectedSeatIds, stage, zoomed];
 }

@@ -1,6 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/booking/domain/booking_usecases.dart';
+import '../../features/booking/presentation/bloc/seat_list/seat_list_cubit.dart';
+import '../../features/booking/presentation/bloc/seat_map/seat_map_bloc.dart';
+import '../../features/booking/presentation/bloc/seat_map/seat_map_event.dart';
+import '../../features/booking/presentation/bloc/seat_selection/seat_selection_cubit.dart';
 import '../../features/booking/presentation/screens/seat_selection_screen.dart';
 import '../../features/movie/domain/usecases/get_movie_detail_usecase.dart';
 import '../../features/movie/presentation/bloc/movie_detail_bloc.dart';
@@ -41,11 +46,24 @@ final GoRouter appRouter = GoRouter(
           },
           routes: [
             GoRoute(
-              path: 'seats',
+              path: 'seats/:showtimeId',
               name: AppRoutes.seatSelection,
-              builder: (_, state) => SeatSelectionScreen(
-                // movieId: state.pathParameters['movieId']!,
-              ),
+              builder: (_, state) {
+                final showtimeId = state.pathParameters['showtimeId']!;
+
+                return MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                      create: (_) =>
+                          SeatMapBloc(sl<GetLockedSeatsUsecase>())
+                            ..add(LoadSeatMapEvent(showtimeId)),
+                    ),
+                    BlocProvider(create: (_) => SeatSelectionCubit()),
+                    BlocProvider(create: (_) => SeatListCubit(sl())),
+                  ],
+                  child: SeatSelectionScreen(showtimeId),
+                );
+              },
             ),
             //       GoRoute(
             //         path: 'checkout',

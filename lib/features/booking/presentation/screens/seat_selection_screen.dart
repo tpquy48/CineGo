@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../enums/seat_stage_enum.dart';
+import '../bloc/seat_list/seat_list_cubit.dart';
+import '../bloc/seat_list/seat_list_state.dart';
+import '../bloc/seat_map/seat_map_bloc.dart';
+import '../bloc/seat_map/seat_map_state.dart';
+import '../bloc/seat_selection/seat_selection_cubit.dart';
+import '../bloc/seat_selection/seat_selection_state.dart';
+import '../enums/seat_stage.dart';
 import '../widgets/bottom_buy_bar.dart';
 import '../widgets/screen_curve.dart';
 import '../widgets/seat_app_bar.dart';
@@ -10,7 +17,8 @@ import '../widgets/seat_legend.dart';
 import '../widgets/session_info.dart';
 
 class SeatSelectionScreen extends StatefulWidget {
-  const SeatSelectionScreen({super.key});
+  final String showtimeId;
+  const SeatSelectionScreen(this.showtimeId, {super.key});
 
   @override
   State<SeatSelectionScreen> createState() => _SeatSelectionScreenState();
@@ -18,10 +26,18 @@ class SeatSelectionScreen extends StatefulWidget {
 
 class _SeatSelectionScreenState extends State<SeatSelectionScreen>
     with SingleTickerProviderStateMixin {
-  SeatStageEnum stage = .overview;
+  SeatStage stage = .overview;
   final Set<String> selectedSeatIds = {};
   final TransformationController _zoomController = TransformationController();
   bool _zoomed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // TODO
+    context.read<SeatListCubit>().loadSeats();
+    // context.read<SeatMapBloc>().add(LoadSeatMapEvent(widget.showtimeId));
+  }
 
   void onSeatTap(String id) {
     setState(() {
@@ -69,10 +85,36 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>
               boundaryMargin: const EdgeInsets.all(120),
               panEnabled: true,
               scaleEnabled: true,
-              child: SeatGrid(
-                // stage: stage,
-                selectedSeatIds: selectedSeatIds,
-                onSeatTap: onSeatTap,
+              child: BlocBuilder<SeatListCubit, SeatListState>(
+                builder: (context, seatState) {
+                  if (seatState.loading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  return BlocBuilder<SeatMapBloc, SeatMapState>(
+                    builder: (context, mapState) {
+                      if (mapState is! SeatMapLoaded) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+
+                      return BlocBuilder<
+                        SeatSelectionCubit,
+                        SeatSelectionState
+                      >(
+                        builder: (context, uiState) {
+                          return SeatGrid(
+                            seats: seatState.seats,
+                            lockedSeatIds: mapState.lockedSeatIds.toSet(),
+                            selectedSeatIds: uiState.selectedSeatIds.toSet(),
+                            onSeatTap: context
+                                .read<SeatSelectionCubit>()
+                                .toggleSeat,
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
               ),
             ),
           ),

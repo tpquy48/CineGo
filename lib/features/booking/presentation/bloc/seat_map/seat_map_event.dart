@@ -1,8 +1,19 @@
 import '../../../../../core/bloc/bloc.dart';
 
-sealed class SeatSelectionEvent extends BaseEvent {}
+sealed class SeatMapEvent extends BaseEvent {}
 
-class LoadLockSeatsEvent extends SeatSelectionEvent {
+class LoadSeatMapEvent extends SeatMapEvent {
+  final String showtimeId;
+  LoadSeatMapEvent(this.showtimeId);
+
+  @override
+  List<Object?> get props => [showtimeId];
+}
+
+class RefreshSeatMapEvent extends SeatMapEvent {}
+
+// outdated
+class LoadLockSeatsEvent extends SeatMapEvent {
   final String showtimeId;
   LoadLockSeatsEvent(this.showtimeId);
 
@@ -10,7 +21,7 @@ class LoadLockSeatsEvent extends SeatSelectionEvent {
   List<Object?> get props => [showtimeId];
 }
 
-class LockSeatsEvent extends SeatSelectionEvent {
+class LockSeatsEvent extends SeatMapEvent {
   final String showtimeId;
   final List<String> seats;
   LockSeatsEvent({required this.showtimeId, required this.seats});
@@ -19,7 +30,7 @@ class LockSeatsEvent extends SeatSelectionEvent {
   List<Object?> get props => [showtimeId, seats];
 }
 
-class UnlockSeatsEvent extends SeatSelectionEvent {
+class UnlockSeatsEvent extends SeatMapEvent {
   final String showtimeId;
   final List<String> seats;
   UnlockSeatsEvent({required this.showtimeId, required this.seats});

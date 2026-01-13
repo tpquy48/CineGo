@@ -2,6 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../env.dart';
+import '../../features/booking/data/datasources/local/seat_local_datasource.dart';
+import '../../features/booking/data/datasources/local/seat_lock_local_datasource.dart';
+import '../../features/booking/data/repositories/seat_repository_impl.dart';
+import '../../features/booking/domain/booking_repositories.dart';
+import '../../features/booking/domain/booking_usecases.dart';
+import '../../features/booking/domain/usecases/get_seats_usecase.dart';
+import '../../features/booking/presentation/bloc/seat_list/seat_list_cubit.dart';
+import '../../features/booking/presentation/bloc/seat_map/seat_map_bloc.dart';
+import '../../features/booking/presentation/bloc/seat_selection/seat_selection_cubit.dart';
 import '../../features/genre/data/datasources/remote/genre_remote_datasource.dart';
 import '../../features/genre/data/repositories/genre_repository_impl.dart';
 import '../../features/genre/domain/repositories/genre_repository.dart';
@@ -20,12 +29,14 @@ import '../../features/movie/presentation/cubit/home_movie_cubit.dart';
 import '../../features/movie/presentation/cubit/sessions_cubit.dart';
 import '../cache/genre_cache.dart';
 import '../cache/movie_memory_cache.dart';
+import '../database/database.dart';
 import '../network/interceptors/tmdb_interceptor.dart';
 
 final sl = GetIt.instance; // sl stands for Service Locator
 
 Future<void> init() async {
   // 1. Core / External
+  sl.registerLazySingleton(() => AppDatabase());
   sl.registerLazySingleton(() => Dio());
   sl.registerLazySingleton(() => TmdbInterceptor());
   // sl.registerLazySingleton(() => Dio()..interceptors.add(TmdbInterceptor()));
@@ -51,6 +62,10 @@ Future<void> init() async {
   sl.registerLazySingleton<SessionsMockDatasource>(
     () => SessionsMockDatasource(),
   );
+  sl.registerLazySingleton<SeatLockLocalDatasource>(
+    () => SeatLockLocalDatasource(sl<AppDatabase>()),
+  );
+  sl.registerLazySingleton(() => SeatLocalDatasource());
 
   // 4. Repositories
   sl.registerLazySingleton<MovieRepository>(
@@ -64,6 +79,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<SessionsRepository>(
     () => SessionsRepositoryImpl(sl<SessionsMockDatasource>()),
+  );
+  sl.registerLazySingleton<SeatRepository>(
+    () => SeatRepositoryImpl(lockLocalDatasource: sl(), localDatasource: sl()),
   );
 
   // 5. UseCases
@@ -79,10 +97,17 @@ Future<void> init() async {
   sl.registerLazySingleton<GetSessionsUsecase>(
     () => GetSessionsUsecase(sl<SessionsRepository>()),
   );
+  sl.registerLazySingleton<GetLockedSeatsUsecase>(
+    () => GetLockedSeatsUsecase(sl<SeatRepository>()),
+  );
+  sl.registerLazySingleton(() => GetSeatsUsecase(sl()));
 
   // 6. Blocs (Register as Factory so a new instance is created each time)
   sl.registerFactory<MovieDetailBloc>(
     () => MovieDetailBloc(sl<GetMovieDetailUsecase>()),
+  );
+  sl.registerFactory<SeatMapBloc>(
+    () => SeatMapBloc(sl<GetLockedSeatsUsecase>()),
   );
 
   // 7. Cubits
@@ -90,4 +115,6 @@ Future<void> init() async {
     () => HomeMovieCubit(sl<GetPopularMoviesUsecase>()),
   );
   sl.registerFactory(() => SessionsCubit(sl<GetSessionsUsecase>()));
+  sl.registerFactory<SeatSelectionCubit>(() => SeatSelectionCubit());
+  sl.registerFactory(() => SeatListCubit(sl()));
 }

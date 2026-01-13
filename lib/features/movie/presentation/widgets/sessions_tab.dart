@@ -46,7 +46,11 @@ class _SessionsTabState extends State<SessionsTab> {
   }
 
   void onSelectSession() {
-    context.openSeatSelection(AppRoutes.seatSelection);
+    // TODO: pass a showtimeId into
+    context.openSeatSelection(
+      showtimeId: 'showtime_1',
+      movieId: widget.movieId.toString(),
+    );
   }
 
   @override
