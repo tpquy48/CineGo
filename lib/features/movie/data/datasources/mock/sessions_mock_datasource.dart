@@ -7,7 +7,8 @@ import '../../models/showtime_model.dart';
 
 class SessionsMockDatasource {
   Future<List<CinemaModel>> _loadCinemas() async {
-    final raw = await rootBundle.loadString(MockApi.getPath('cinemas_2.json'));
+    // final raw = await rootBundle.loadString(MockApi.getPath('cinemas_2.json'));
+    final raw = await rootBundle.loadString(MockApi.cinemas);
 
     final list = jsonDecode(raw) as List;
     return list.map((e) => CinemaModel.fromJson(e)).toList();
@@ -15,7 +16,8 @@ class SessionsMockDatasource {
 
   Future<List<ShowtimeModel>> _loadShowtimes() async {
     final raw = await rootBundle.loadString(
-      MockApi.getPath('showtimes_2.json'),
+      // MockApi.getPath('showtimes_2.json'),
+      MockApi.showtimes,
     );
     final list = jsonDecode(raw) as List;
     return list.map((e) => ShowtimeModel.fromJson(e)).toList();
@@ -36,8 +38,9 @@ class SessionsMockDatasource {
       (s) => s.movieId == movieId && s.date == dateStr,
     );
 
-    final Map<int, List<ShowtimeModel>> grouped = {};
+    final Map<String, List<ShowtimeModel>> grouped = {};
 
+    // TODO: turn on filtter
     // for (final s in filtered) {
     for (final s in showtimes) {
       grouped.putIfAbsent(s.cinemaId, () => []).add(s);

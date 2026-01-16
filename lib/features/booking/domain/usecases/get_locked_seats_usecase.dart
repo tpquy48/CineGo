@@ -1,11 +1,11 @@
-import '../repositories/seat_repository.dart';
+import '../repositories/seat_lock_repository.dart';
 
-class GetLockedSeatsUsecase {
-  final SeatRepository _repository;
+class GetLockedSeatsUseCase {
+  final SeatLockRepository repository;
 
-  GetLockedSeatsUsecase(this._repository);
+  GetLockedSeatsUseCase(this.repository);
 
-  Future<List<String>> call(String showtimeId) {
-    return _repository.getLockedSeats(showtimeId);
+  Future<Set<String>> call(String showtimeId) {
+    return repository.getLockedSeatIds(showtimeId);
   }
 }

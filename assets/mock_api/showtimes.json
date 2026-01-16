@@ -1,26 +1,64 @@
 [
   {
-    "id": "st_001",
-    "movieId": 550,
-    "cinemaId": "cgv_binhthanh",
-    "roomId": "room_01",
-    "startTime": "2026-01-05T19:30:00",
-    "price": 75000
+    "id": "st_101",
+    "movie_id": 550,
+    "cinema_id": "galaxy_hvt",
+    "date": "2026-02-15",
+    "time": "14:40",
+    "format": "2D Ru",
+    "room_id": 1,
+    "prices": {
+      "Adult": "120.000đ",
+      "Child": "60.000đ",
+      "Student": "100.000đ",
+      "VIP": null
+    }
   },
   {
-    "id": "st_002",
-    "movieId": 550,
-    "cinemaId": "cgv_binhthanh",
-    "roomId": "room_02",
-    "startTime": "2026-01-05T21:30:00",
-    "price": 90000
+    "id": "st_102",
+    "movie_id": 550,
+    "cinema_id": "galaxy_hvt",
+    "date": "2026-02-15",
+    "time": "16:10",
+    "format": "2D Ru",
+    "room_id": 1,
+    "prices": {
+      "Adult": "140.000đ",
+      "Child": null,
+      "Student": "100.000đ",
+      "VIP": null
+    }
   },
   {
-    "id": "st_003",
-    "movieId": 299534,
-    "cinemaId": "lotte_q1",
-    "roomId": "room_03",
-    "startTime": "2026-01-06T20:00:00",
-    "price": 120000
+    "id": "st_201",
+    "movie_id": 550,
+    "cinema_id": "cgv_thu_duc",
+    "date": "2026-02-15",
+    "time": "15:10",
+    "format": "IMAX Ru",
+    "room_id": 3,
+    "prices": {
+      "Adult": "130.000đ",
+      "Child": "70.000đ",
+      "Student": "100.000đ",
+      "VIP": "180.000đ"
+    },
+    "logo": "https://i.imgur.com/CGV.png"
+  },
+  {
+    "id": "st_301",
+    "movie_id": 550,
+    "cinema_id": "lotte_cinema_bt",
+    "date": "2026-02-15",
+    "time": "16:05",
+    "format": "Laser Eng",
+    "room_id": 5,
+    "prices": {
+      "Adult": "130.000đ",
+      "Child": null,
+      "Student": "100.000đ",
+      "VIP": null
+    },
+    "logo": "https://i.imgur.com/Lotte.png"
   }
 ]

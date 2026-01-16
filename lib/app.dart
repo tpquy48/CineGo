@@ -8,7 +8,6 @@ import 'core/l10n/app_localizations.dart';
 import 'core/l10n/l10n.dart';
 import 'core/navigation/app_router.dart';
 import 'core/theme/app_theme.dart';
-import 'features/movie/presentation/bloc/movie_detail_bloc.dart';
 import 'features/movie/presentation/cubit/home_movie_cubit.dart';
 
 class CineGoApp extends StatelessWidget {

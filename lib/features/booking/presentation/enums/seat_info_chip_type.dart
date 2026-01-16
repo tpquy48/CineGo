@@ -1,1 +1,1 @@
-enum SeatInfoChipType { date, time }
+// enum SeatInfoChipType { date, time }

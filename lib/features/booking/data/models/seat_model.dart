@@ -1,55 +1,28 @@
-class SeatModel {
-  final int rowIndex; // 0
-  final int colIndex; // 0
-  final String type; // 'regular'
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  const SeatModel({
-    required this.rowIndex,
-    required this.colIndex,
-    required this.type,
-  });
+import '../../../../core/database/app_database.dart';
 
-  factory SeatModel.fromJson(Map<String, dynamic> json) {
+part 'seat_model.freezed.dart';
+part 'seat_model.g.dart';
+
+@freezed
+sealed class SeatModel with _$SeatModel {
+  const factory SeatModel({
+    required String id,
+    required String row,
+    required int number,
+    required int price,
+  }) = _SeatModel;
+
+  factory SeatModel.fromDrift(SeatsTableData row) {
     return SeatModel(
-      rowIndex: json['row_index'],
-      colIndex: json['col_index'],
-      type: json['type'],
+      id: row.id,
+      row: row.row,
+      number: row.number,
+      price: row.price,
     );
   }
 
-  Map<String, dynamic> toJson() => {
-    'row_index': rowIndex,
-    'col_index': colIndex,
-    'type': type,
-  };
+  factory SeatModel.fromJson(Map<String, dynamic> json) =>
+      _$SeatModelFromJson(json);
 }
-
-// class SeatModel {
-//   final String id;
-//   final int row;
-//   final int number;
-//   final bool isBlocked;
-
-//   const SeatModel({
-//     required this.id,
-//     required this.row,
-//     required this.number,
-//     required this.isBlocked,
-//   });
-
-//   factory SeatModel.fromJson(Map<String, dynamic> json) {
-//     return SeatModel(
-//       id: json['id'],
-//       row: json['row'],
-//       number: json['number'],
-//       isBlocked: json['is_blocked'],
-//     );
-//   }
-
-//   Map<String, dynamic> toJson() => {
-//     'id': id,
-//     'row': row,
-//     'number': number,
-//     'is_blocked': isBlocked,
-//   };
-// }

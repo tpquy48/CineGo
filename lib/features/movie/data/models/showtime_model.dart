@@ -1,7 +1,7 @@
 class ShowtimeModel {
-  final int id;
+  final String id;
   final int movieId;
-  final int cinemaId;
+  final String cinemaId;
   final String date;
   final String time;
   final String format;

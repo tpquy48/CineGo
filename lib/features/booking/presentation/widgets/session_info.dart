@@ -86,7 +86,7 @@ class _ConfirmButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFFFF7A1A),
+          backgroundColor: AppColors.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
           ),
@@ -168,11 +168,11 @@ class _TimeRow extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
           color: active
-              ? const Color(0xFFFF7A1A).withOpacity(0.15)
+              ? AppColors.primary.withOpacity(0.15)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: active ? const Color(0xFFFF7A1A) : Colors.white12,
+            color: active ? AppColors.primary : Colors.white12,
           ),
         ),
         alignment: Alignment.center,
@@ -180,7 +180,7 @@ class _TimeRow extends StatelessWidget {
           time,
           style: TextStyle(
             fontSize: 16,
-            color: active ? const Color(0xFFFF7A1A) : Colors.white,
+            color: active ? AppColors.primary : Colors.white,
           ),
         ),
       ),
@@ -220,9 +220,7 @@ class _DatePickerSheetState extends State<DatePickerSheet> {
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 180),
                   decoration: BoxDecoration(
-                    color: active
-                        ? const Color(0xFFFF7A1A)
-                        : Colors.transparent,
+                    color: active ? AppColors.primary : Colors.transparent,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: Colors.white12),
                   ),
@@ -268,12 +266,10 @@ class _InfoChipState extends State<InfoChip> {
 
   @override
   Widget build(BuildContext context) {
-    final borderColor = widget.active
-        ? const Color(0xFFFF7A1A)
-        : Colors.white12;
+    final borderColor = widget.active ? AppColors.primary : Colors.white12;
 
     final bgColor = widget.active
-        ? const Color(0xFFFF7A1A).withOpacity(0.12)
+        ? AppColors.primary.withOpacity(0.12)
         : Colors.transparent;
 
     return Expanded(
@@ -299,9 +295,7 @@ class _InfoChipState extends State<InfoChip> {
                 Icon(
                   widget.icon,
                   size: 16,
-                  color: widget.active
-                      ? const Color(0xFFFF7A1A)
-                      : Colors.white70,
+                  color: widget.active ? AppColors.primary : Colors.white70,
                 ),
                 const SizedBox(width: 6),
                 Text(
@@ -309,9 +303,7 @@ class _InfoChipState extends State<InfoChip> {
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
-                    color: widget.active
-                        ? const Color(0xFFFF7A1A)
-                        : Colors.white,
+                    color: widget.active ? AppColors.primary : Colors.white,
                   ),
                 ),
               ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_colors.dart';
+
 class SeatLegend extends StatelessWidget {
   const SeatLegend({super.key});
 
@@ -12,7 +14,7 @@ class SeatLegend extends StatelessWidget {
         SizedBox(width: 16),
         _LegendDot('Occupied', Color(0xFF3A4A63)),
         SizedBox(width: 16),
-        _LegendDot('Chosen', Color(0xFFFF7A1A)),
+        _LegendDot('Chosen', AppColors.primary),
       ],
     );
   }

@@ -4,7 +4,7 @@ import 'sessions_tab.dart';
 
 class ByTimeView extends StatelessWidget {
   final List<SessionWithCinema> sessions;
-  final VoidCallback onSelectSession;
+  final void Function(String) onSelectSession;
 
   const ByTimeView({
     required this.sessions,
@@ -17,6 +17,7 @@ class ByTimeView extends StatelessWidget {
     return ListView(
       children: sessions.map((s) {
         return _SessionItem(
+          s.session.showtimeId,
           s.session.time,
           s.cinemaName,
           s.session.prices,
@@ -28,17 +29,24 @@ class ByTimeView extends StatelessWidget {
 }
 
 class _SessionItem extends StatelessWidget {
+  final String showtimeId;
   final String time;
   final String cinema;
   final Map<String, String> prices;
-  final VoidCallback onSelectSession;
+  final void Function(String) onSelectSession;
 
-  const _SessionItem(this.time, this.cinema, this.prices, this.onSelectSession);
+  const _SessionItem(
+    this.showtimeId,
+    this.time,
+    this.cinema,
+    this.prices,
+    this.onSelectSession,
+  );
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onSelectSession,
+      onTap: () => onSelectSession(showtimeId),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: const BoxDecoration(

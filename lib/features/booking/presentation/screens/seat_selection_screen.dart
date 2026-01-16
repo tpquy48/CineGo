@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../bloc/seat_list/seat_list_cubit.dart';
-import '../bloc/seat_list/seat_list_state.dart';
-import '../bloc/seat_map/seat_map_bloc.dart';
-import '../bloc/seat_map/seat_map_state.dart';
 import '../bloc/seat_selection/seat_selection_cubit.dart';
 import '../bloc/seat_selection/seat_selection_state.dart';
-import '../enums/seat_stage.dart';
 import '../widgets/bottom_buy_bar.dart';
 import '../widgets/screen_curve.dart';
 import '../widgets/seat_app_bar.dart';
@@ -26,32 +21,16 @@ class SeatSelectionScreen extends StatefulWidget {
 
 class _SeatSelectionScreenState extends State<SeatSelectionScreen>
     with SingleTickerProviderStateMixin {
-  SeatStage stage = .overview;
-  final Set<String> selectedSeatIds = {};
+  // SeatStage stage = SeatStage.available;
   final TransformationController _zoomController = TransformationController();
   bool _zoomed = false;
 
   @override
   void initState() {
     super.initState();
-    // TODO
-    context.read<SeatListCubit>().loadSeats();
-    // context.read<SeatMapBloc>().add(LoadSeatMapEvent(widget.showtimeId));
+    context.read<SeatSelectionCubit>().loadSeatMap(widget.showtimeId);
   }
 
-  void onSeatTap(String id) {
-    setState(() {
-      if (selectedSeatIds.contains(id)) {
-        selectedSeatIds.remove(id);
-      } else {
-        selectedSeatIds.add(id);
-      }
-
-      stage = selectedSeatIds.isEmpty ? .selecting : .selected;
-    });
-  }
-
-  // Zoom into center
   void _toggleZoom() {
     final matrix = Matrix4.identity();
 
@@ -85,33 +64,21 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>
               boundaryMargin: const EdgeInsets.all(120),
               panEnabled: true,
               scaleEnabled: true,
-              child: BlocBuilder<SeatListCubit, SeatListState>(
-                builder: (context, seatState) {
-                  if (seatState.loading) {
+              child: BlocBuilder<SeatSelectionCubit, SeatSelectionState>(
+                builder: (context, state) {
+                  if (state.isLoading) {
                     return const Center(child: CircularProgressIndicator());
                   }
 
-                  return BlocBuilder<SeatMapBloc, SeatMapState>(
-                    builder: (context, mapState) {
-                      if (mapState is! SeatMapLoaded) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
+                  // stage = state.selectedSeatIds.isEmpty
+                  //     ? SeatStage.available
+                  //     : SeatStage.selected;
 
-                      return BlocBuilder<
-                        SeatSelectionCubit,
-                        SeatSelectionState
-                      >(
-                        builder: (context, uiState) {
-                          return SeatGrid(
-                            seats: seatState.seats,
-                            lockedSeatIds: mapState.lockedSeatIds.toSet(),
-                            selectedSeatIds: uiState.selectedSeatIds.toSet(),
-                            onSeatTap: context
-                                .read<SeatSelectionCubit>()
-                                .toggleSeat,
-                          );
-                        },
-                      );
+                  return SeatGrid(
+                    seatMap: state.seatMap,
+                    selectedSeatIds: state.selectedSeatIds,
+                    onSeatTap: (seatId) {
+                      context.read<SeatSelectionCubit>().toggleSeat(seatId);
                     },
                   );
                 },
@@ -119,7 +86,21 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>
             ),
           ),
 
-          if (stage == .selected) BottomBuyBar(count: selectedSeatIds.length),
+          // if (stage == SeatStage.selected)
+          BlocBuilder<SeatSelectionCubit, SeatSelectionState>(
+            builder: (context, state) {
+              return BottomBuyBar(
+                selectedCount: state.selectedSeatIds.length,
+                totalPrice: state.totalPrice,
+                isLoading: state.isConfirming,
+                onConfirm: () {
+                  context.read<SeatSelectionCubit>().confirmSelection(
+                    widget.showtimeId,
+                  );
+                },
+              );
+            },
+          ),
         ],
       ),
     );

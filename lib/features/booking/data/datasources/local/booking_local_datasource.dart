@@ -17,9 +17,9 @@ class BookingLocalDatasource {
     await db.transaction(() async {
       // Save booking
       await db
-          .into(db.bookings)
+          .into(db.bookingsTable)
           .insert(
-            BookingsCompanion.insert(
+            BookingsTableCompanion.insert(
               movieId: movieId,
               showtimeId: showtimeId,
               seats: jsonEncode(seats),
@@ -31,9 +31,9 @@ class BookingLocalDatasource {
 
       // Issue ticket
       await db
-          .into(db.tickets)
+          .into(db.ticketsTable)
           .insert(
-            TicketsCompanion.insert(
+            TicketsTableCompanion.insert(
               movieId: movieId,
               showtimeId: showtimeId,
               seats: jsonEncode(seats),

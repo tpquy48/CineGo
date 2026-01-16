@@ -1,8 +1,10 @@
 import 'package:drift/drift.dart';
 
-class SeatLocks extends Table {
-  IntColumn get id => integer().autoIncrement()();
+class SeatLocksTable extends Table {
+  TextColumn get seatId => text()();
+  TextColumn get showtimeId => text()();
+  DateTimeColumn get lockedAt => dateTime()();
 
-  TextColumn get showtimeId => text().unique()();
-  TextColumn get lockedSeats => text()(); // JSON: ["A1", "B3"]
+  @override
+  Set<Column> get primaryKey => {seatId, showtimeId};
 }

@@ -1,14 +1,11 @@
-import '../repositories/seat_repository.dart';
+import '../repositories/seat_lock_repository.dart';
 
-class LockSeatsUsecase {
-  final SeatRepository _repository;
+class LockSeatsUseCase {
+  final SeatLockRepository repository;
 
-  LockSeatsUsecase(this._repository);
+  LockSeatsUseCase(this.repository);
 
-  Future<void> call({required String showtimeId, required List<String> seats}) {
-    if (seats.isEmpty) {
-      return Future.value();
-    }
-    return _repository.lockSeats(showtimeId, seats);
+  Future<void> call(String showtimeId, List<String> seatIds) {
+    return repository.lockSeats(showtimeId, seatIds);
   }
 }

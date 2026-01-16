@@ -1,23 +1,18 @@
 import 'package:drift/drift.dart';
 
-import '../../../../../core/database/database.dart';
+import '../../../../core/database/app_database.dart';
+import '../../domain/repositories/seat_lock_repository.dart';
 
-abstract class SeatLockLocalDatasource {
-  Future<Set<String>> getLockedSeatIds(String showtimeId);
-  Future<void> lockSeats(String showtimeId, List<String> seatIds);
-  Future<void> unlockSeats(String showtimeId, List<String> seatIds);
-}
-
-class SeatLockLocalDatasourceImpl implements SeatLockLocalDatasource {
+class SeatLockRepositoryImpl implements SeatLockRepository {
   final AppDatabase db;
 
-  SeatLockLocalDatasourceImpl(this.db);
+  SeatLockRepositoryImpl(this.db);
 
   @override
   Future<Set<String>> getLockedSeatIds(String showtimeId) async {
     final rows = await (db.select(
       db.seatLocksTable,
-    )..where((t) => t.showtimeId.equals(showtimeId))).get();
+    )..where((tbl) => tbl.showtimeId.equals(showtimeId))).get();
 
     return rows.map((e) => e.seatId).toSet();
   }
@@ -42,7 +37,7 @@ class SeatLockLocalDatasourceImpl implements SeatLockLocalDatasource {
   @override
   Future<void> unlockSeats(String showtimeId, List<String> seatIds) async {
     await (db.delete(db.seatLocksTable)..where(
-          (t) => t.showtimeId.equals(showtimeId) & t.seatId.isIn(seatIds),
+          (tbl) => tbl.showtimeId.equals(showtimeId) & tbl.seatId.isIn(seatIds),
         ))
         .go();
   }

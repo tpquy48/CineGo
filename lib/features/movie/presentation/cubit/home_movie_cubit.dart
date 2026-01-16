@@ -9,13 +9,25 @@ class HomeMovieCubit extends Cubit<HomeMovieState> {
   HomeMovieCubit(this.getMovies) : super(HomeMovieState.initial());
 
   Future<void> loadInitial() async {
-    emit(state.copyWith(isLoading: true, page: 1, hasReachedMax: false, error: null));
+    emit(
+      state.copyWith(
+        isLoading: true,
+        page: 1,
+        hasReachedMax: false,
+        error: null,
+      ),
+    );
 
     try {
       final movies = await getMovies(page: 1);
 
       emit(
-        state.copyWith(movies: movies, page: 2, isLoading: false, hasReachedMax: movies.isEmpty),
+        state.copyWith(
+          movies: movies,
+          page: 2,
+          isLoading: false,
+          hasReachedMax: movies.isEmpty,
+        ),
       );
     } catch (e) {
       emit(state.copyWith(isLoading: false, error: e.toString()));
@@ -24,7 +36,9 @@ class HomeMovieCubit extends Cubit<HomeMovieState> {
 
   Future<void> loadMore() async {
     // HARD GUARDS
-    if (state.isLoadingMore || state.hasReachedMax || state.isLoading) return;
+    if (state.isLoadingMore || state.hasReachedMax || state.isLoading) {
+      return;
+    }
 
     emit(state.copyWith(isLoadingMore: true));
 

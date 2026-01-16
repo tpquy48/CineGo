@@ -45,10 +45,9 @@ class _SessionsTabState extends State<SessionsTab> {
     super.dispose();
   }
 
-  void onSelectSession() {
-    // TODO: pass a showtimeId into
+  void onSelectSession(String showtimeId) {
     context.openSeatSelection(
-      showtimeId: 'showtime_1',
+      showtimeId: showtimeId,
       movieId: widget.movieId.toString(),
     );
   }

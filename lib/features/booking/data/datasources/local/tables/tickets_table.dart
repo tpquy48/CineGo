@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-class Tickets extends Table {
+class TicketsTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   IntColumn get movieId => integer()();

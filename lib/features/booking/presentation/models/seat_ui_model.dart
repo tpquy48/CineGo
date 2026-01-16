@@ -1,23 +1,18 @@
-// presentation/models/seat_ui_model.dart
 class SeatUiModel {
-  final String seatId;
-  final String label; // '1'
-  final bool isBlocked;
+  final String id;
+  final String row;
+  final int number;
+  final int price;
+
+  final bool isLocked;
   final bool isSelected;
 
   const SeatUiModel({
-    required this.seatId,
-    required this.label,
-    required this.isBlocked,
+    required this.id,
+    required this.row,
+    required this.number,
+    required this.price,
+    required this.isLocked,
     required this.isSelected,
   });
-
-  SeatUiModel copyWith({bool? isBlocked, bool? isSelected}) {
-    return SeatUiModel(
-      seatId: seatId,
-      label: label,
-      isBlocked: isBlocked ?? this.isBlocked,
-      isSelected: isSelected ?? this.isSelected,
-    );
-  }
 }
