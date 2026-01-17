@@ -12,17 +12,20 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     on<ConfirmBookingEvent>(_confirmBooking);
   }
 
-  Future<void> _confirmBooking(ConfirmBookingEvent event, Emitter<BookingState> emit) async {
+  Future<void> _confirmBooking(
+    ConfirmBookingEvent event,
+    Emitter<BookingState> emit,
+  ) async {
     emit(BookingLoading());
     try {
-      await createBooking(
+      final bookingId = await createBooking(
         movieId: event.movieId,
         showtimeId: event.showtimeId,
-        seats: event.seats,
-        foods: event.foods,
+        seatIds: event.seats,
+        // foods: event.foods,
         totalPrice: event.totalPrice,
       );
-      emit(BookingSuccess());
+      emit(BookingSuccess(bookingId));
     } catch (e) {
       emit(BookingFailure(e.toString()));
     }

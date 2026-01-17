@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/cinema_entity.dart';
 import '../../domain/entities/session_entity.dart';
+import '../cubit/sessions_cubit.dart';
+import '../cubit/sessions_state.dart';
 
 class ByCinemaView extends StatelessWidget {
   final List<CinemaEntity> cinemas;
-  final void Function(String) onSelectSession;
+  final void Function(String, DateTime, String) onSelectSession;
 
   const ByCinemaView({
     required this.cinemas,
@@ -28,7 +31,7 @@ class ByCinemaView extends StatelessWidget {
 
 class _CinemaBlock extends StatelessWidget {
   final CinemaEntity cinema;
-  final void Function(String) onSelectSession;
+  final void Function(String, DateTime, String) onSelectSession;
 
   const _CinemaBlock({required this.cinema, required this.onSelectSession});
 
@@ -90,14 +93,18 @@ class _CinemaBlock extends StatelessWidget {
 
 class _SessionRow extends StatelessWidget {
   final SessionEntity session;
-  final void Function(String) onSelectSession;
+  final void Function(String, DateTime, String) onSelectSession;
 
   const _SessionRow({required this.session, required this.onSelectSession});
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<SessionsCubit>();
+    final selectedDate = (cubit.state as SessionsLoaded).selectedDate;
+
     return InkWell(
-      onTap: () => onSelectSession(session.showtimeId),
+      onTap: () =>
+          onSelectSession(session.showtimeId, selectedDate, session.time),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: const BoxDecoration(

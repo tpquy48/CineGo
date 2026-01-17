@@ -13,7 +13,14 @@ import '../widgets/session_info.dart';
 
 class SeatSelectionScreen extends StatefulWidget {
   final String showtimeId;
-  const SeatSelectionScreen(this.showtimeId, {super.key});
+  final String date;
+  final String time;
+  const SeatSelectionScreen({
+    required this.showtimeId,
+    required this.date,
+    required this.time,
+    super.key,
+  });
 
   @override
   State<SeatSelectionScreen> createState() => _SeatSelectionScreenState();
@@ -51,7 +58,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>
       appBar: SeatAppBar(zoomed: _zoomed, toggleZoom: _toggleZoom),
       body: Column(
         children: [
-          const SessionInfo(),
+          SessionInfo(date: widget.date, time: widget.time),
           const SeatLegend(),
           const SizedBox(height: 40),
           const ScreenCurve(),

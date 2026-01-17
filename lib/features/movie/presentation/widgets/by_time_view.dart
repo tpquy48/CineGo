@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../cubit/sessions_cubit.dart';
+import '../cubit/sessions_state.dart';
 import 'sessions_tab.dart';
 
 class ByTimeView extends StatelessWidget {
   final List<SessionWithCinema> sessions;
-  final void Function(String) onSelectSession;
+  final void Function(String, DateTime, String) onSelectSession;
 
   const ByTimeView({
     required this.sessions,
@@ -33,7 +36,7 @@ class _SessionItem extends StatelessWidget {
   final String time;
   final String cinema;
   final Map<String, String> prices;
-  final void Function(String) onSelectSession;
+  final void Function(String, DateTime, String) onSelectSession;
 
   const _SessionItem(
     this.showtimeId,
@@ -45,8 +48,11 @@ class _SessionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<SessionsCubit>();
+    final selectedDate = (cubit.state as SessionsLoaded).selectedDate;
+
     return InkWell(
-      onTap: () => onSelectSession(showtimeId),
+      onTap: () => onSelectSession(showtimeId, selectedDate, time),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: const BoxDecoration(

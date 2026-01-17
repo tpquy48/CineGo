@@ -9,28 +9,15 @@ class $BookingsTableTable extends BookingsTable
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $BookingsTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _movieIdMeta = const VerificationMeta(
-    'movieId',
+  static const VerificationMeta _bookingIdMeta = const VerificationMeta(
+    'bookingId',
   );
   @override
-  late final GeneratedColumn<int> movieId = GeneratedColumn<int>(
-    'movie_id',
+  late final GeneratedColumn<String> bookingId = GeneratedColumn<String>(
+    'booking_id',
     aliasedName,
     false,
-    type: DriftSqlType.int,
+    type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
   static const VerificationMeta _showtimeIdMeta = const VerificationMeta(
@@ -44,22 +31,15 @@ class $BookingsTableTable extends BookingsTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _seatsMeta = const VerificationMeta('seats');
-  @override
-  late final GeneratedColumn<String> seats = GeneratedColumn<String>(
-    'seats',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
+  static const VerificationMeta _movieIdMeta = const VerificationMeta(
+    'movieId',
   );
-  static const VerificationMeta _foodsMeta = const VerificationMeta('foods');
   @override
-  late final GeneratedColumn<String> foods = GeneratedColumn<String>(
-    'foods',
+  late final GeneratedColumn<int> movieId = GeneratedColumn<int>(
+    'movie_id',
     aliasedName,
     false,
-    type: DriftSqlType.string,
+    type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
   static const VerificationMeta _totalPriceMeta = const VerificationMeta(
@@ -84,15 +64,36 @@ class $BookingsTableTable extends BookingsTable
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _issuedAtMeta = const VerificationMeta(
+    'issuedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> issuedAt = GeneratedColumn<DateTime>(
+    'issued_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('PENDING'),
+  );
   @override
   List<GeneratedColumn> get $columns => [
-    id,
-    movieId,
+    bookingId,
     showtimeId,
-    seats,
-    foods,
+    movieId,
     totalPrice,
     createdAt,
+    issuedAt,
+    status,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -106,16 +107,13 @@ class $BookingsTableTable extends BookingsTable
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('movie_id')) {
+    if (data.containsKey('booking_id')) {
       context.handle(
-        _movieIdMeta,
-        movieId.isAcceptableOrUnknown(data['movie_id']!, _movieIdMeta),
+        _bookingIdMeta,
+        bookingId.isAcceptableOrUnknown(data['booking_id']!, _bookingIdMeta),
       );
     } else if (isInserting) {
-      context.missing(_movieIdMeta);
+      context.missing(_bookingIdMeta);
     }
     if (data.containsKey('showtime_id')) {
       context.handle(
@@ -125,21 +123,13 @@ class $BookingsTableTable extends BookingsTable
     } else if (isInserting) {
       context.missing(_showtimeIdMeta);
     }
-    if (data.containsKey('seats')) {
+    if (data.containsKey('movie_id')) {
       context.handle(
-        _seatsMeta,
-        seats.isAcceptableOrUnknown(data['seats']!, _seatsMeta),
+        _movieIdMeta,
+        movieId.isAcceptableOrUnknown(data['movie_id']!, _movieIdMeta),
       );
     } else if (isInserting) {
-      context.missing(_seatsMeta);
-    }
-    if (data.containsKey('foods')) {
-      context.handle(
-        _foodsMeta,
-        foods.isAcceptableOrUnknown(data['foods']!, _foodsMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_foodsMeta);
+      context.missing(_movieIdMeta);
     }
     if (data.containsKey('total_price')) {
       context.handle(
@@ -157,34 +147,38 @@ class $BookingsTableTable extends BookingsTable
     } else if (isInserting) {
       context.missing(_createdAtMeta);
     }
+    if (data.containsKey('issued_at')) {
+      context.handle(
+        _issuedAtMeta,
+        issuedAt.isAcceptableOrUnknown(data['issued_at']!, _issuedAtMeta),
+      );
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {bookingId};
   @override
   BookingsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return BookingsTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      movieId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}movie_id'],
+      bookingId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}booking_id'],
       )!,
       showtimeId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}showtime_id'],
       )!,
-      seats: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}seats'],
-      )!,
-      foods: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}foods'],
+      movieId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}movie_id'],
       )!,
       totalPrice: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -193,6 +187,14 @@ class $BookingsTableTable extends BookingsTable
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
+      )!,
+      issuedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}issued_at'],
+      ),
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
       )!,
     );
   }
@@ -205,44 +207,58 @@ class $BookingsTableTable extends BookingsTable
 
 class BookingsTableData extends DataClass
     implements Insertable<BookingsTableData> {
-  final int id;
-  final int movieId;
+  final String bookingId;
+
+  /// FK → ShowtimesTable
   final String showtimeId;
-  final String seats;
-  final String foods;
+
+  /// Denormalized for performance & history
+  final int movieId;
   final int totalPrice;
+
+  /// When user pressed "Confirm"
   final DateTime createdAt;
+
+  /// When payment succeeded (nullable for now)
+  final DateTime? issuedAt;
+
+  /// Booking lifecycle
+  final String status;
   const BookingsTableData({
-    required this.id,
-    required this.movieId,
+    required this.bookingId,
     required this.showtimeId,
-    required this.seats,
-    required this.foods,
+    required this.movieId,
     required this.totalPrice,
     required this.createdAt,
+    this.issuedAt,
+    required this.status,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['movie_id'] = Variable<int>(movieId);
+    map['booking_id'] = Variable<String>(bookingId);
     map['showtime_id'] = Variable<String>(showtimeId);
-    map['seats'] = Variable<String>(seats);
-    map['foods'] = Variable<String>(foods);
+    map['movie_id'] = Variable<int>(movieId);
     map['total_price'] = Variable<int>(totalPrice);
     map['created_at'] = Variable<DateTime>(createdAt);
+    if (!nullToAbsent || issuedAt != null) {
+      map['issued_at'] = Variable<DateTime>(issuedAt);
+    }
+    map['status'] = Variable<String>(status);
     return map;
   }
 
   BookingsTableCompanion toCompanion(bool nullToAbsent) {
     return BookingsTableCompanion(
-      id: Value(id),
-      movieId: Value(movieId),
+      bookingId: Value(bookingId),
       showtimeId: Value(showtimeId),
-      seats: Value(seats),
-      foods: Value(foods),
+      movieId: Value(movieId),
       totalPrice: Value(totalPrice),
       createdAt: Value(createdAt),
+      issuedAt: issuedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(issuedAt),
+      status: Value(status),
     );
   }
 
@@ -252,180 +268,187 @@ class BookingsTableData extends DataClass
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return BookingsTableData(
-      id: serializer.fromJson<int>(json['id']),
-      movieId: serializer.fromJson<int>(json['movieId']),
+      bookingId: serializer.fromJson<String>(json['bookingId']),
       showtimeId: serializer.fromJson<String>(json['showtimeId']),
-      seats: serializer.fromJson<String>(json['seats']),
-      foods: serializer.fromJson<String>(json['foods']),
+      movieId: serializer.fromJson<int>(json['movieId']),
       totalPrice: serializer.fromJson<int>(json['totalPrice']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      issuedAt: serializer.fromJson<DateTime?>(json['issuedAt']),
+      status: serializer.fromJson<String>(json['status']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'movieId': serializer.toJson<int>(movieId),
+      'bookingId': serializer.toJson<String>(bookingId),
       'showtimeId': serializer.toJson<String>(showtimeId),
-      'seats': serializer.toJson<String>(seats),
-      'foods': serializer.toJson<String>(foods),
+      'movieId': serializer.toJson<int>(movieId),
       'totalPrice': serializer.toJson<int>(totalPrice),
       'createdAt': serializer.toJson<DateTime>(createdAt),
+      'issuedAt': serializer.toJson<DateTime?>(issuedAt),
+      'status': serializer.toJson<String>(status),
     };
   }
 
   BookingsTableData copyWith({
-    int? id,
-    int? movieId,
+    String? bookingId,
     String? showtimeId,
-    String? seats,
-    String? foods,
+    int? movieId,
     int? totalPrice,
     DateTime? createdAt,
+    Value<DateTime?> issuedAt = const Value.absent(),
+    String? status,
   }) => BookingsTableData(
-    id: id ?? this.id,
-    movieId: movieId ?? this.movieId,
+    bookingId: bookingId ?? this.bookingId,
     showtimeId: showtimeId ?? this.showtimeId,
-    seats: seats ?? this.seats,
-    foods: foods ?? this.foods,
+    movieId: movieId ?? this.movieId,
     totalPrice: totalPrice ?? this.totalPrice,
     createdAt: createdAt ?? this.createdAt,
+    issuedAt: issuedAt.present ? issuedAt.value : this.issuedAt,
+    status: status ?? this.status,
   );
   BookingsTableData copyWithCompanion(BookingsTableCompanion data) {
     return BookingsTableData(
-      id: data.id.present ? data.id.value : this.id,
-      movieId: data.movieId.present ? data.movieId.value : this.movieId,
+      bookingId: data.bookingId.present ? data.bookingId.value : this.bookingId,
       showtimeId: data.showtimeId.present
           ? data.showtimeId.value
           : this.showtimeId,
-      seats: data.seats.present ? data.seats.value : this.seats,
-      foods: data.foods.present ? data.foods.value : this.foods,
+      movieId: data.movieId.present ? data.movieId.value : this.movieId,
       totalPrice: data.totalPrice.present
           ? data.totalPrice.value
           : this.totalPrice,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      issuedAt: data.issuedAt.present ? data.issuedAt.value : this.issuedAt,
+      status: data.status.present ? data.status.value : this.status,
     );
   }
 
   @override
   String toString() {
     return (StringBuffer('BookingsTableData(')
-          ..write('id: $id, ')
-          ..write('movieId: $movieId, ')
+          ..write('bookingId: $bookingId, ')
           ..write('showtimeId: $showtimeId, ')
-          ..write('seats: $seats, ')
-          ..write('foods: $foods, ')
+          ..write('movieId: $movieId, ')
           ..write('totalPrice: $totalPrice, ')
-          ..write('createdAt: $createdAt')
+          ..write('createdAt: $createdAt, ')
+          ..write('issuedAt: $issuedAt, ')
+          ..write('status: $status')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, movieId, showtimeId, seats, foods, totalPrice, createdAt);
+  int get hashCode => Object.hash(
+    bookingId,
+    showtimeId,
+    movieId,
+    totalPrice,
+    createdAt,
+    issuedAt,
+    status,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is BookingsTableData &&
-          other.id == this.id &&
-          other.movieId == this.movieId &&
+          other.bookingId == this.bookingId &&
           other.showtimeId == this.showtimeId &&
-          other.seats == this.seats &&
-          other.foods == this.foods &&
+          other.movieId == this.movieId &&
           other.totalPrice == this.totalPrice &&
-          other.createdAt == this.createdAt);
+          other.createdAt == this.createdAt &&
+          other.issuedAt == this.issuedAt &&
+          other.status == this.status);
 }
 
 class BookingsTableCompanion extends UpdateCompanion<BookingsTableData> {
-  final Value<int> id;
-  final Value<int> movieId;
+  final Value<String> bookingId;
   final Value<String> showtimeId;
-  final Value<String> seats;
-  final Value<String> foods;
+  final Value<int> movieId;
   final Value<int> totalPrice;
   final Value<DateTime> createdAt;
+  final Value<DateTime?> issuedAt;
+  final Value<String> status;
+  final Value<int> rowid;
   const BookingsTableCompanion({
-    this.id = const Value.absent(),
-    this.movieId = const Value.absent(),
+    this.bookingId = const Value.absent(),
     this.showtimeId = const Value.absent(),
-    this.seats = const Value.absent(),
-    this.foods = const Value.absent(),
+    this.movieId = const Value.absent(),
     this.totalPrice = const Value.absent(),
     this.createdAt = const Value.absent(),
+    this.issuedAt = const Value.absent(),
+    this.status = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   BookingsTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int movieId,
+    required String bookingId,
     required String showtimeId,
-    required String seats,
-    required String foods,
+    required int movieId,
     required int totalPrice,
     required DateTime createdAt,
-  }) : movieId = Value(movieId),
+    this.issuedAt = const Value.absent(),
+    this.status = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : bookingId = Value(bookingId),
        showtimeId = Value(showtimeId),
-       seats = Value(seats),
-       foods = Value(foods),
+       movieId = Value(movieId),
        totalPrice = Value(totalPrice),
        createdAt = Value(createdAt);
   static Insertable<BookingsTableData> custom({
-    Expression<int>? id,
-    Expression<int>? movieId,
+    Expression<String>? bookingId,
     Expression<String>? showtimeId,
-    Expression<String>? seats,
-    Expression<String>? foods,
+    Expression<int>? movieId,
     Expression<int>? totalPrice,
     Expression<DateTime>? createdAt,
+    Expression<DateTime>? issuedAt,
+    Expression<String>? status,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (movieId != null) 'movie_id': movieId,
+      if (bookingId != null) 'booking_id': bookingId,
       if (showtimeId != null) 'showtime_id': showtimeId,
-      if (seats != null) 'seats': seats,
-      if (foods != null) 'foods': foods,
+      if (movieId != null) 'movie_id': movieId,
       if (totalPrice != null) 'total_price': totalPrice,
       if (createdAt != null) 'created_at': createdAt,
+      if (issuedAt != null) 'issued_at': issuedAt,
+      if (status != null) 'status': status,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
   BookingsTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? movieId,
+    Value<String>? bookingId,
     Value<String>? showtimeId,
-    Value<String>? seats,
-    Value<String>? foods,
+    Value<int>? movieId,
     Value<int>? totalPrice,
     Value<DateTime>? createdAt,
+    Value<DateTime?>? issuedAt,
+    Value<String>? status,
+    Value<int>? rowid,
   }) {
     return BookingsTableCompanion(
-      id: id ?? this.id,
-      movieId: movieId ?? this.movieId,
+      bookingId: bookingId ?? this.bookingId,
       showtimeId: showtimeId ?? this.showtimeId,
-      seats: seats ?? this.seats,
-      foods: foods ?? this.foods,
+      movieId: movieId ?? this.movieId,
       totalPrice: totalPrice ?? this.totalPrice,
       createdAt: createdAt ?? this.createdAt,
+      issuedAt: issuedAt ?? this.issuedAt,
+      status: status ?? this.status,
+      rowid: rowid ?? this.rowid,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (movieId.present) {
-      map['movie_id'] = Variable<int>(movieId.value);
+    if (bookingId.present) {
+      map['booking_id'] = Variable<String>(bookingId.value);
     }
     if (showtimeId.present) {
       map['showtime_id'] = Variable<String>(showtimeId.value);
     }
-    if (seats.present) {
-      map['seats'] = Variable<String>(seats.value);
-    }
-    if (foods.present) {
-      map['foods'] = Variable<String>(foods.value);
+    if (movieId.present) {
+      map['movie_id'] = Variable<int>(movieId.value);
     }
     if (totalPrice.present) {
       map['total_price'] = Variable<int>(totalPrice.value);
@@ -433,19 +456,29 @@ class BookingsTableCompanion extends UpdateCompanion<BookingsTableData> {
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
+    if (issuedAt.present) {
+      map['issued_at'] = Variable<DateTime>(issuedAt.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('BookingsTableCompanion(')
-          ..write('id: $id, ')
-          ..write('movieId: $movieId, ')
+          ..write('bookingId: $bookingId, ')
           ..write('showtimeId: $showtimeId, ')
-          ..write('seats: $seats, ')
-          ..write('foods: $foods, ')
+          ..write('movieId: $movieId, ')
           ..write('totalPrice: $totalPrice, ')
-          ..write('createdAt: $createdAt')
+          ..write('createdAt: $createdAt, ')
+          ..write('issuedAt: $issuedAt, ')
+          ..write('status: $status, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -727,48 +760,44 @@ class $TicketsTableTable extends TicketsTable
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $TicketsTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _movieIdMeta = const VerificationMeta(
-    'movieId',
+  static const VerificationMeta _ticketIdMeta = const VerificationMeta(
+    'ticketId',
   );
   @override
-  late final GeneratedColumn<int> movieId = GeneratedColumn<int>(
-    'movie_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _showtimeIdMeta = const VerificationMeta(
-    'showtimeId',
-  );
-  @override
-  late final GeneratedColumn<String> showtimeId = GeneratedColumn<String>(
-    'showtime_id',
+  late final GeneratedColumn<String> ticketId = GeneratedColumn<String>(
+    'ticket_id',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _seatsMeta = const VerificationMeta('seats');
+  static const VerificationMeta _bookingIdMeta = const VerificationMeta(
+    'bookingId',
+  );
   @override
-  late final GeneratedColumn<String> seats = GeneratedColumn<String>(
-    'seats',
+  late final GeneratedColumn<String> bookingId = GeneratedColumn<String>(
+    'booking_id',
     aliasedName,
     false,
     type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _seatIdMeta = const VerificationMeta('seatId');
+  @override
+  late final GeneratedColumn<String> seatId = GeneratedColumn<String>(
+    'seat_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _priceMeta = const VerificationMeta('price');
+  @override
+  late final GeneratedColumn<int> price = GeneratedColumn<int>(
+    'price',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
   static const VerificationMeta _issuedAtMeta = const VerificationMeta(
@@ -784,10 +813,10 @@ class $TicketsTableTable extends TicketsTable
   );
   @override
   List<GeneratedColumn> get $columns => [
-    id,
-    movieId,
-    showtimeId,
-    seats,
+    ticketId,
+    bookingId,
+    seatId,
+    price,
     issuedAt,
   ];
   @override
@@ -802,32 +831,37 @@ class $TicketsTableTable extends TicketsTable
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('movie_id')) {
+    if (data.containsKey('ticket_id')) {
       context.handle(
-        _movieIdMeta,
-        movieId.isAcceptableOrUnknown(data['movie_id']!, _movieIdMeta),
+        _ticketIdMeta,
+        ticketId.isAcceptableOrUnknown(data['ticket_id']!, _ticketIdMeta),
       );
     } else if (isInserting) {
-      context.missing(_movieIdMeta);
+      context.missing(_ticketIdMeta);
     }
-    if (data.containsKey('showtime_id')) {
+    if (data.containsKey('booking_id')) {
       context.handle(
-        _showtimeIdMeta,
-        showtimeId.isAcceptableOrUnknown(data['showtime_id']!, _showtimeIdMeta),
+        _bookingIdMeta,
+        bookingId.isAcceptableOrUnknown(data['booking_id']!, _bookingIdMeta),
       );
     } else if (isInserting) {
-      context.missing(_showtimeIdMeta);
+      context.missing(_bookingIdMeta);
     }
-    if (data.containsKey('seats')) {
+    if (data.containsKey('seat_id')) {
       context.handle(
-        _seatsMeta,
-        seats.isAcceptableOrUnknown(data['seats']!, _seatsMeta),
+        _seatIdMeta,
+        seatId.isAcceptableOrUnknown(data['seat_id']!, _seatIdMeta),
       );
     } else if (isInserting) {
-      context.missing(_seatsMeta);
+      context.missing(_seatIdMeta);
+    }
+    if (data.containsKey('price')) {
+      context.handle(
+        _priceMeta,
+        price.isAcceptableOrUnknown(data['price']!, _priceMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_priceMeta);
     }
     if (data.containsKey('issued_at')) {
       context.handle(
@@ -841,26 +875,26 @@ class $TicketsTableTable extends TicketsTable
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {ticketId};
   @override
   TicketsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return TicketsTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      movieId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}movie_id'],
-      )!,
-      showtimeId: attachedDatabase.typeMapping.read(
+      ticketId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}showtime_id'],
+        data['${effectivePrefix}ticket_id'],
       )!,
-      seats: attachedDatabase.typeMapping.read(
+      bookingId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}seats'],
+        data['${effectivePrefix}booking_id'],
+      )!,
+      seatId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}seat_id'],
+      )!,
+      price: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}price'],
       )!,
       issuedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
@@ -877,35 +911,43 @@ class $TicketsTableTable extends TicketsTable
 
 class TicketsTableData extends DataClass
     implements Insertable<TicketsTableData> {
-  final int id;
-  final int movieId;
-  final String showtimeId;
-  final String seats;
+  final String ticketId;
+
+  /// FK → BookingsTable
+  final String bookingId;
+
+  /// FK → SeatsTable
+  final String seatId;
+
+  /// Snapshot price (VERY important)
+  final int price;
+
+  /// When ticket is officially issued
   final DateTime issuedAt;
   const TicketsTableData({
-    required this.id,
-    required this.movieId,
-    required this.showtimeId,
-    required this.seats,
+    required this.ticketId,
+    required this.bookingId,
+    required this.seatId,
+    required this.price,
     required this.issuedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['movie_id'] = Variable<int>(movieId);
-    map['showtime_id'] = Variable<String>(showtimeId);
-    map['seats'] = Variable<String>(seats);
+    map['ticket_id'] = Variable<String>(ticketId);
+    map['booking_id'] = Variable<String>(bookingId);
+    map['seat_id'] = Variable<String>(seatId);
+    map['price'] = Variable<int>(price);
     map['issued_at'] = Variable<DateTime>(issuedAt);
     return map;
   }
 
   TicketsTableCompanion toCompanion(bool nullToAbsent) {
     return TicketsTableCompanion(
-      id: Value(id),
-      movieId: Value(movieId),
-      showtimeId: Value(showtimeId),
-      seats: Value(seats),
+      ticketId: Value(ticketId),
+      bookingId: Value(bookingId),
+      seatId: Value(seatId),
+      price: Value(price),
       issuedAt: Value(issuedAt),
     );
   }
@@ -916,10 +958,10 @@ class TicketsTableData extends DataClass
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return TicketsTableData(
-      id: serializer.fromJson<int>(json['id']),
-      movieId: serializer.fromJson<int>(json['movieId']),
-      showtimeId: serializer.fromJson<String>(json['showtimeId']),
-      seats: serializer.fromJson<String>(json['seats']),
+      ticketId: serializer.fromJson<String>(json['ticketId']),
+      bookingId: serializer.fromJson<String>(json['bookingId']),
+      seatId: serializer.fromJson<String>(json['seatId']),
+      price: serializer.fromJson<int>(json['price']),
       issuedAt: serializer.fromJson<DateTime>(json['issuedAt']),
     );
   }
@@ -927,35 +969,33 @@ class TicketsTableData extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'movieId': serializer.toJson<int>(movieId),
-      'showtimeId': serializer.toJson<String>(showtimeId),
-      'seats': serializer.toJson<String>(seats),
+      'ticketId': serializer.toJson<String>(ticketId),
+      'bookingId': serializer.toJson<String>(bookingId),
+      'seatId': serializer.toJson<String>(seatId),
+      'price': serializer.toJson<int>(price),
       'issuedAt': serializer.toJson<DateTime>(issuedAt),
     };
   }
 
   TicketsTableData copyWith({
-    int? id,
-    int? movieId,
-    String? showtimeId,
-    String? seats,
+    String? ticketId,
+    String? bookingId,
+    String? seatId,
+    int? price,
     DateTime? issuedAt,
   }) => TicketsTableData(
-    id: id ?? this.id,
-    movieId: movieId ?? this.movieId,
-    showtimeId: showtimeId ?? this.showtimeId,
-    seats: seats ?? this.seats,
+    ticketId: ticketId ?? this.ticketId,
+    bookingId: bookingId ?? this.bookingId,
+    seatId: seatId ?? this.seatId,
+    price: price ?? this.price,
     issuedAt: issuedAt ?? this.issuedAt,
   );
   TicketsTableData copyWithCompanion(TicketsTableCompanion data) {
     return TicketsTableData(
-      id: data.id.present ? data.id.value : this.id,
-      movieId: data.movieId.present ? data.movieId.value : this.movieId,
-      showtimeId: data.showtimeId.present
-          ? data.showtimeId.value
-          : this.showtimeId,
-      seats: data.seats.present ? data.seats.value : this.seats,
+      ticketId: data.ticketId.present ? data.ticketId.value : this.ticketId,
+      bookingId: data.bookingId.present ? data.bookingId.value : this.bookingId,
+      seatId: data.seatId.present ? data.seatId.value : this.seatId,
+      price: data.price.present ? data.price.value : this.price,
       issuedAt: data.issuedAt.present ? data.issuedAt.value : this.issuedAt,
     );
   }
@@ -963,100 +1003,111 @@ class TicketsTableData extends DataClass
   @override
   String toString() {
     return (StringBuffer('TicketsTableData(')
-          ..write('id: $id, ')
-          ..write('movieId: $movieId, ')
-          ..write('showtimeId: $showtimeId, ')
-          ..write('seats: $seats, ')
+          ..write('ticketId: $ticketId, ')
+          ..write('bookingId: $bookingId, ')
+          ..write('seatId: $seatId, ')
+          ..write('price: $price, ')
           ..write('issuedAt: $issuedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, movieId, showtimeId, seats, issuedAt);
+  int get hashCode => Object.hash(ticketId, bookingId, seatId, price, issuedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TicketsTableData &&
-          other.id == this.id &&
-          other.movieId == this.movieId &&
-          other.showtimeId == this.showtimeId &&
-          other.seats == this.seats &&
+          other.ticketId == this.ticketId &&
+          other.bookingId == this.bookingId &&
+          other.seatId == this.seatId &&
+          other.price == this.price &&
           other.issuedAt == this.issuedAt);
 }
 
 class TicketsTableCompanion extends UpdateCompanion<TicketsTableData> {
-  final Value<int> id;
-  final Value<int> movieId;
-  final Value<String> showtimeId;
-  final Value<String> seats;
+  final Value<String> ticketId;
+  final Value<String> bookingId;
+  final Value<String> seatId;
+  final Value<int> price;
   final Value<DateTime> issuedAt;
+  final Value<int> rowid;
   const TicketsTableCompanion({
-    this.id = const Value.absent(),
-    this.movieId = const Value.absent(),
-    this.showtimeId = const Value.absent(),
-    this.seats = const Value.absent(),
+    this.ticketId = const Value.absent(),
+    this.bookingId = const Value.absent(),
+    this.seatId = const Value.absent(),
+    this.price = const Value.absent(),
     this.issuedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   TicketsTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int movieId,
-    required String showtimeId,
-    required String seats,
+    required String ticketId,
+    required String bookingId,
+    required String seatId,
+    required int price,
     required DateTime issuedAt,
-  }) : movieId = Value(movieId),
-       showtimeId = Value(showtimeId),
-       seats = Value(seats),
+    this.rowid = const Value.absent(),
+  }) : ticketId = Value(ticketId),
+       bookingId = Value(bookingId),
+       seatId = Value(seatId),
+       price = Value(price),
        issuedAt = Value(issuedAt);
   static Insertable<TicketsTableData> custom({
-    Expression<int>? id,
-    Expression<int>? movieId,
-    Expression<String>? showtimeId,
-    Expression<String>? seats,
+    Expression<String>? ticketId,
+    Expression<String>? bookingId,
+    Expression<String>? seatId,
+    Expression<int>? price,
     Expression<DateTime>? issuedAt,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (movieId != null) 'movie_id': movieId,
-      if (showtimeId != null) 'showtime_id': showtimeId,
-      if (seats != null) 'seats': seats,
+      if (ticketId != null) 'ticket_id': ticketId,
+      if (bookingId != null) 'booking_id': bookingId,
+      if (seatId != null) 'seat_id': seatId,
+      if (price != null) 'price': price,
       if (issuedAt != null) 'issued_at': issuedAt,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
   TicketsTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? movieId,
-    Value<String>? showtimeId,
-    Value<String>? seats,
+    Value<String>? ticketId,
+    Value<String>? bookingId,
+    Value<String>? seatId,
+    Value<int>? price,
     Value<DateTime>? issuedAt,
+    Value<int>? rowid,
   }) {
     return TicketsTableCompanion(
-      id: id ?? this.id,
-      movieId: movieId ?? this.movieId,
-      showtimeId: showtimeId ?? this.showtimeId,
-      seats: seats ?? this.seats,
+      ticketId: ticketId ?? this.ticketId,
+      bookingId: bookingId ?? this.bookingId,
+      seatId: seatId ?? this.seatId,
+      price: price ?? this.price,
       issuedAt: issuedAt ?? this.issuedAt,
+      rowid: rowid ?? this.rowid,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
+    if (ticketId.present) {
+      map['ticket_id'] = Variable<String>(ticketId.value);
     }
-    if (movieId.present) {
-      map['movie_id'] = Variable<int>(movieId.value);
+    if (bookingId.present) {
+      map['booking_id'] = Variable<String>(bookingId.value);
     }
-    if (showtimeId.present) {
-      map['showtime_id'] = Variable<String>(showtimeId.value);
+    if (seatId.present) {
+      map['seat_id'] = Variable<String>(seatId.value);
     }
-    if (seats.present) {
-      map['seats'] = Variable<String>(seats.value);
+    if (price.present) {
+      map['price'] = Variable<int>(price.value);
     }
     if (issuedAt.present) {
       map['issued_at'] = Variable<DateTime>(issuedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
     }
     return map;
   }
@@ -1064,11 +1115,12 @@ class TicketsTableCompanion extends UpdateCompanion<TicketsTableData> {
   @override
   String toString() {
     return (StringBuffer('TicketsTableCompanion(')
-          ..write('id: $id, ')
-          ..write('movieId: $movieId, ')
-          ..write('showtimeId: $showtimeId, ')
-          ..write('seats: $seats, ')
-          ..write('issuedAt: $issuedAt')
+          ..write('ticketId: $ticketId, ')
+          ..write('bookingId: $bookingId, ')
+          ..write('seatId: $seatId, ')
+          ..write('price: $price, ')
+          ..write('issuedAt: $issuedAt, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -1447,23 +1499,25 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 
 typedef $$BookingsTableTableCreateCompanionBuilder =
     BookingsTableCompanion Function({
-      Value<int> id,
-      required int movieId,
+      required String bookingId,
       required String showtimeId,
-      required String seats,
-      required String foods,
+      required int movieId,
       required int totalPrice,
       required DateTime createdAt,
+      Value<DateTime?> issuedAt,
+      Value<String> status,
+      Value<int> rowid,
     });
 typedef $$BookingsTableTableUpdateCompanionBuilder =
     BookingsTableCompanion Function({
-      Value<int> id,
-      Value<int> movieId,
+      Value<String> bookingId,
       Value<String> showtimeId,
-      Value<String> seats,
-      Value<String> foods,
+      Value<int> movieId,
       Value<int> totalPrice,
       Value<DateTime> createdAt,
+      Value<DateTime?> issuedAt,
+      Value<String> status,
+      Value<int> rowid,
     });
 
 class $$BookingsTableTableFilterComposer
@@ -1475,13 +1529,8 @@ class $$BookingsTableTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get movieId => $composableBuilder(
-    column: $table.movieId,
+  ColumnFilters<String> get bookingId => $composableBuilder(
+    column: $table.bookingId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1490,13 +1539,8 @@ class $$BookingsTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get seats => $composableBuilder(
-    column: $table.seats,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get foods => $composableBuilder(
-    column: $table.foods,
+  ColumnFilters<int> get movieId => $composableBuilder(
+    column: $table.movieId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1507,6 +1551,16 @@ class $$BookingsTableTableFilterComposer
 
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get issuedAt => $composableBuilder(
+    column: $table.issuedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get status => $composableBuilder(
+    column: $table.status,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -1520,13 +1574,8 @@ class $$BookingsTableTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get movieId => $composableBuilder(
-    column: $table.movieId,
+  ColumnOrderings<String> get bookingId => $composableBuilder(
+    column: $table.bookingId,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -1535,13 +1584,8 @@ class $$BookingsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get seats => $composableBuilder(
-    column: $table.seats,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get foods => $composableBuilder(
-    column: $table.foods,
+  ColumnOrderings<int> get movieId => $composableBuilder(
+    column: $table.movieId,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -1552,6 +1596,16 @@ class $$BookingsTableTableOrderingComposer
 
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get issuedAt => $composableBuilder(
+    column: $table.issuedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -1565,22 +1619,16 @@ class $$BookingsTableTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<int> get movieId =>
-      $composableBuilder(column: $table.movieId, builder: (column) => column);
+  GeneratedColumn<String> get bookingId =>
+      $composableBuilder(column: $table.bookingId, builder: (column) => column);
 
   GeneratedColumn<String> get showtimeId => $composableBuilder(
     column: $table.showtimeId,
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get seats =>
-      $composableBuilder(column: $table.seats, builder: (column) => column);
-
-  GeneratedColumn<String> get foods =>
-      $composableBuilder(column: $table.foods, builder: (column) => column);
+  GeneratedColumn<int> get movieId =>
+      $composableBuilder(column: $table.movieId, builder: (column) => column);
 
   GeneratedColumn<int> get totalPrice => $composableBuilder(
     column: $table.totalPrice,
@@ -1589,6 +1637,12 @@ class $$BookingsTableTableAnnotationComposer
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get issuedAt =>
+      $composableBuilder(column: $table.issuedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
 }
 
 class $$BookingsTableTableTableManager
@@ -1626,39 +1680,43 @@ class $$BookingsTableTableTableManager
               $$BookingsTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                Value<int> movieId = const Value.absent(),
+                Value<String> bookingId = const Value.absent(),
                 Value<String> showtimeId = const Value.absent(),
-                Value<String> seats = const Value.absent(),
-                Value<String> foods = const Value.absent(),
+                Value<int> movieId = const Value.absent(),
                 Value<int> totalPrice = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime?> issuedAt = const Value.absent(),
+                Value<String> status = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
               }) => BookingsTableCompanion(
-                id: id,
-                movieId: movieId,
+                bookingId: bookingId,
                 showtimeId: showtimeId,
-                seats: seats,
-                foods: foods,
+                movieId: movieId,
                 totalPrice: totalPrice,
                 createdAt: createdAt,
+                issuedAt: issuedAt,
+                status: status,
+                rowid: rowid,
               ),
           createCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                required int movieId,
+                required String bookingId,
                 required String showtimeId,
-                required String seats,
-                required String foods,
+                required int movieId,
                 required int totalPrice,
                 required DateTime createdAt,
+                Value<DateTime?> issuedAt = const Value.absent(),
+                Value<String> status = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
               }) => BookingsTableCompanion.insert(
-                id: id,
-                movieId: movieId,
+                bookingId: bookingId,
                 showtimeId: showtimeId,
-                seats: seats,
-                foods: foods,
+                movieId: movieId,
                 totalPrice: totalPrice,
                 createdAt: createdAt,
+                issuedAt: issuedAt,
+                status: status,
+                rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -1857,19 +1915,21 @@ typedef $$SeatLocksTableTableProcessedTableManager =
     >;
 typedef $$TicketsTableTableCreateCompanionBuilder =
     TicketsTableCompanion Function({
-      Value<int> id,
-      required int movieId,
-      required String showtimeId,
-      required String seats,
+      required String ticketId,
+      required String bookingId,
+      required String seatId,
+      required int price,
       required DateTime issuedAt,
+      Value<int> rowid,
     });
 typedef $$TicketsTableTableUpdateCompanionBuilder =
     TicketsTableCompanion Function({
-      Value<int> id,
-      Value<int> movieId,
-      Value<String> showtimeId,
-      Value<String> seats,
+      Value<String> ticketId,
+      Value<String> bookingId,
+      Value<String> seatId,
+      Value<int> price,
       Value<DateTime> issuedAt,
+      Value<int> rowid,
     });
 
 class $$TicketsTableTableFilterComposer
@@ -1881,23 +1941,23 @@ class $$TicketsTableTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
+  ColumnFilters<String> get ticketId => $composableBuilder(
+    column: $table.ticketId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get movieId => $composableBuilder(
-    column: $table.movieId,
+  ColumnFilters<String> get bookingId => $composableBuilder(
+    column: $table.bookingId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get showtimeId => $composableBuilder(
-    column: $table.showtimeId,
+  ColumnFilters<String> get seatId => $composableBuilder(
+    column: $table.seatId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get seats => $composableBuilder(
-    column: $table.seats,
+  ColumnFilters<int> get price => $composableBuilder(
+    column: $table.price,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1916,23 +1976,23 @@ class $$TicketsTableTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
+  ColumnOrderings<String> get ticketId => $composableBuilder(
+    column: $table.ticketId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get movieId => $composableBuilder(
-    column: $table.movieId,
+  ColumnOrderings<String> get bookingId => $composableBuilder(
+    column: $table.bookingId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get showtimeId => $composableBuilder(
-    column: $table.showtimeId,
+  ColumnOrderings<String> get seatId => $composableBuilder(
+    column: $table.seatId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get seats => $composableBuilder(
-    column: $table.seats,
+  ColumnOrderings<int> get price => $composableBuilder(
+    column: $table.price,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -1951,19 +2011,17 @@ class $$TicketsTableTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
+  GeneratedColumn<String> get ticketId =>
+      $composableBuilder(column: $table.ticketId, builder: (column) => column);
 
-  GeneratedColumn<int> get movieId =>
-      $composableBuilder(column: $table.movieId, builder: (column) => column);
+  GeneratedColumn<String> get bookingId =>
+      $composableBuilder(column: $table.bookingId, builder: (column) => column);
 
-  GeneratedColumn<String> get showtimeId => $composableBuilder(
-    column: $table.showtimeId,
-    builder: (column) => column,
-  );
+  GeneratedColumn<String> get seatId =>
+      $composableBuilder(column: $table.seatId, builder: (column) => column);
 
-  GeneratedColumn<String> get seats =>
-      $composableBuilder(column: $table.seats, builder: (column) => column);
+  GeneratedColumn<int> get price =>
+      $composableBuilder(column: $table.price, builder: (column) => column);
 
   GeneratedColumn<DateTime> get issuedAt =>
       $composableBuilder(column: $table.issuedAt, builder: (column) => column);
@@ -2000,31 +2058,35 @@ class $$TicketsTableTableTableManager
               $$TicketsTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                Value<int> movieId = const Value.absent(),
-                Value<String> showtimeId = const Value.absent(),
-                Value<String> seats = const Value.absent(),
+                Value<String> ticketId = const Value.absent(),
+                Value<String> bookingId = const Value.absent(),
+                Value<String> seatId = const Value.absent(),
+                Value<int> price = const Value.absent(),
                 Value<DateTime> issuedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
               }) => TicketsTableCompanion(
-                id: id,
-                movieId: movieId,
-                showtimeId: showtimeId,
-                seats: seats,
+                ticketId: ticketId,
+                bookingId: bookingId,
+                seatId: seatId,
+                price: price,
                 issuedAt: issuedAt,
+                rowid: rowid,
               ),
           createCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                required int movieId,
-                required String showtimeId,
-                required String seats,
+                required String ticketId,
+                required String bookingId,
+                required String seatId,
+                required int price,
                 required DateTime issuedAt,
+                Value<int> rowid = const Value.absent(),
               }) => TicketsTableCompanion.insert(
-                id: id,
-                movieId: movieId,
-                showtimeId: showtimeId,
-                seats: seats,
+                ticketId: ticketId,
+                bookingId: bookingId,
+                seatId: seatId,
+                price: price,
                 issuedAt: issuedAt,
+                rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

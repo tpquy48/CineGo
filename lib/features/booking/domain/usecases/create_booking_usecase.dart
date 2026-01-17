@@ -5,22 +5,22 @@ class CreateBookingUsecase {
 
   CreateBookingUsecase(this._repository);
 
-  Future<void> call({
+  Future<String> call({
     required int movieId,
     required String showtimeId,
-    required List<String> seats,
-    required List<Map<String, dynamic>> foods,
+    required List<String> seatIds,
+    // required List<Map<String, dynamic>> foods,
     required int totalPrice,
   }) {
-    if (seats.isEmpty) {
+    if (seatIds.isEmpty) {
       throw Exception('Cannot create booking without seats');
     }
 
     return _repository.createBooking(
       movieId: movieId,
       showtimeId: showtimeId,
-      seats: seats,
-      foods: foods,
+      seatIds: seatIds,
+      // foods: foods,
       totalPrice: totalPrice,
     );
   }

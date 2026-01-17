@@ -46,6 +46,9 @@ final GoRouter appRouter = GoRouter(
               name: AppRoutes.seatSelection,
               builder: (_, state) {
                 final showtimeId = state.pathParameters['showtimeId']!;
+                final extra = state.extra as Map<String, dynamic>;
+                final date = extra['date'] as String;
+                final time = extra['time'] as String;
 
                 // return SeatSelectionScreen(showtimeId);
 
@@ -60,7 +63,11 @@ final GoRouter appRouter = GoRouter(
                     ),
                     // BlocProvider(create: (_) => SeatListCubit(sl())),
                   ],
-                  child: SeatSelectionScreen(showtimeId),
+                  child: SeatSelectionScreen(
+                    showtimeId: showtimeId,
+                    date: date,
+                    time: time,
+                  ),
                 );
               },
             ),

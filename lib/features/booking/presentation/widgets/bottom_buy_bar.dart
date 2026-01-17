@@ -15,6 +15,7 @@ class BottomBuyBar extends StatelessWidget {
     this.isLoading = false,
   });
 
+  // TODO: Move to utils
   String formatPrice(int price) {
     // Simple price formatting, you can enhance it as needed
     return price.toString().replaceAllMapped(

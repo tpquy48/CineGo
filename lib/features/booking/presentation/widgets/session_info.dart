@@ -3,37 +3,39 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class SessionInfo extends StatefulWidget {
-  const SessionInfo({super.key});
+  final String date;
+  final String time;
+  const SessionInfo({required this.date, required this.time, super.key});
 
   @override
   State<SessionInfo> createState() => _SessionInfoState();
 }
 
 class _SessionInfoState extends State<SessionInfo> {
-  bool dateActive = true;
-  bool timeActive = false;
+  // bool dateActive = true;
+  // bool timeActive = false;
 
-  void openDatePicker(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: AppColors.appBarBg,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (_) => const DatePickerSheet(),
-    );
-  }
+  // void openDatePicker(BuildContext context) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     backgroundColor: AppColors.appBarBg,
+  //     shape: const RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+  //     ),
+  //     builder: (_) => const DatePickerSheet(),
+  //   );
+  // }
 
-  void openTimePicker(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: AppColors.appBarBg,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (_) => const TimePickerSheet(),
-    );
-  }
+  // void openTimePicker(BuildContext context) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     backgroundColor: AppColors.appBarBg,
+  //     shape: const RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+  //     ),
+  //     builder: (_) => const TimePickerSheet(),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -43,29 +45,29 @@ class _SessionInfoState extends State<SessionInfo> {
         children: [
           InfoChip(
             icon: Icons.calendar_today,
-            text: 'April, 14',
-            active: dateActive,
+            text: widget.date,
+            // active: dateActive,
             onTap: () {
-              setState(() {
-                dateActive = true;
-                timeActive = false;
-              });
+              // setState(() {
+              //   dateActive = true;
+              //   timeActive = false;
+              // });
               // TODO: open date picker
-              openDatePicker(context);
+              // openDatePicker(context);
             },
           ),
           const SizedBox(width: 12),
           InfoChip(
             icon: Icons.access_time,
-            text: '15:10',
-            active: timeActive,
+            text: widget.time,
+            // active: timeActive,
             onTap: () {
-              setState(() {
-                dateActive = false;
-                timeActive = true;
-              });
+              // setState(() {
+              //   dateActive = false;
+              //   timeActive = true;
+              // });
               // TODO: open time picker
-              openTimePicker(context);
+              // openTimePicker(context);
             },
           ),
         ],
