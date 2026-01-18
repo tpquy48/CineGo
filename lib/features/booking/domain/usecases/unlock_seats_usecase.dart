@@ -1,15 +1,11 @@
-import '../repositories/seat_repository.dart';
+import '../repositories/seat_lock_repository.dart';
 
-class UnlockSeatsUsecase {
-  final SeatRepository _repository;
+class UnlockSeatsUseCase {
+  final SeatLockRepository repository;
 
-  UnlockSeatsUsecase(this._repository);
+  UnlockSeatsUseCase(this.repository);
 
-  Future<void> call({required String showtimeId, required List<String> seats}) {
-    if (seats.isEmpty) {
-      return Future.value();
-    }
-
-    return _repository.unlockSeats(showtimeId, seats);
+  Future<void> call(String showtimeId, List<String> seatIds) {
+    return repository.unlockSeats(showtimeId, seatIds);
   }
 }

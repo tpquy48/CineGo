@@ -16,5 +16,17 @@
     "name": "Couple Combo",
     "price": 120000,
     "image": "https://i.imgur.com/couple.png"
+  },
+  {
+    "id": 1,
+    "name": "Popcorn M",
+    "price": "1200 ₸",
+    "image": "assets/images/foods/popcorn_m.png"
+  },
+  {
+    "id": 2,
+    "name": "Combo Popcorn + Cola",
+    "price": "2200 ₸",
+    "image": "assets/images/foods/combo.png"
   }
 ]

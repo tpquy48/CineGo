@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/di/service_locator.dart';
 import '../../../../core/l10n/l10n.dart';
+import '../../../../core/navigation/app_navigator.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/session_entity.dart';
 import '../cubit/sessions_cubit.dart';
@@ -42,8 +43,13 @@ class _SessionsTabState extends State<SessionsTab> {
     super.dispose();
   }
 
-  void onSelectSession() {
-    // TODO: Go to seat selection
+  void onSelectSession(String showtimeId, DateTime selectedDate, String time) {
+    context.openSeatSelection(
+      showtimeId: showtimeId,
+      movieId: widget.movieId.toString(),
+      date: DateFormat('MMM, dd').format(selectedDate),
+      time: time,
+    );
   }
 
   @override

@@ -6,18 +6,18 @@ class BookingRepositoryImpl implements BookingRepository {
   BookingRepositoryImpl(this._localDatasource);
 
   @override
-  Future<void> createBooking({
+  Future<String> createBooking({
     required int movieId,
     required String showtimeId,
-    required List<String> seats,
-    required List<Map<String, dynamic>> foods,
+    required List<String> seatIds,
+    // required List<Map<String, dynamic>> foods,
     required int totalPrice,
   }) {
     return _localDatasource.createBooking(
       movieId: movieId,
       showtimeId: showtimeId,
-      seats: seats,
-      foods: foods,
+      seatIds: seatIds,
+      // foods: foods,
       totalPrice: totalPrice,
     );
   }

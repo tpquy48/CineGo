@@ -1,23 +1,27 @@
+import '../../domain/entities/seat_entity.dart';
+import '../../domain/entities/seat_map_entity.dart';
 import '../../domain/repositories/seat_repository.dart';
-import '../datasources/local/seat_lock_local_datasource.dart';
+import '../datasources/local/seat_local_datasource.dart';
+import '../datasources/mock/seat_mock_datasource.dart';
+import '../mappers/seat_mapper.dart';
 
 class SeatRepositoryImpl implements SeatRepository {
-  final SeatLockLocalDatasource _localDataSource;
+  final SeatLocalDatasource localDatasource;
+  final SeatMockDatasource mockDatasource;
 
-  SeatRepositoryImpl(this._localDataSource);
-
-  @override
-  Future<List<String>> getLockedSeats(String showtimeId) {
-    return _localDataSource.getLockedSeats(showtimeId);
-  }
-
-  @override
-  Future<void> lockSeats(String showtimeId, List<String> seats) {
-    return _localDataSource.lockSeats(showtimeId, seats);
-  }
+  SeatRepositoryImpl({
+    required this.localDatasource,
+    required this.mockDatasource,
+  });
 
   @override
-  Future<void> unlockSeats(String showtimeId, List<String> seats) {
-    return _localDataSource.unlockSeats(showtimeId, seats);
+  Future<SeatMapEntity> getSeatMap(String showtimeId) async {
+    // final models = await localDatasource.getSeatsByShowtime(showtimeId);
+    // final models = await localDatasource.getMockGeneratedSeats(showtimeId);
+    final model = await mockDatasource.loadSeatMap(showtimeId);
+
+    // return models.map(SeatMapper.toEntity).toList();
+    // return SeatMapper.toEntityList(models);
+    return SeatMapper.toSeatMapEntity(model);
   }
 }

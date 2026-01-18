@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/booking/presentation/bloc/seat_selection/seat_selection_cubit.dart';
+import '../../features/booking/presentation/screens/seat_selection_screen.dart';
 import '../../features/movie/domain/usecases/get_movie_detail_usecase.dart';
 import '../../features/movie/presentation/bloc/movie_detail_bloc.dart';
 import '../../features/movie/presentation/bloc/movie_detail_event.dart';
@@ -38,23 +40,48 @@ final GoRouter appRouter = GoRouter(
               child: MovieDetailScreen(movieId: movieId),
             );
           },
-          //     routes: [
-          //       GoRoute(
-          //         path: 'seats',
-          //         name: AppRoutes.seatSelection,
-          //         builder: (_, state) => SeatSelectionScreen(movieId: state.pathParameters['movieId']!),
-          //       ),
-          //       GoRoute(
-          //         path: 'checkout',
-          //         name: AppRoutes.checkout,
-          //         builder: (_, state) => const CheckoutPage(),
-          //       ),
-          //       GoRoute(
-          //         path: 'result',
-          //         name: AppRoutes.paymentResult,
-          //         builder: (_, state) => const PaymentResultScreen(),
-          //       ),
-          //     ],
+          routes: [
+            GoRoute(
+              path: 'seats/:showtimeId',
+              name: AppRoutes.seatSelection,
+              builder: (_, state) {
+                final showtimeId = state.pathParameters['showtimeId']!;
+                final extra = state.extra as Map<String, dynamic>;
+                final date = extra['date'] as String;
+                final time = extra['time'] as String;
+
+                // return SeatSelectionScreen(showtimeId);
+
+                return MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                      create: (_) => SeatSelectionCubit(
+                        getSeatMap: sl(),
+                        getLockedSeats: sl(),
+                        lockSeats: sl(),
+                      )..loadSeatMap(showtimeId),
+                    ),
+                    // BlocProvider(create: (_) => SeatListCubit(sl())),
+                  ],
+                  child: SeatSelectionScreen(
+                    showtimeId: showtimeId,
+                    date: date,
+                    time: time,
+                  ),
+                );
+              },
+            ),
+            //       GoRoute(
+            //         path: 'checkout',
+            //         name: AppRoutes.checkout,
+            //         builder: (_, state) => const CheckoutPage(),
+            //       ),
+            //       GoRoute(
+            //         path: 'result',
+            //         name: AppRoutes.paymentResult,
+            //         builder: (_, state) => const PaymentResultScreen(),
+            //       ),
+          ],
         ),
       ],
     ),

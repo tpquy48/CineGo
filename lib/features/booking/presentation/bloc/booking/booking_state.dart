@@ -6,7 +6,13 @@ class BookingInitial extends BookingState {}
 
 class BookingLoading extends BookingState {}
 
-class BookingSuccess extends BookingState {}
+class BookingSuccess extends BookingState {
+  final String bookingId;
+  BookingSuccess(this.bookingId);
+
+  @override
+  List<Object?> get props => [bookingId];
+}
 
 class BookingFailure extends BookingState {
   final String message;

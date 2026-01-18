@@ -71,9 +71,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
               centerTitle: true,
               bottom: TabBar(
                 controller: _tabController,
-                indicatorColor: context.colors.primary,
+                indicatorColor: AppColors.primary,
                 indicatorWeight: 3,
-                labelColor: context.colors.primary,
+                labelColor: AppColors.primary,
                 unselectedLabelColor: Colors.white54,
                 tabs: [
                   Tab(text: context.l10n.about),

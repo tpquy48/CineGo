@@ -1,46 +1,49 @@
-import 'dart:convert';
-
 import 'package:drift/drift.dart';
 
 import '../../../../../core/database/database.dart';
 
-class SeatLockLocalDatasource {
+abstract class SeatLockLocalDatasource {
+  Future<Set<String>> getLockedSeatIds(String showtimeId);
+  Future<void> lockSeats(String showtimeId, List<String> seatIds);
+  Future<void> unlockSeats(String showtimeId, List<String> seatIds);
+}
+
+class SeatLockLocalDatasourceImpl implements SeatLockLocalDatasource {
   final AppDatabase db;
 
-  SeatLockLocalDatasource(this.db);
+  SeatLockLocalDatasourceImpl(this.db);
 
-  // Get locked seats for a showtime
-  Future<List<String>> getLockedSeats(String showtimeId) async {
-    final query = db.select(db.seatLocks)..where((tbl) => tbl.showtimeId.equals(showtimeId));
-    final record = await query.getSingleOrNull();
-    if (record == null) {
-      return [];
-    }
-    return List<String>.from(jsonDecode(record.lockedSeats));
+  @override
+  Future<Set<String>> getLockedSeatIds(String showtimeId) async {
+    final rows = await (db.select(
+      db.seatLocksTable,
+    )..where((t) => t.showtimeId.equals(showtimeId))).get();
+
+    return rows.map((e) => e.seatId).toSet();
   }
 
-  // Lock seats (used when user selects seats)
-  Future<void> lockSeats(String showtimeId, List<String> seats) async {
-    final existing = await getLockedSeats(showtimeId);
-    final updated = {...existing, ...seats}.toList();
-
-    await db
-        .into(db.seatLocks)
-        .insertOnConflictUpdate(
-          SeatLocksCompanion(
-            showtimeId: Value(showtimeId),
-            lockedSeats: Value(jsonEncode(updated)),
+  @override
+  Future<void> lockSeats(String showtimeId, List<String> seatIds) async {
+    await db.batch((batch) {
+      for (final id in seatIds) {
+        batch.insert(
+          db.seatLocksTable,
+          SeatLocksTableCompanion.insert(
+            seatId: id,
+            showtimeId: showtimeId,
+            lockedAt: DateTime.now(),
           ),
+          mode: InsertMode.insertOrIgnore,
         );
+      }
+    });
   }
 
-  // Unlock seats (used on cancel / timeout)
-  Future<void> unlockSeats(String showtimeId, List<String> seats) async {
-    final existing = await getLockedSeats(showtimeId);
-    final updated = existing..removeWhere(seats.contains);
-
-    await (db.update(db.seatLocks)..where((tbl) => tbl.showtimeId.equals(showtimeId))).write(
-      SeatLocksCompanion(lockedSeats: Value(jsonEncode(updated))),
-    );
+  @override
+  Future<void> unlockSeats(String showtimeId, List<String> seatIds) async {
+    await (db.delete(db.seatLocksTable)..where(
+          (t) => t.showtimeId.equals(showtimeId) & t.seatId.isIn(seatIds),
+        ))
+        .go();
   }
 }

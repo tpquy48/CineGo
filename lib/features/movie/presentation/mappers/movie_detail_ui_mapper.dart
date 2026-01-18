@@ -43,12 +43,16 @@ extension MovieDetailUiMapper on MovieDetailEntity {
   }
 
   String _imageUrl(String? path) {
-    if (path == null) return '';
+    if (path == null) {
+      return '';
+    }
     return 'https://image.tmdb.org/t/p/w780$path';
   }
 
   String _formatRuntime(int? minutes) {
-    if (minutes == null) return '--';
+    if (minutes == null) {
+      return '--';
+    }
     final h = minutes ~/ 60;
     final m = minutes % 60;
     return '${h.toString().padLeft(2, '0')}:${m.toString().padLeft(2, '0')}';

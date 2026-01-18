@@ -11,6 +11,9 @@ CinemaEntity mapCinema(CinemaModel cinema, List<ShowtimeModel> showtimes) {
     sessions: showtimes
         .map(
           (s) => SessionEntity(
+            showtimeId: s.id,
+            movieId: s.movieId,
+            cinemaId: s.cinemaId,
             time: s.time,
             format: s.format,
             prices: s.prices.map((k, v) => MapEntry(k, v ?? '•')),

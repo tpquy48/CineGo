@@ -10,12 +10,18 @@ extension CineGoNavigator on BuildContext {
     pushNamed(AppRoutes.movieDetail, pathParameters: {'movieId': movieId});
   }
 
-  // void openSeatSelection(String movieId) {
-  //   pushNamed(
-  //     AppRoutes.seatSelection,
-  //     pathParameters: {'movieId': movieId},
-  //   );
-  // }
+  void openSeatSelection({
+    required String showtimeId,
+    required String movieId,
+    required String date,
+    required String time,
+  }) {
+    pushNamed(
+      AppRoutes.seatSelection,
+      pathParameters: {'showtimeId': showtimeId, 'movieId': movieId},
+      extra: {'date': date, 'time': time},
+    );
+  }
 
   // void openCheckout() {
   //   pushNamed(AppRoutes.checkout);

@@ -7,11 +7,14 @@ import 'package:path_provider/path_provider.dart';
 
 import '../../features/booking/data/datasources/local/tables/bookings_table.dart';
 import '../../features/booking/data/datasources/local/tables/seat_locks_table.dart';
+import '../../features/booking/data/datasources/local/tables/seats_table.dart';
 import '../../features/booking/data/datasources/local/tables/tickets_table.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [Bookings, SeatLocks, Tickets])
+@DriftDatabase(
+  tables: [BookingsTable, SeatLocksTable, TicketsTable, SeatsTable],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 

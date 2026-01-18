@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SessionEntity {
 
- String get time; String get format; Map<String, String> get prices;
+ String get showtimeId; int get movieId; String get cinemaId; String get time; String get format; Map<String, String> get prices;
 /// Create a copy of SessionEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $SessionEntityCopyWith<SessionEntity> get copyWith => _$SessionEntityCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionEntity&&(identical(other.time, time) || other.time == time)&&(identical(other.format, format) || other.format == format)&&const DeepCollectionEquality().equals(other.prices, prices));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionEntity&&(identical(other.showtimeId, showtimeId) || other.showtimeId == showtimeId)&&(identical(other.movieId, movieId) || other.movieId == movieId)&&(identical(other.cinemaId, cinemaId) || other.cinemaId == cinemaId)&&(identical(other.time, time) || other.time == time)&&(identical(other.format, format) || other.format == format)&&const DeepCollectionEquality().equals(other.prices, prices));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,time,format,const DeepCollectionEquality().hash(prices));
+int get hashCode => Object.hash(runtimeType,showtimeId,movieId,cinemaId,time,format,const DeepCollectionEquality().hash(prices));
 
 @override
 String toString() {
-  return 'SessionEntity(time: $time, format: $format, prices: $prices)';
+  return 'SessionEntity(showtimeId: $showtimeId, movieId: $movieId, cinemaId: $cinemaId, time: $time, format: $format, prices: $prices)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $SessionEntityCopyWith<$Res>  {
   factory $SessionEntityCopyWith(SessionEntity value, $Res Function(SessionEntity) _then) = _$SessionEntityCopyWithImpl;
 @useResult
 $Res call({
- String time, String format, Map<String, String> prices
+ String showtimeId, int movieId, String cinemaId, String time, String format, Map<String, String> prices
 });
 
 
@@ -62,9 +62,12 @@ class _$SessionEntityCopyWithImpl<$Res>
 
 /// Create a copy of SessionEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? time = null,Object? format = null,Object? prices = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? showtimeId = null,Object? movieId = null,Object? cinemaId = null,Object? time = null,Object? format = null,Object? prices = null,}) {
   return _then(_self.copyWith(
-time: null == time ? _self.time : time // ignore: cast_nullable_to_non_nullable
+showtimeId: null == showtimeId ? _self.showtimeId : showtimeId // ignore: cast_nullable_to_non_nullable
+as String,movieId: null == movieId ? _self.movieId : movieId // ignore: cast_nullable_to_non_nullable
+as int,cinemaId: null == cinemaId ? _self.cinemaId : cinemaId // ignore: cast_nullable_to_non_nullable
+as String,time: null == time ? _self.time : time // ignore: cast_nullable_to_non_nullable
 as String,format: null == format ? _self.format : format // ignore: cast_nullable_to_non_nullable
 as String,prices: null == prices ? _self.prices : prices // ignore: cast_nullable_to_non_nullable
 as Map<String, String>,
@@ -149,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String time,  String format,  Map<String, String> prices)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String showtimeId,  int movieId,  String cinemaId,  String time,  String format,  Map<String, String> prices)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SessionEntity() when $default != null:
-return $default(_that.time,_that.format,_that.prices);case _:
+return $default(_that.showtimeId,_that.movieId,_that.cinemaId,_that.time,_that.format,_that.prices);case _:
   return orElse();
 
 }
@@ -170,10 +173,10 @@ return $default(_that.time,_that.format,_that.prices);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String time,  String format,  Map<String, String> prices)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String showtimeId,  int movieId,  String cinemaId,  String time,  String format,  Map<String, String> prices)  $default,) {final _that = this;
 switch (_that) {
 case _SessionEntity():
-return $default(_that.time,_that.format,_that.prices);}
+return $default(_that.showtimeId,_that.movieId,_that.cinemaId,_that.time,_that.format,_that.prices);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -187,10 +190,10 @@ return $default(_that.time,_that.format,_that.prices);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String time,  String format,  Map<String, String> prices)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String showtimeId,  int movieId,  String cinemaId,  String time,  String format,  Map<String, String> prices)?  $default,) {final _that = this;
 switch (_that) {
 case _SessionEntity() when $default != null:
-return $default(_that.time,_that.format,_that.prices);case _:
+return $default(_that.showtimeId,_that.movieId,_that.cinemaId,_that.time,_that.format,_that.prices);case _:
   return null;
 
 }
@@ -202,9 +205,12 @@ return $default(_that.time,_that.format,_that.prices);case _:
 
 
 class _SessionEntity implements SessionEntity {
-  const _SessionEntity({required this.time, required this.format, required final  Map<String, String> prices}): _prices = prices;
+  const _SessionEntity({required this.showtimeId, required this.movieId, required this.cinemaId, required this.time, required this.format, required final  Map<String, String> prices}): _prices = prices;
   
 
+@override final  String showtimeId;
+@override final  int movieId;
+@override final  String cinemaId;
 @override final  String time;
 @override final  String format;
  final  Map<String, String> _prices;
@@ -225,16 +231,16 @@ _$SessionEntityCopyWith<_SessionEntity> get copyWith => __$SessionEntityCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionEntity&&(identical(other.time, time) || other.time == time)&&(identical(other.format, format) || other.format == format)&&const DeepCollectionEquality().equals(other._prices, _prices));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionEntity&&(identical(other.showtimeId, showtimeId) || other.showtimeId == showtimeId)&&(identical(other.movieId, movieId) || other.movieId == movieId)&&(identical(other.cinemaId, cinemaId) || other.cinemaId == cinemaId)&&(identical(other.time, time) || other.time == time)&&(identical(other.format, format) || other.format == format)&&const DeepCollectionEquality().equals(other._prices, _prices));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,time,format,const DeepCollectionEquality().hash(_prices));
+int get hashCode => Object.hash(runtimeType,showtimeId,movieId,cinemaId,time,format,const DeepCollectionEquality().hash(_prices));
 
 @override
 String toString() {
-  return 'SessionEntity(time: $time, format: $format, prices: $prices)';
+  return 'SessionEntity(showtimeId: $showtimeId, movieId: $movieId, cinemaId: $cinemaId, time: $time, format: $format, prices: $prices)';
 }
 
 
@@ -245,7 +251,7 @@ abstract mixin class _$SessionEntityCopyWith<$Res> implements $SessionEntityCopy
   factory _$SessionEntityCopyWith(_SessionEntity value, $Res Function(_SessionEntity) _then) = __$SessionEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String time, String format, Map<String, String> prices
+ String showtimeId, int movieId, String cinemaId, String time, String format, Map<String, String> prices
 });
 
 
@@ -262,9 +268,12 @@ class __$SessionEntityCopyWithImpl<$Res>
 
 /// Create a copy of SessionEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? time = null,Object? format = null,Object? prices = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? showtimeId = null,Object? movieId = null,Object? cinemaId = null,Object? time = null,Object? format = null,Object? prices = null,}) {
   return _then(_SessionEntity(
-time: null == time ? _self.time : time // ignore: cast_nullable_to_non_nullable
+showtimeId: null == showtimeId ? _self.showtimeId : showtimeId // ignore: cast_nullable_to_non_nullable
+as String,movieId: null == movieId ? _self.movieId : movieId // ignore: cast_nullable_to_non_nullable
+as int,cinemaId: null == cinemaId ? _self.cinemaId : cinemaId // ignore: cast_nullable_to_non_nullable
+as String,time: null == time ? _self.time : time // ignore: cast_nullable_to_non_nullable
 as String,format: null == format ? _self.format : format // ignore: cast_nullable_to_non_nullable
 as String,prices: null == prices ? _self._prices : prices // ignore: cast_nullable_to_non_nullable
 as Map<String, String>,
