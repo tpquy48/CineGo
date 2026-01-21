@@ -31,15 +31,6 @@ class SeatSelectionCubit extends Cubit<SeatSelectionState> {
         selectedSeatIds: state.selectedSeatIds,
       );
 
-      // final seatUiModels = seats.map((seat) {
-      //   return SeatUiMapper.from(
-      //     seat: seat,
-      //     lockedSeatIds: lockedIds.toSet(),
-      //     selectedSeatIds: state.selectedSeatIds,
-      //   );
-      // }).toList();
-
-      // emit(state.copyWith(seats: seatUiModels, isLoading: false));
       emit(state.copyWith(seatMap: seatMapUiModel, isLoading: false));
     } catch (e) {
       emit(state.copyWith(isLoading: false, error: e.toString()));
@@ -59,20 +50,35 @@ class SeatSelectionCubit extends Cubit<SeatSelectionState> {
     emit(state.copyWith(selectedSeatIds: selected));
   }
 
-  /// Confirm selection -> lock seats
-  Future<void> confirmSelection(String showtimeId) async {
-    if (state.selectedSeatIds.isEmpty) {
-      return;
-    }
+  // /// Confirm selection -> lock seats
+  // Future<void> confirmSelection(String showtimeId) async {
+  //   if (state.selectedSeatIds.isEmpty) {
+  //     return;
+  //   }
 
-    emit(state.copyWith(isConfirming: true));
+  //   emit(
+  //     state.copyWith(confirmSelectionStage: ConfirmSelectionStage.confirming),
+  //   );
 
-    try {
-      await lockSeats(showtimeId, state.selectedSeatIds.toList());
+  //   try {
+  //     await lockSeats(
+  //       showtimeId: showtimeId,
+  //       seatIds: state.selectedSeatIds.toList(),
+  //     );
 
-      emit(state.copyWith(isConfirming: false, selectedSeatIds: {}));
-    } catch (e) {
-      emit(state.copyWith(isConfirming: false, error: 'Failed to lock seats'));
-    }
-  }
+  //     emit(
+  //       state.copyWith(
+  //         confirmSelectionStage: ConfirmSelectionStage.confirmed,
+  //         selectedSeatIds: {},
+  //       ),
+  //     );
+  //   } catch (e) {
+  //     emit(
+  //       state.copyWith(
+  //         confirmSelectionStage: ConfirmSelectionStage.selecting,
+  //         error: 'Failed to lock seats',
+  //       ),
+  //     );
+  //   }
+  // }
 }

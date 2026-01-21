@@ -67,4 +67,46 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get timeDescending => 'Time ↓';
+
+  @override
+  String get payForTickets => 'Pay for tickets';
+
+  @override
+  String get phoneNumber => 'Phone number';
+
+  @override
+  String get continueText => 'Continue';
+
+  @override
+  String get movie => 'Movie';
+
+  @override
+  String get cinema => 'Cinema';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get hall => 'Hall';
+
+  @override
+  String get seats => 'Seats';
+
+  @override
+  String get time => 'Time';
+
+  @override
+  String get total => 'Total';
+
+  @override
+  String get adult => 'Adult';
+
+  @override
+  String get child => 'Child';
+
+  @override
+  String get student => 'Student';
+
+  @override
+  String get vip => 'VIP';
 }

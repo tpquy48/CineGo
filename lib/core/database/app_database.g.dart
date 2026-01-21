@@ -521,8 +521,17 @@ class $SeatLocksTableTable extends SeatLocksTable
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _lockIdMeta = const VerificationMeta('lockId');
   @override
-  List<GeneratedColumn> get $columns => [seatId, showtimeId, lockedAt];
+  late final GeneratedColumn<String> lockId = GeneratedColumn<String>(
+    'lock_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [seatId, showtimeId, lockedAt, lockId];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -559,6 +568,14 @@ class $SeatLocksTableTable extends SeatLocksTable
     } else if (isInserting) {
       context.missing(_lockedAtMeta);
     }
+    if (data.containsKey('lock_id')) {
+      context.handle(
+        _lockIdMeta,
+        lockId.isAcceptableOrUnknown(data['lock_id']!, _lockIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_lockIdMeta);
+    }
     return context;
   }
 
@@ -580,6 +597,10 @@ class $SeatLocksTableTable extends SeatLocksTable
         DriftSqlType.dateTime,
         data['${effectivePrefix}locked_at'],
       )!,
+      lockId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lock_id'],
+      )!,
     );
   }
 
@@ -594,10 +615,12 @@ class SeatLocksTableData extends DataClass
   final String seatId;
   final String showtimeId;
   final DateTime lockedAt;
+  final String lockId;
   const SeatLocksTableData({
     required this.seatId,
     required this.showtimeId,
     required this.lockedAt,
+    required this.lockId,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -605,6 +628,7 @@ class SeatLocksTableData extends DataClass
     map['seat_id'] = Variable<String>(seatId);
     map['showtime_id'] = Variable<String>(showtimeId);
     map['locked_at'] = Variable<DateTime>(lockedAt);
+    map['lock_id'] = Variable<String>(lockId);
     return map;
   }
 
@@ -613,6 +637,7 @@ class SeatLocksTableData extends DataClass
       seatId: Value(seatId),
       showtimeId: Value(showtimeId),
       lockedAt: Value(lockedAt),
+      lockId: Value(lockId),
     );
   }
 
@@ -625,6 +650,7 @@ class SeatLocksTableData extends DataClass
       seatId: serializer.fromJson<String>(json['seatId']),
       showtimeId: serializer.fromJson<String>(json['showtimeId']),
       lockedAt: serializer.fromJson<DateTime>(json['lockedAt']),
+      lockId: serializer.fromJson<String>(json['lockId']),
     );
   }
   @override
@@ -634,6 +660,7 @@ class SeatLocksTableData extends DataClass
       'seatId': serializer.toJson<String>(seatId),
       'showtimeId': serializer.toJson<String>(showtimeId),
       'lockedAt': serializer.toJson<DateTime>(lockedAt),
+      'lockId': serializer.toJson<String>(lockId),
     };
   }
 
@@ -641,10 +668,12 @@ class SeatLocksTableData extends DataClass
     String? seatId,
     String? showtimeId,
     DateTime? lockedAt,
+    String? lockId,
   }) => SeatLocksTableData(
     seatId: seatId ?? this.seatId,
     showtimeId: showtimeId ?? this.showtimeId,
     lockedAt: lockedAt ?? this.lockedAt,
+    lockId: lockId ?? this.lockId,
   );
   SeatLocksTableData copyWithCompanion(SeatLocksTableCompanion data) {
     return SeatLocksTableData(
@@ -653,6 +682,7 @@ class SeatLocksTableData extends DataClass
           ? data.showtimeId.value
           : this.showtimeId,
       lockedAt: data.lockedAt.present ? data.lockedAt.value : this.lockedAt,
+      lockId: data.lockId.present ? data.lockId.value : this.lockId,
     );
   }
 
@@ -661,51 +691,59 @@ class SeatLocksTableData extends DataClass
     return (StringBuffer('SeatLocksTableData(')
           ..write('seatId: $seatId, ')
           ..write('showtimeId: $showtimeId, ')
-          ..write('lockedAt: $lockedAt')
+          ..write('lockedAt: $lockedAt, ')
+          ..write('lockId: $lockId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(seatId, showtimeId, lockedAt);
+  int get hashCode => Object.hash(seatId, showtimeId, lockedAt, lockId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is SeatLocksTableData &&
           other.seatId == this.seatId &&
           other.showtimeId == this.showtimeId &&
-          other.lockedAt == this.lockedAt);
+          other.lockedAt == this.lockedAt &&
+          other.lockId == this.lockId);
 }
 
 class SeatLocksTableCompanion extends UpdateCompanion<SeatLocksTableData> {
   final Value<String> seatId;
   final Value<String> showtimeId;
   final Value<DateTime> lockedAt;
+  final Value<String> lockId;
   final Value<int> rowid;
   const SeatLocksTableCompanion({
     this.seatId = const Value.absent(),
     this.showtimeId = const Value.absent(),
     this.lockedAt = const Value.absent(),
+    this.lockId = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   SeatLocksTableCompanion.insert({
     required String seatId,
     required String showtimeId,
     required DateTime lockedAt,
+    required String lockId,
     this.rowid = const Value.absent(),
   }) : seatId = Value(seatId),
        showtimeId = Value(showtimeId),
-       lockedAt = Value(lockedAt);
+       lockedAt = Value(lockedAt),
+       lockId = Value(lockId);
   static Insertable<SeatLocksTableData> custom({
     Expression<String>? seatId,
     Expression<String>? showtimeId,
     Expression<DateTime>? lockedAt,
+    Expression<String>? lockId,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (seatId != null) 'seat_id': seatId,
       if (showtimeId != null) 'showtime_id': showtimeId,
       if (lockedAt != null) 'locked_at': lockedAt,
+      if (lockId != null) 'lock_id': lockId,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -714,12 +752,14 @@ class SeatLocksTableCompanion extends UpdateCompanion<SeatLocksTableData> {
     Value<String>? seatId,
     Value<String>? showtimeId,
     Value<DateTime>? lockedAt,
+    Value<String>? lockId,
     Value<int>? rowid,
   }) {
     return SeatLocksTableCompanion(
       seatId: seatId ?? this.seatId,
       showtimeId: showtimeId ?? this.showtimeId,
       lockedAt: lockedAt ?? this.lockedAt,
+      lockId: lockId ?? this.lockId,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -736,6 +776,9 @@ class SeatLocksTableCompanion extends UpdateCompanion<SeatLocksTableData> {
     if (lockedAt.present) {
       map['locked_at'] = Variable<DateTime>(lockedAt.value);
     }
+    if (lockId.present) {
+      map['lock_id'] = Variable<String>(lockId.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -748,6 +791,7 @@ class SeatLocksTableCompanion extends UpdateCompanion<SeatLocksTableData> {
           ..write('seatId: $seatId, ')
           ..write('showtimeId: $showtimeId, ')
           ..write('lockedAt: $lockedAt, ')
+          ..write('lockId: $lockId, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1748,6 +1792,7 @@ typedef $$SeatLocksTableTableCreateCompanionBuilder =
       required String seatId,
       required String showtimeId,
       required DateTime lockedAt,
+      required String lockId,
       Value<int> rowid,
     });
 typedef $$SeatLocksTableTableUpdateCompanionBuilder =
@@ -1755,6 +1800,7 @@ typedef $$SeatLocksTableTableUpdateCompanionBuilder =
       Value<String> seatId,
       Value<String> showtimeId,
       Value<DateTime> lockedAt,
+      Value<String> lockId,
       Value<int> rowid,
     });
 
@@ -1779,6 +1825,11 @@ class $$SeatLocksTableTableFilterComposer
 
   ColumnFilters<DateTime> get lockedAt => $composableBuilder(
     column: $table.lockedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lockId => $composableBuilder(
+    column: $table.lockId,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -1806,6 +1857,11 @@ class $$SeatLocksTableTableOrderingComposer
     column: $table.lockedAt,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get lockId => $composableBuilder(
+    column: $table.lockId,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$SeatLocksTableTableAnnotationComposer
@@ -1827,6 +1883,9 @@ class $$SeatLocksTableTableAnnotationComposer
 
   GeneratedColumn<DateTime> get lockedAt =>
       $composableBuilder(column: $table.lockedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get lockId =>
+      $composableBuilder(column: $table.lockId, builder: (column) => column);
 }
 
 class $$SeatLocksTableTableTableManager
@@ -1869,11 +1928,13 @@ class $$SeatLocksTableTableTableManager
                 Value<String> seatId = const Value.absent(),
                 Value<String> showtimeId = const Value.absent(),
                 Value<DateTime> lockedAt = const Value.absent(),
+                Value<String> lockId = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => SeatLocksTableCompanion(
                 seatId: seatId,
                 showtimeId: showtimeId,
                 lockedAt: lockedAt,
+                lockId: lockId,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -1881,11 +1942,13 @@ class $$SeatLocksTableTableTableManager
                 required String seatId,
                 required String showtimeId,
                 required DateTime lockedAt,
+                required String lockId,
                 Value<int> rowid = const Value.absent(),
               }) => SeatLocksTableCompanion.insert(
                 seatId: seatId,
                 showtimeId: showtimeId,
                 lockedAt: lockedAt,
+                lockId: lockId,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

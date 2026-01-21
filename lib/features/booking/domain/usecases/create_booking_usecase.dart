@@ -16,12 +16,15 @@ class CreateBookingUsecase {
       throw Exception('Cannot create booking without seats');
     }
 
-    return _repository.createBooking(
-      movieId: movieId,
-      showtimeId: showtimeId,
-      seatIds: seatIds,
-      // foods: foods,
-      totalPrice: totalPrice,
-    );
+    // TODO: implement actual booking logic
+    throw UnimplementedError();
+
+    // return _repository.createBooking(
+    //   movieId: movieId,
+    //   showtimeId: showtimeId,
+    //   seatIds: seatIds,
+    //   // foods: foods,
+    //   totalPrice: totalPrice,
+    // );
   }
 }

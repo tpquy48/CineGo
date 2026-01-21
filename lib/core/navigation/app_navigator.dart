@@ -13,19 +13,51 @@ extension CineGoNavigator on BuildContext {
   void openSeatSelection({
     required String showtimeId,
     required String movieId,
-    required String date,
+    required String movieTitle,
+    required String cinemaName,
+    required String hallName,
+    required String filterDate,
     required String time,
+    required String date,
   }) {
     pushNamed(
       AppRoutes.seatSelection,
+      // pathParameters: {'showtimeId': showtimeId, 'movieId': movieId},
       pathParameters: {'showtimeId': showtimeId, 'movieId': movieId},
-      extra: {'date': date, 'time': time},
+      extra: {
+        'filterDate': filterDate,
+        'date': date,
+        'time': time,
+        'movieTitle': movieTitle,
+        'cinemaName': cinemaName,
+        'hallName': hallName,
+        // 'startTime': showtime.startTime.toIso8601String(),
+      },
     );
   }
 
-  // void openCheckout() {
-  //   pushNamed(AppRoutes.checkout);
-  // }
+  void openPayment({
+    required String movieId,
+    required String movieTitle,
+    required String showtimeId,
+    required String cinemaName,
+    required String hallName,
+    required String date,
+    required String time,
+  }) {
+    goNamed(
+      AppRoutes.payment,
+      pathParameters: {'movieId': movieId},
+      extra: {
+        'movieTitle': movieTitle,
+        'showtimeId': showtimeId,
+        'cinemaName': cinemaName,
+        'hallName': hallName,
+        'date': date,
+        'time': time,
+      },
+    );
+  }
 
   // void openPaymentResult() {
   //   goNamed(AppRoutes.paymentResult);

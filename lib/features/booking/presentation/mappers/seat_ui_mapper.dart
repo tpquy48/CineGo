@@ -37,4 +37,15 @@ class SeatUiMapper {
       }).toList(),
     );
   }
+
+  static List<SeatEntity> toSeatEntities(List<SeatUiModel> models) {
+    return models.map((model) {
+      return SeatEntity(
+        id: model.id,
+        row: model.row,
+        number: model.number,
+        price: model.price,
+      );
+    }).toList();
+  }
 }

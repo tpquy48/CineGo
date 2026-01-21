@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/l10n.dart';
 import '../cubit/sessions_cubit.dart';
 import '../cubit/sessions_state.dart';
 import 'sessions_tab.dart';
 
 class ByTimeView extends StatelessWidget {
   final List<SessionWithCinema> sessions;
-  final void Function(String, DateTime, String) onSelectSession;
+  final SelectSessionCallback onSelectSession;
 
   const ByTimeView({
     required this.sessions,
@@ -36,7 +38,7 @@ class _SessionItem extends StatelessWidget {
   final String time;
   final String cinema;
   final Map<String, String> prices;
-  final void Function(String, DateTime, String) onSelectSession;
+  final SelectSessionCallback onSelectSession;
 
   const _SessionItem(
     this.showtimeId,
@@ -49,10 +51,20 @@ class _SessionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<SessionsCubit>();
-    final selectedDate = (cubit.state as SessionsLoaded).selectedDate;
+    final state = cubit.state as SessionsLoaded;
+    final selectedDate = state.selectedDate;
+    final cinemaName = cinema;
 
     return InkWell(
-      onTap: () => onSelectSession(showtimeId, selectedDate, time),
+      onTap: () => onSelectSession(
+        showtimeId: showtimeId,
+        selectedDate: selectedDate,
+        time: time,
+        date: DateFormat('MMM, dd').format(selectedDate),
+        cinemaName: cinemaName,
+        // hallName: session.hallName,
+        hallName: '6th Floor Hall', // TODO: Fix me
+      ),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: const BoxDecoration(
@@ -84,7 +96,12 @@ class _SessionItem extends StatelessWidget {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      ...['Adult', 'Child', 'Student', 'VIP'].map(
+                      ...[
+                        context.l10n.adult,
+                        context.l10n.child,
+                        context.l10n.student,
+                        context.l10n.vip,
+                      ].map(
                         (k) => Expanded(
                           child: Text(
                             prices[k] ?? '•',

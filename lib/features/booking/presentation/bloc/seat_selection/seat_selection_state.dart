@@ -2,20 +2,20 @@ import '../../../../../core/bloc/base_state.dart';
 import '../../models/seat_map_ui_model.dart';
 import '../../models/seat_ui_model.dart';
 
+enum ConfirmSelectionStage { selecting, confirming, confirmed }
+
 class SeatSelectionState extends BaseState {
   final SeatMapUiModel seatMap;
-  // final List<SeatUiModel> seats;
   final Set<String> selectedSeatIds;
   final bool isLoading;
-  final bool isConfirming;
+  final ConfirmSelectionStage confirmSelectionStage;
   final String? error;
 
   const SeatSelectionState({
     required this.seatMap,
-    // required this.seats,
     required this.selectedSeatIds,
     this.isLoading = false,
-    this.isConfirming = false,
+    this.confirmSelectionStage = ConfirmSelectionStage.selecting,
     this.error,
   });
 
@@ -25,7 +25,7 @@ class SeatSelectionState extends BaseState {
       // seats: [],
       selectedSeatIds: {},
       isLoading: false,
-      isConfirming: false,
+      confirmSelectionStage: ConfirmSelectionStage.selecting,
     );
   }
 
@@ -34,15 +34,15 @@ class SeatSelectionState extends BaseState {
     List<SeatUiModel>? seats,
     Set<String>? selectedSeatIds,
     bool? isLoading,
-    bool? isConfirming,
+    ConfirmSelectionStage? confirmSelectionStage,
     String? error,
   }) {
     return SeatSelectionState(
       seatMap: seatMap ?? this.seatMap,
-      // seats: seats ?? this.seats,
       selectedSeatIds: selectedSeatIds ?? this.selectedSeatIds,
       isLoading: isLoading ?? this.isLoading,
-      isConfirming: isConfirming ?? this.isConfirming,
+      confirmSelectionStage:
+          confirmSelectionStage ?? this.confirmSelectionStage,
       error: error,
     );
   }
@@ -50,10 +50,9 @@ class SeatSelectionState extends BaseState {
   @override
   List<Object?> get props => [
     seatMap,
-    // seats,
     selectedSeatIds,
     isLoading,
-    isConfirming,
+    confirmSelectionStage,
     error,
   ];
 }

@@ -1,4 +1,3 @@
-import '../../domain/entities/seat_entity.dart';
 import '../../domain/entities/seat_map_entity.dart';
 import '../../domain/repositories/seat_repository.dart';
 import '../datasources/local/seat_local_datasource.dart';

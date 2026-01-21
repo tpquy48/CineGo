@@ -1,22 +1,22 @@
-import '../../../../../core/bloc/bloc.dart';
+// import '../../../../../core/bloc/bloc.dart';
 
-sealed class BookingEvent extends BaseEvent {}
+// sealed class BookingEvent extends BaseEvent {}
 
-class ConfirmBookingEvent extends BookingEvent {
-  final int movieId;
-  final String showtimeId;
-  final List<String> seats;
-  final List<Map<String, dynamic>> foods;
-  final int totalPrice;
+// class ConfirmBookingEvent extends BookingEvent {
+//   final int movieId;
+//   final String showtimeId;
+//   final List<String> seats;
+//   final List<Map<String, dynamic>> foods;
+//   final int totalPrice;
 
-  ConfirmBookingEvent({
-    required this.movieId,
-    required this.showtimeId,
-    required this.seats,
-    required this.foods,
-    required this.totalPrice,
-  });
+//   ConfirmBookingEvent({
+//     required this.movieId,
+//     required this.showtimeId,
+//     required this.seats,
+//     required this.foods,
+//     required this.totalPrice,
+//   });
 
-  @override
-  List<Object?> get props => [movieId, showtimeId, seats, foods, totalPrice];
-}
+//   @override
+//   List<Object?> get props => [movieId, showtimeId, seats, foods, totalPrice];
+// }

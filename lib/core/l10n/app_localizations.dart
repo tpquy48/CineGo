@@ -217,6 +217,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Time ↓'**
   String get timeDescending;
+
+  /// No description provided for @payForTickets.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay for tickets'**
+  String get payForTickets;
+
+  /// No description provided for @phoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get phoneNumber;
+
+  /// No description provided for @continueText.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueText;
+
+  /// No description provided for @movie.
+  ///
+  /// In en, this message translates to:
+  /// **'Movie'**
+  String get movie;
+
+  /// No description provided for @cinema.
+  ///
+  /// In en, this message translates to:
+  /// **'Cinema'**
+  String get cinema;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
+
+  /// No description provided for @hall.
+  ///
+  /// In en, this message translates to:
+  /// **'Hall'**
+  String get hall;
+
+  /// No description provided for @seats.
+  ///
+  /// In en, this message translates to:
+  /// **'Seats'**
+  String get seats;
+
+  /// No description provided for @time.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get time;
+
+  /// No description provided for @total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get total;
+
+  /// No description provided for @adult.
+  ///
+  /// In en, this message translates to:
+  /// **'Adult'**
+  String get adult;
+
+  /// No description provided for @child.
+  ///
+  /// In en, this message translates to:
+  /// **'Child'**
+  String get child;
+
+  /// No description provided for @student.
+  ///
+  /// In en, this message translates to:
+  /// **'Student'**
+  String get student;
+
+  /// No description provided for @vip.
+  ///
+  /// In en, this message translates to:
+  /// **'VIP'**
+  String get vip;
 }
 
 class _AppLocalizationsDelegate
