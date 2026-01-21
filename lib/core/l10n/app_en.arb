@@ -19,5 +19,19 @@
   "selectSession": "Select session",
   "byCinema": "By cinema",
   "timeAscending": "Time ↑",
-  "timeDescending": "Time ↓"
+  "timeDescending": "Time ↓",
+  "payForTickets": "Pay for tickets",
+  "phoneNumber": "Phone number",
+  "continueText": "Continue",
+  "movie": "Movie",
+  "cinema": "Cinema",
+  "date": "Date",
+  "hall": "Hall",
+  "seats": "Seats",
+  "time": "Time",
+  "total": "Total",
+  "adult": "Adult",
+  "child": "Child",
+  "student": "Student",
+  "vip": "VIP"
 }

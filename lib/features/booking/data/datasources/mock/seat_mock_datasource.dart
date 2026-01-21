@@ -26,6 +26,8 @@ class SeatMockDatasourceImpl implements SeatMockDatasource {
           .map((e) => SeatMapModel.fromJson(e))
           .firstWhere((sm) => sm.showtimeId == showtimeId);
 
+      // await Future.delayed(const Duration(milliseconds: 1000));
+
       return seatMap;
     } catch (e) {
       log('Error loading seats from SeatMockDatasource', error: e);

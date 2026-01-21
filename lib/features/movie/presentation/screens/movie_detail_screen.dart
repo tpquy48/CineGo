@@ -85,7 +85,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
               controller: _tabController,
               children: [
                 AboutTab(movie: movie, onGoToSessions: goToSessionsTab),
-                SessionsTab(movieId: movie.id),
+                SessionsTab(movieDetail: state.movie),
               ],
             ),
           ),

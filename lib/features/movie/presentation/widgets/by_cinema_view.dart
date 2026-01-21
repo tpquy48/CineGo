@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/l10n.dart';
 import '../../domain/entities/cinema_entity.dart';
 import '../../domain/entities/session_entity.dart';
 import '../cubit/sessions_cubit.dart';
 import '../cubit/sessions_state.dart';
+import 'sessions_tab.dart';
 
 class ByCinemaView extends StatelessWidget {
   final List<CinemaEntity> cinemas;
-  final void Function(String, DateTime, String) onSelectSession;
+  final SelectSessionCallback onSelectSession;
 
   const ByCinemaView({
     required this.cinemas,
@@ -31,7 +34,7 @@ class ByCinemaView extends StatelessWidget {
 
 class _CinemaBlock extends StatelessWidget {
   final CinemaEntity cinema;
-  final void Function(String, DateTime, String) onSelectSession;
+  final SelectSessionCallback onSelectSession;
 
   const _CinemaBlock({required this.cinema, required this.onSelectSession});
 
@@ -93,18 +96,29 @@ class _CinemaBlock extends StatelessWidget {
 
 class _SessionRow extends StatelessWidget {
   final SessionEntity session;
-  final void Function(String, DateTime, String) onSelectSession;
+  final SelectSessionCallback onSelectSession;
 
   const _SessionRow({required this.session, required this.onSelectSession});
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<SessionsCubit>();
-    final selectedDate = (cubit.state as SessionsLoaded).selectedDate;
+    final state = cubit.state as SessionsLoaded;
+    final selectedDate = state.selectedDate;
+    final cinemaName = state.cinemas
+        .firstWhere((c) => c.sessions.contains(session))
+        .name;
 
     return InkWell(
-      onTap: () =>
-          onSelectSession(session.showtimeId, selectedDate, session.time),
+      onTap: () => onSelectSession(
+        showtimeId: session.showtimeId,
+        selectedDate: selectedDate,
+        time: session.time,
+        date: DateFormat('MMM, dd').format(selectedDate),
+        cinemaName: cinemaName,
+        // hallName: session.hallName,
+        hallName: '6th Floor Hall', // TODO: Fix me
+      ),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: const BoxDecoration(
@@ -134,7 +148,12 @@ class _SessionRow extends StatelessWidget {
                 ],
               ),
             ),
-            ...['Adult', 'Child', 'Student', 'VIP'].map(
+            ...[
+              context.l10n.adult,
+              context.l10n.child,
+              context.l10n.student,
+              context.l10n.vip,
+            ].map(
               (k) => Expanded(
                 child: Text(
                   session.prices[k] ?? '•',

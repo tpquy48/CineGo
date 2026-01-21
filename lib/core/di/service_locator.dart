@@ -66,9 +66,9 @@ Future<void> init() async {
   sl.registerLazySingleton<SessionsMockDatasource>(
     () => SessionsMockDatasource(),
   );
-  sl.registerLazySingleton<SeatLockLocalDatasource>(
-    () => SeatLockLocalDatasourceImpl(sl<AppDatabase>()),
-  );
+  // sl.registerLazySingleton<SeatLockLocalDatasource>(
+  //   () => SeatLockLocalDatasourceImpl(sl<AppDatabase>()),
+  // );
   sl.registerLazySingleton<SeatLocalDatasource>(
     () => SeatLocalDatasourceImpl(sl()),
   );
@@ -98,7 +98,7 @@ Future<void> init() async {
     () => SeatLockRepositoryImpl(sl()),
   );
   sl.registerLazySingleton<BookingRepository>(
-    () => BookingRepositoryImpl(sl<BookingLocalDatasource>()),
+    () => BookingRepositoryImpl(sl()),
   );
 
   // 5. UseCases
@@ -140,11 +140,7 @@ Future<void> init() async {
     ),
   );
   sl.registerFactory<BookingCubit>(
-    () => BookingCubit(
-      createBooking: sl(),
-      getLockedSeats: sl(),
-      unlockSeats: sl(),
-    ),
+    () => BookingCubit(lockSeats: sl(), unlockSeats: sl()),
   );
   // sl.registerFactory(() => SeatListCubit(sl()));
 }

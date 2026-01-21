@@ -6,16 +6,27 @@ import '../../../../core/di/service_locator.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../../core/navigation/app_navigator.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../domain/entities/movie_detail_entity.dart';
 import '../../domain/entities/session_entity.dart';
 import '../cubit/sessions_cubit.dart';
 import '../cubit/sessions_state.dart';
 import 'by_cinema_view.dart';
 import 'by_time_view.dart';
 
-class SessionsTab extends StatefulWidget {
-  final int movieId;
+typedef SelectSessionCallback =
+    void Function({
+      required String cinemaName,
+      required String date,
+      required String hallName,
+      required DateTime selectedDate,
+      required String showtimeId,
+      required String time,
+    });
 
-  const SessionsTab({required this.movieId, super.key});
+class SessionsTab extends StatefulWidget {
+  final MovieDetailEntity movieDetail;
+
+  const SessionsTab({required this.movieDetail, super.key});
 
   @override
   State<SessionsTab> createState() => _SessionsTabState();
@@ -43,12 +54,23 @@ class _SessionsTabState extends State<SessionsTab> {
     super.dispose();
   }
 
-  void onSelectSession(String showtimeId, DateTime selectedDate, String time) {
+  void onSelectSession({
+    required String showtimeId,
+    required DateTime selectedDate,
+    required String time,
+    required String date,
+    required String cinemaName,
+    required String hallName,
+  }) {
     context.openSeatSelection(
       showtimeId: showtimeId,
-      movieId: widget.movieId.toString(),
-      date: DateFormat('MMM, dd').format(selectedDate),
+      movieId: widget.movieDetail.id.toString(),
+      movieTitle: widget.movieDetail.title,
+      filterDate: DateFormat('MMM, dd').format(selectedDate),
+      cinemaName: cinemaName,
+      hallName: hallName,
       time: time,
+      date: date,
     );
   }
 
@@ -221,13 +243,16 @@ class _PriceHeader extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       color: const Color(0xFF121C2E),
-      child: const Row(
+      child: Row(
         children: [
-          SizedBox(width: 60, child: Text('Time', style: _headerStyle)),
-          Expanded(child: Text('Adult', style: _headerStyle)),
-          Expanded(child: Text('Child', style: _headerStyle)),
-          Expanded(child: Text('Student', style: _headerStyle)),
-          Expanded(child: Text('VIP', style: _headerStyle)),
+          SizedBox(
+            width: 60,
+            child: Text(context.l10n.time, style: _headerStyle),
+          ),
+          Expanded(child: Text(context.l10n.adult, style: _headerStyle)),
+          Expanded(child: Text(context.l10n.child, style: _headerStyle)),
+          Expanded(child: Text(context.l10n.student, style: _headerStyle)),
+          Expanded(child: Text(context.l10n.vip, style: _headerStyle)),
         ],
       ),
     );
