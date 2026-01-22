@@ -1,8 +1,3 @@
-import 'package:dartz/dartz.dart';
-
-import '../../../../core/core.dart';
-import '../results/seat_lock_result.dart';
-
 abstract class BookingRepository {
   // Future<Either<Failure, SeatLockResult>> lockSeats({
   //   required String showtimeId,

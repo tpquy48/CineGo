@@ -2,9 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/booking_usecases.dart';
 import '../../../domain/entities/booking_draft_entity.dart';
-import '../../../domain/entities/seat_entity.dart';
 import '../../models/seat_ui_model.dart';
-import '../../screens/seat_selection_screen.dart';
 import 'booking_state.dart';
 
 class BookingCubit extends Cubit<BookingState> {

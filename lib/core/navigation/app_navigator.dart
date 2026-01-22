@@ -46,7 +46,7 @@ extension CineGoNavigator on BuildContext {
     required String time,
   }) {
     goNamed(
-      AppRoutes.payment,
+      AppRoutes.booking,
       pathParameters: {'movieId': movieId},
       extra: {
         'movieTitle': movieTitle,
@@ -57,6 +57,10 @@ extension CineGoNavigator on BuildContext {
         'time': time,
       },
     );
+  }
+
+  void openPaymentTicketScreen({required String movieId}) {
+    goNamed(AppRoutes.payment, pathParameters: {'movieId': movieId}, extra: {});
   }
 
   // void openPaymentResult() {

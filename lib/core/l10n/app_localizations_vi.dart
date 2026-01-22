@@ -109,4 +109,19 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get vip => 'VIP';
+
+  @override
+  String get savedCards => 'Saved cards';
+
+  @override
+  String get paymentsHistory => 'Payments history';
+
+  @override
+  String get visa => 'VISA';
+
+  @override
+  String get addNewCard => 'Add new card';
+
+  @override
+  String get yourTicket => 'Your ticket';
 }

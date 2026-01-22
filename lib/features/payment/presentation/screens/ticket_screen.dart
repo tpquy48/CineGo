@@ -1,37 +1,53 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/l10n.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../widgets/ticket_card.dart';
-import 'payment_profile_screen.dart';
 
 class TicketScreen extends StatelessWidget {
   const TicketScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF0F172A),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF0F172A),
-        elevation: 0,
-        title: const Text('Your ticket'),
-        leading: const BackButton(),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () => Navigator.pop(context),
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: AppColors.splashPrimary,
+          appBar: AppBar(
+            backgroundColor: AppColors.splashPrimary,
+            elevation: 0,
+            title: Text(context.l10n.yourTicket),
+            leading: const BackButton(),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
           ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            const TicketCard(),
-            const Spacer(),
-            _bottomButtons(context),
-          ],
+          body: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                const TicketCard(),
+                const Spacer(),
+                _bottomButtons(context),
+              ],
+            ),
+          ),
         ),
-      ),
+
+        // Payment Loading Indicator
+        const Scaffold(
+          backgroundColor: AppColors.splashPrimary,
+          body: Center(
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              color: AppColors.primary,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -64,12 +80,6 @@ class TicketScreen extends StatelessWidget {
             ),
             onPressed: () {
               // TODO: Implement send ticket functionality
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) =>
-                      const PaymentProfileScreen(hasTickets: false),
-                ),
-              );
             },
             child: const Text('Send'),
           ),

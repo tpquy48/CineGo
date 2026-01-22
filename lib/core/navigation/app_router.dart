@@ -94,39 +94,40 @@ final GoRouter appRouter = GoRouter(
 
                 /// PAYMENT
                 GoRoute(
-                  path: 'payment',
-                  name: AppRoutes.payment,
+                  path: 'booking',
+                  name: AppRoutes.booking,
                   builder: (_, state) {
-                    // final movieId = state.pathParameters['movieId']!;
-
                     final extra = state.extra as Map<String, dynamic>;
-                    // final showtimeId = extra['showtimeId'] as String;
                     final date = extra['date'] as String;
                     final time = extra['time'] as String;
-                    // final movieTitle = extra['movieTitle'] as String;
-                    // final cinemaName = extra['cinemaName'] as String;
-                    // final hallName = extra['hallName'] as String;
 
                     return PayScreen(
-                      args: PayScreenArguments(
-                        // movieId: movieId,
-                        // showtimeId: showtimeId,
-                        date: date,
-                        time: time,
-                        // movieTitle: movieTitle,
-                        // cinemaName: cinemaName,
-                        // hallName: hallName,
-                      ),
+                      args: PayScreenArguments(date: date, time: time),
                     );
                   },
                 ),
+
+                // GoRoute(
+                //   path: 'payment',
+                //   name: AppRoutes.payment,
+                //   builder: (_, state) {
+                //     return BlocProvider(
+                //       create: (_) => PaymentCubit(),
+                //       child: Builder(
+                //         builder: (context) {
+                //           return const TicketScreen();
+                //         },
+                //       ),
+                //     );
+                //   },
+                // ),
               ],
             ),
-            //       GoRoute(
-            //         path: 'result',
-            //         name: AppRoutes.paymentResult,
-            //         builder: (_, state) => const PaymentResultScreen(),
-            //       ),
+            // GoRoute(
+            //   path: 'result',
+            //   name: AppRoutes.paymentResult,
+            //   builder: (_, state) => const PaymentResultScreen(),
+            // ),
           ],
         ),
       ],
