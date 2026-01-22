@@ -7,26 +7,12 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/formatters/price_formatter.dart';
 import '../../../booking/presentation/bloc/booking/booking_cubit.dart';
 import '../../../booking/presentation/bloc/booking/booking_state.dart';
-import 'payment_loading_screen.dart';
 
 class PayScreenArguments {
-  // final String movieId;
-  // final String showtimeId;
   final String date;
   final String time;
-  // final String movieTitle;
-  // final String cinemaName;
-  // final String hallName;
 
-  PayScreenArguments({
-    // required this.movieId,
-    // required this.showtimeId,
-    required this.date,
-    required this.time,
-    // required this.movieTitle,
-    // required this.cinemaName,
-    // required this.hallName,
-  });
+  PayScreenArguments({required this.date, required this.time});
 }
 
 class PayScreen extends StatefulWidget {
@@ -126,13 +112,7 @@ class _PayScreenState extends State<PayScreen> {
                       ),
                     ),
                     onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (_) =>
-                      //         const PaymentLoadingScreen(isToTicket: true),
-                      //   ),`
-                      // );
+                      // TODO: handle payment info and confirm booking
                     },
                     child: Text(
                       context.l10n.continueText,

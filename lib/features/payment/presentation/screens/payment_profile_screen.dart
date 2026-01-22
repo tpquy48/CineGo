@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/l10n.dart';
+import '../../../../core/theme/app_colors.dart';
+
 class PaymentProfileScreen extends StatelessWidget {
   final bool hasTickets;
 
@@ -8,9 +11,9 @@ class PaymentProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F172A),
+      backgroundColor: AppColors.splashPrimary,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F172A),
+        backgroundColor: AppColors.splashPrimary,
         elevation: 0,
         leading: const BackButton(),
         title: const Text('8 (707) 268 48 12', style: TextStyle(fontSize: 16)),
@@ -21,12 +24,12 @@ class PaymentProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _sectionTitle('Saved cards'),
+            _sectionTitle(context.l10n.savedCards),
             _savedCard(),
             const SizedBox(height: 10),
-            _addCardButton(),
+            _addCardButton(context),
             const SizedBox(height: 24),
-            _sectionTitle('Payments history'),
+            _sectionTitle(context.l10n.paymentsHistory),
             const SizedBox(height: 12),
             Expanded(child: hasTickets ? _paymentsHistory() : _emptyHistory()),
           ],
@@ -46,12 +49,21 @@ class PaymentProfileScreen extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(6)),
-            child: const Text('VISA', style: TextStyle(fontWeight: FontWeight.bold)),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: const Text(
+              'VISA',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
           const SizedBox(width: 12),
           const Expanded(
-            child: Text('4716 •••• •••• 5615', style: TextStyle(color: Colors.white)),
+            child: Text(
+              '4716 •••• •••• 5615',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           const Text('06/24', style: TextStyle(color: Colors.white38)),
         ],
@@ -59,7 +71,7 @@ class PaymentProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _addCardButton() {
+  Widget _addCardButton(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         minimumSize: const Size.fromHeight(48),
@@ -68,7 +80,7 @@ class PaymentProfileScreen extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       ),
       onPressed: () {},
-      child: const Text('Add new card'),
+      child: Text(context.l10n.addNewCard),
     );
   }
 
@@ -97,12 +109,21 @@ class PaymentProfileScreen extends StatelessWidget {
               children: [
                 Text(
                   'The Batman',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 SizedBox(height: 4),
-                Text('6 April 2022, 14:40', style: TextStyle(color: Colors.white54)),
+                Text(
+                  '6 April 2022, 14:40',
+                  style: TextStyle(color: Colors.white54),
+                ),
                 SizedBox(height: 2),
-                Text('Eurasia Cinema7', style: TextStyle(color: Colors.white38)),
+                Text(
+                  'Eurasia Cinema7',
+                  style: TextStyle(color: Colors.white38),
+                ),
               ],
             ),
           ),
@@ -118,7 +139,10 @@ class PaymentProfileScreen extends StatelessWidget {
         children: [
           Icon(Icons.local_movies_outlined, size: 48, color: Colors.white24),
           SizedBox(height: 12),
-          Text("You haven't bought tickets yet", style: TextStyle(color: Colors.white38)),
+          Text(
+            "You haven't bought tickets yet",
+            style: TextStyle(color: Colors.white38),
+          ),
         ],
       ),
     );
@@ -127,7 +151,10 @@ class PaymentProfileScreen extends StatelessWidget {
   Widget _sectionTitle(String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
-      child: Text(title, style: const TextStyle(color: Colors.white54, fontSize: 13)),
+      child: Text(
+        title,
+        style: const TextStyle(color: Colors.white54, fontSize: 13),
+      ),
     );
   }
 }

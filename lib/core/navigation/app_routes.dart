@@ -5,6 +5,7 @@ class AppRoutes {
 
   static const movieDetail = 'movieDetail';
   static const seatSelection = 'seatSelection';
+  static const booking = 'booking';
   static const payment = 'payment';
-  // static const paymentResult = 'paymentResult';
+  static const paymentResult = 'paymentResult';
 }

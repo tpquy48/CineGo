@@ -1,5 +1,4 @@
 import '../../presentation/models/seat_ui_model.dart';
-import 'seat_entity.dart';
 
 class BookingDraftEntity {
   final String movieId;

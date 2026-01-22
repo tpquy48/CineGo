@@ -301,6 +301,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'VIP'**
   String get vip;
+
+  /// No description provided for @savedCards.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved cards'**
+  String get savedCards;
+
+  /// No description provided for @paymentsHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments history'**
+  String get paymentsHistory;
+
+  /// No description provided for @visa.
+  ///
+  /// In en, this message translates to:
+  /// **'VISA'**
+  String get visa;
+
+  /// No description provided for @addNewCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new card'**
+  String get addNewCard;
+
+  /// No description provided for @yourTicket.
+  ///
+  /// In en, this message translates to:
+  /// **'Your ticket'**
+  String get yourTicket;
 }
 
 class _AppLocalizationsDelegate

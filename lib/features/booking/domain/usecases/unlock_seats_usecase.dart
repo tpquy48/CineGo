@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failure.dart';
-import '../repositories/booking_repository.dart';
 import '../repositories/seat_lock_repository.dart';
 
 class UnlockSeatsUseCase {
