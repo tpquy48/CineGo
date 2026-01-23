@@ -11,6 +11,7 @@ import '../../features/movie/presentation/screens/home_screen.dart';
 import '../../features/movie/presentation/screens/movie_detail_screen.dart';
 import '../../features/movie/presentation/screens/splash_screen.dart';
 import '../../features/payment/presentation/screens/pay_screen.dart';
+import '../../features/payment/presentation/screens/ticket_screen.dart';
 import '../di/service_locator.dart';
 import 'app_routes.dart';
 
@@ -94,8 +95,8 @@ final GoRouter appRouter = GoRouter(
 
                 /// PAYMENT
                 GoRoute(
-                  path: 'booking',
-                  name: AppRoutes.booking,
+                  path: 'payment',
+                  name: AppRoutes.payment,
                   builder: (_, state) {
                     final extra = state.extra as Map<String, dynamic>;
                     final date = extra['date'] as String;
@@ -107,20 +108,13 @@ final GoRouter appRouter = GoRouter(
                   },
                 ),
 
-                // GoRoute(
-                //   path: 'payment',
-                //   name: AppRoutes.payment,
-                //   builder: (_, state) {
-                //     return BlocProvider(
-                //       create: (_) => PaymentCubit(),
-                //       child: Builder(
-                //         builder: (context) {
-                //           return const TicketScreen();
-                //         },
-                //       ),
-                //     );
-                //   },
-                // ),
+                GoRoute(
+                  path: 'ticket',
+                  name: AppRoutes.ticket,
+                  builder: (_, state) {
+                    return const TicketScreen();
+                  },
+                ),
               ],
             ),
             // GoRoute(
