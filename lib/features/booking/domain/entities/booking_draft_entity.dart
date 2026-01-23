@@ -8,6 +8,8 @@ class BookingDraftEntity {
   final String hallName;
 
   final DateTime startTime;
+  final String? time;
+  final String? date;
 
   final String showtimeId;
 
@@ -28,5 +30,7 @@ class BookingDraftEntity {
     required this.totalPrice,
     required this.lockId,
     required this.expiresAt,
+    this.time,
+    this.date,
   });
 }

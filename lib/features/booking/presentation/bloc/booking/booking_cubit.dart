@@ -50,6 +50,8 @@ class BookingCubit extends Cubit<BookingState> {
               totalPrice: seats.fold(0, (s, e) => s + e.price),
               lockId: lockResult.lockId,
               expiresAt: lockResult.expiresAt,
+              time: time,
+              date: date,
             ),
             // BookingDraftEntity(
             //   showtimeId: showtimeId,

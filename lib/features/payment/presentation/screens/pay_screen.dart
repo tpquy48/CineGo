@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/l10n.dart';
+import '../../../../core/navigation/app_navigator.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/formatters/price_formatter.dart';
 import '../../../booking/presentation/bloc/booking/booking_cubit.dart';
@@ -113,6 +114,8 @@ class _PayScreenState extends State<PayScreen> {
                     ),
                     onPressed: () {
                       // TODO: handle payment info and confirm booking
+                      // This action below is just for demo payment flow
+                      context.openTicket(movieId: state.draft.movieId);
                     },
                     child: Text(
                       context.l10n.continueText,

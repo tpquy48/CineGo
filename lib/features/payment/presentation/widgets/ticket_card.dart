@@ -1,54 +1,85 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+
+import '../../../../core/constants/constants.dart';
+import '../../../../core/l10n/l10n.dart';
+import '../../../../core/utils/formatters/price_formatter.dart';
+import '../../../booking/presentation/bloc/booking/booking_cubit.dart';
+import '../../../booking/presentation/bloc/booking/booking_state.dart';
 
 class TicketCard extends StatelessWidget {
   const TicketCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        gradient: const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.4),
-            blurRadius: 24,
-            offset: const Offset(0, 12),
+    return BlocBuilder<BookingCubit, BookingState>(
+      builder: (context, state) {
+        final draft = (state is BookingLocked) ? state.draft : null;
+        final listSeatInfo = draft?.seats.fold<String>(
+          '',
+          (prev, seat) => prev.isEmpty ? seat.id : '$prev, ${seat.number}',
+        );
+
+        return Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.4),
+                blurRadius: 24,
+                offset: const Offset(0, 12),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Column(
-        children: [
-          _qrSection(),
-          const SizedBox(height: 16),
-          const Text(
-            'Show this code to the gatekeeper at the cinema',
-            style: TextStyle(color: Colors.white38, fontSize: 12),
+          child: Column(
+            children: [
+              _qrSection(),
+              const SizedBox(height: 16),
+              const Text(
+                'Show this code to the gatekeeper at the cinema',
+                style: TextStyle(color: Colors.white38, fontSize: 12),
+              ),
+              const SizedBox(height: 20),
+              _divider(),
+              const SizedBox(height: 16),
+              _infoRow(context.l10n.movie, draft?.movieTitle ?? '---'),
+              _infoRow(context.l10n.cinema, draft?.cinemaName ?? '---'),
+              _infoRow(
+                context.l10n.date,
+                '${draft?.date} - ${draft?.time}',
+                // draft?.startTime != null
+                //     ? '${draft!.startTime.day}/${draft.startTime.month}/${draft.startTime.year}'
+                //     // ? draft!.startTime.formattedDate
+                //     : '---',
+              ),
+              _infoRow(context.l10n.hall, draft?.hallName ?? '---'),
+              _infoRow(context.l10n.seats, listSeatInfo ?? '---'),
+              _infoRow(
+                'Cost',
+                draft != null ? draft.totalPrice.formatPrice() : '---',
+                valueColor: AppColors.primary,
+              ),
+            ],
           ),
-          const SizedBox(height: 20),
-          _divider(),
-          const SizedBox(height: 16),
-          _infoRow('Movie', 'The Batman'),
-          _infoRow('Cinema', 'Eurasia Cinema7'),
-          _infoRow('Date', '6 April 2022, 14:40'),
-          _infoRow('Hall', '6th'),
-          _infoRow('Seats', '7 row (7, 8)'),
-          _infoRow('Cost', '3200 ₸ (paid)', valueColor: const Color(0xFFFF7A1A)),
-        ],
-      ),
+        );
+      },
     );
   }
 
   Widget _qrSection() {
     return Container(
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+      ),
       child: QrImageView(
         data: 'TICKET|BATMAN|ROW7|SEAT7-8|EURASIA',
         size: 220,
@@ -62,13 +93,20 @@ class TicketCard extends StatelessWidget {
       children: List.generate(
         20,
         (index) => Expanded(
-          child: Container(height: 1, color: index.isEven ? Colors.transparent : Colors.white24),
+          child: Container(
+            height: 1,
+            color: index.isEven ? Colors.transparent : Colors.white24,
+          ),
         ),
       ),
     );
   }
 
-  Widget _infoRow(String label, String value, {Color valueColor = Colors.white}) {
+  Widget _infoRow(
+    String label,
+    String value, {
+    Color valueColor = Colors.white,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
