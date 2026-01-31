@@ -118,14 +118,8 @@ This video demonstrates the complete booking flow:
 - Fake payment confirmation
 - Fake ticket generation
 
-<p align="center">
-  <i>👉 Click the image to watch the demo video</i>
-</p>
-<p align="center">
-  <a href="https://github.com/user-attachments/assets/a873fc54-2af9-4380-b734-1cad8405af87">
-    <img src="screenshots/home.png" width="30%" />
-  </a>
-</p>
+▶️ Watch the full booking flow demo here:  
+https://github.com/user-attachments/assets/a873fc54-2af9-4380-b734-1cad8405af87
 
 ---
 
