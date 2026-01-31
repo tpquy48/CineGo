@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 
 class SeatAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool zoomed;
   final void Function() toggleZoom;
+  final String movieTitle;
+  final String cinemaName;
 
-  const SeatAppBar({required this.toggleZoom, this.zoomed = false, super.key});
+  const SeatAppBar({
+    required this.toggleZoom,
+    required this.movieTitle,
+    required this.cinemaName,
+    this.zoomed = false,
+    super.key,
+  });
 
   @override
   Size get preferredSize => const Size.fromHeight(56);
@@ -16,17 +25,17 @@ class SeatAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: AppColors.appBarBg,
       elevation: 0,
-      leading: const BackButton(),
-      title: const Column(
+      leading: BackButton(onPressed: () => context.pop()),
+      title: Column(
         children: [
           Text(
-            'Lotte Cinema 7',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+            movieTitle,
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
           ),
-          SizedBox(height: 2),
+          const SizedBox(height: 2),
           Text(
-            'The Batman',
-            style: TextStyle(fontSize: 11, color: Colors.white54),
+            cinemaName,
+            style: const TextStyle(fontSize: 11, color: Colors.white54),
           ),
         ],
       ),

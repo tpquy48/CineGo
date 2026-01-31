@@ -99,7 +99,12 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>
         children: [
           Scaffold(
             backgroundColor: AppColors.secondary,
-            appBar: SeatAppBar(zoomed: _zoomed, toggleZoom: _toggleZoom),
+            appBar: SeatAppBar(
+              zoomed: _zoomed,
+              toggleZoom: _toggleZoom,
+              movieTitle: widget.args.movieTitle,
+              cinemaName: widget.args.cinemaName,
+            ),
             body: Column(
               children: [
                 SessionInfo(date: widget.args.date, time: widget.args.time),
