@@ -188,7 +188,8 @@ This video demonstrates the complete booking flow:
 - Fake ticket generation
 
 ▶️ Watch the full booking flow demo here:  
-https://github.com/user-attachments/assets/a873fc54-2af9-4380-b734-1cad8405af87
+https://github.com/user-attachments/assets/36b08f45-32b6-4bcc-a4a2-b002027ed50f
+
 
 ---
 
