@@ -164,8 +164,6 @@ flutter run
 
 ## 📸 Screenshots
 
-_(Add screenshots or GIFs here later)_
-
 <p align="center">
   <img src="screenshots/splash.png" width="30%" />
   <img src="screenshots/home.png" width="30%" />
