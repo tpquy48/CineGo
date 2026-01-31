@@ -22,21 +22,90 @@ clean architecture, scalable state management, and a complete booking flow UI.
 ## 🧱 Architecture
 
 This project follows **Clean Architecture** principles:
-lib/
-├── core/
-└── features/
-├── domain/
-│ ├── entities
-│ ├── repositories
-│ └── usecases
-├── data/
-│ ├── datasources
-│ ├── models
-│ └── repositories
-└── presentation/
-├── blocs
-├── screens
-└── widgets
+```text
+lib
+├── app.dart
+├── core
+│   ├── bloc
+│   ├── cache
+│   ├── constants
+│   ├── core.dart
+│   ├── database
+│   ├── di
+│   ├── error
+│   ├── extensions
+│   ├── l10n
+│   ├── navigation
+│   ├── network
+│   ├── observer
+│   ├── theme
+│   └── utils
+├── features
+│   ├── booking
+│   │   ├── data
+│   │   │   ├── datasources
+│   │   │   ├── mappers
+│   │   │   ├── models
+│   │   │   └── repositories
+│   │   ├── domain
+│   │   │   ├── entities
+│   │   │   ├── repositories
+│   │   │   ├── results
+│   │   │   └── usecases
+│   │   └── presentation
+│   │       ├── bloc
+│   │       ├── enums
+│   │       ├── mappers
+│   │       ├── models
+│   │       ├── screens
+│   │       └── widgets
+│   ├── genre
+│   │   ├── data
+│   │   │   ├── datasources
+│   │   │   ├── dtos
+│   │   │   ├── mappers
+│   │   │   ├── repositories
+│   │   │   └── responses
+│   │   └── domain
+│   │       ├── entities
+│   │       ├── repositories
+│   │       └── usecases
+│   ├── movie
+│   │   ├── data
+│   │   │   ├── datasources
+│   │   │   ├── dtos
+│   │   │   ├── mappers
+│   │   │   ├── models
+│   │   │   └── repositories
+│   │   ├── domain
+│   │   │   ├── entities
+│   │   │   ├── repositories
+│   │   │   └── usecases
+│   │   └── presentation
+│   │       ├── bloc
+│   │       ├── cubit
+│   │       ├── mappers
+│   │       ├── models
+│   │       ├── screens
+│   │       └── widgets
+│   └── payment
+│       ├── data
+│       │   ├── datasources
+│       │   ├── mappers
+│       │   ├── models
+│       │   └── repositories
+│       ├── domain
+│       │   ├── entities
+│       │   ├── repositories
+│       │   └── usecases
+│       └── presentation
+│           ├── screens
+│           └── widgets
+├── env.dart
+├── env.g.dart
+├── injection_container.dart
+└── main.dart
+```
 
 State management is handled using **flutter_bloc (Cubit & Bloc)**.
 
