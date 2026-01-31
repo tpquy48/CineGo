@@ -103,7 +103,6 @@ lib
 │           └── widgets
 ├── env.dart
 ├── env.g.dart
-├── injection_container.dart
 └── main.dart
 ```
 
@@ -137,6 +136,18 @@ State management is handled using **flutter_bloc (Cubit & Bloc)**.
 
 This project will not be further developed unless used as a base
 for backend or real-time booking experiments.
+
+---
+
+## 🚀 Installation & Usage
+
+```bash
+git clone https://github.com/USERNAME/CineGo.git
+cd CineGo
+flutter pub get
+flutter pub run build_runner build --delete-conflicting-outputs
+flutter run
+```
 
 ---
 
@@ -189,7 +200,6 @@ This video demonstrates the complete booking flow:
 
 ▶️ Watch the full booking flow demo here:  
 https://github.com/user-attachments/assets/36b08f45-32b6-4bcc-a4a2-b002027ed50f
-
 
 ---
 
