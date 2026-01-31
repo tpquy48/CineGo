@@ -1,16 +1,123 @@
-# cinego
+# 🎬 CineGo – Cinema Ticket Booking App (Flutter)
 
-A movie ticket booking app
+CineGo is a Flutter-based cinema ticket booking application focusing on
+clean architecture, scalable state management, and a complete booking flow UI.
 
-## Getting Started
+> 📌 This project is intentionally stopped at the **Fake Ticket Demo** stage
+> for learning, architectural practice, and portfolio purposes.
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## ✨ Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Browse movies & showtimes (mock data)
+- Seat selection with visual seat map
+- Booking flow: Seat → Payment → Ticket
+- Fake Ticket generation for demo
+- Clean Architecture (Domain / Data / Presentation)
+- BLoC / Cubit state management
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 🧱 Architecture
+
+This project follows **Clean Architecture** principles:
+lib/
+├── core/
+└── features/
+├── domain/
+│ ├── entities
+│ ├── repositories
+│ └── usecases
+├── data/
+│ ├── datasources
+│ ├── models
+│ └── repositories
+└── presentation/
+├── blocs
+├── screens
+└── widgets
+
+State management is handled using **flutter_bloc (Cubit & Bloc)**.
+
+---
+
+## 🎟 Booking Flow (Demo)
+
+1. Select movie & showtime
+2. Choose seats
+3. Fake payment confirmation
+4. Display fake ticket screen
+
+> ⚠️ No real payment, backend, or seat locking system is implemented.
+
+---
+
+## 🧪 Data & Limitations
+
+- All data (movies, showtimes, seats) are **mocked**
+- No authentication
+- No real backend or database sync
+- Seat locking is simulated only for UI demonstration
+
+---
+
+## 🛑 Project Status
+
+🚧 **Stopped – Fake Ticket Demo Completed**
+
+This project will not be further developed unless used as a base
+for backend or real-time booking experiments.
+
+---
+
+## 📦 Tech Stack
+
+- Flutter
+- Dart
+- flutter_bloc
+- Clean Architecture
+- Drift (local DB - experimental)
+- TMDB API (exploration only)
+
+---
+
+## 📸 Screenshots
+
+_(Add screenshots or GIFs here later)_
+
+<p align="center">
+  <img src="screenshots/splash.png" width="30%" />
+  <img src="screenshots/home.png" width="30%" />
+  <img src="screenshots/movie_detail.png" width="30%" />
+</p>
+
+<p align="center">
+  <img src="screenshots/sessions_by_cinema.png" width="30%" />
+  <img src="screenshots/sessions_by_time.png" width="30%" />
+</p>
+
+<p align="center">
+  <img src="screenshots/showtime_seats.png" width="30%" />
+  <img src="screenshots/showtime_seats_zoomed.png" width="30%" />
+  <img src="screenshots/showtime_seats_selecting.png" width="30%" />
+</p>
+
+<p align="center">
+  <img src="screenshots/payment_info.png" width="30%" />
+  <img src="screenshots/ticket.png" width="30%" />
+</p>
+
+---
+
+## 👤 Author
+
+**Phu Quy**  
+Flutter Developer  
+📍 Vietnam
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
