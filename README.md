@@ -118,8 +118,14 @@ This video demonstrates the complete booking flow:
 - Fake payment confirmation
 - Fake ticket generation
 
-👉 Click to watch the full booking flow demo:
-[![CineGo Demo](screenshots/home.png)](https://github.com/user-attachments/assets/a873fc54-2af9-4380-b734-1cad8405af87)
+<p align="center">
+  <i>👉 Click the image to watch the demo video</i>
+</p>
+<p align="center">
+  <a href="https://github.com/user-attachments/assets/a873fc54-2af9-4380-b734-1cad8405af87">
+    <img src="screenshots/home.png" width="30%" />
+  </a>
+</p>
 
 ---
 
