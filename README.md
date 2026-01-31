@@ -110,6 +110,19 @@ _(Add screenshots or GIFs here later)_
 
 ---
 
+## 🎥 Demo Video
+
+This video demonstrates the complete booking flow:
+
+- Seat selection
+- Fake payment confirmation
+- Fake ticket generation
+
+▶️ Watch the full booking flow demo here:  
+https://github.com/user-attachments/assets/a873fc54-2af9-4380-b734-1cad8405af87
+
+---
+
 ## 👤 Author
 
 **Phu Quy**  
